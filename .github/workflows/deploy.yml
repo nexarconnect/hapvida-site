@@ -15,19 +15,13 @@ jobs:
       - name: 🟢 Configurar Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "18"
+          node-version: "20"
 
-      - name: 🔍 Localizar projeto e fazer Build
-        id: build_step
-        run: |
-          # Procura a pasta que contém o package.json
-          PROJECT_PATH=$(find . -name package.json -not -path "*/node_modules/*" -exec dirname {} \;)
-          echo "Projeto encontrado em: $PROJECT_PATH"
-          
-          cd "$PROJECT_PATH"
-          npm install
-          npm run build
-          echo "dist_path=$PROJECT_PATH/dist/" >> $GITHUB_OUTPUT
+      - name: 📦 Instalar dependências
+        run: npm install
+
+      - name: 🏗️ Fazer o Build
+        run: npm run build
 
       - name: 🚀 Enviar para Hostinger via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
@@ -35,6 +29,6 @@ jobs:
           server: ${{ secrets.HOSTINGER_FTP_HOST }}
           username: ${{ secrets.HOSTINGER_FTP_USERNAME }}
           password: ${{ secrets.HOSTINGER_FTP_PASSWORD }}
-          local-dir: ${{ steps.build_step.outputs.dist_path }}
+          local-dir: dist/
           server-dir: /home/u975902304/domains/tabelaplanosaude.com.br/public_html/
           state-name: .ftp-deploy-sync-state.json
