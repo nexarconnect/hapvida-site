@@ -7,30 +7,20 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - name: 🚚 Checkout do código
-        uses: actions/checkout@v4
-
-      - name: 🟢 Configurar Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-
-      - name: 📦 Instalar dependências
-        run: npm install
-
-      - name: 🏗️ Fazer o Build
-        run: npm run build
-
-      - name: 🚀 Enviar para Hostinger via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.HOSTINGER_FTP_HOST }}
-          username: ${{ secrets.HOSTINGER_FTP_USERNAME }}
-          password: ${{ secrets.HOSTINGER_FTP_PASSWORD }}
-          local-dir: dist/
-          server-dir: /public_html/
-          state-name: .ftp-deploy-sync-state.json
-          
-        
+    - uses: actions/checkout@v2
+    - name: 🚀 Enviar para Hostinger via FTP
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      with:
+        server: ${{ secrets.HOSTINGER_FTP_HOST }}
+        username: ${{ secrets.HOSTINGER_FTP_USERNAME }}
+        password: ${{ secrets.HOSTINGER_FTP_PASSWORD }}
+        local-dir: ./  # Alterado de dist/ para ./ (raiz do repositório)
+        server-dir: /public_html/
+        exclude: |     # Adicionado para não subir arquivos desnecessários
+          **/.git*
+          **/.git*/**
+          **/node_modules/**
+          .github/**
+          trigger.txt
+        state-name: .ftp-deploy-sync-state.json
