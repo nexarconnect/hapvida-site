@@ -30,6 +30,7 @@ jobs:
           username: ${{ secrets.HOSTINGER_FTP_USERNAME }}
           password: ${{ secrets.HOSTINGER_FTP_PASSWORD }}
           local-dir: dist/
-          server-dir: /home/u975902304/domains/tabelaplanosaude.com.br/public_html/
+          server-dir: /public_html/
           state-name: .ftp-deploy-sync-state.json
           
+        
