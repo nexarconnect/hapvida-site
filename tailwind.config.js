@@ -18,17 +18,28 @@ module.exports = {
     },
     extend: {
       colors: {
+        // Estrutura base (Shadcn/UI)
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        
+        // Cores da Marca Hapvida
         hapvida: {
           blue: "#2652B5",
           "blue-light": "#307CBF",
           orange: "#ED862E",
           red: "#E64A36",
         },
+
+        // Cores do WhatsApp
+        whatsapp: {
+          DEFAULT: "#25D366",
+          hover: "#1EBE5D",
+        },
+
+        // Cores do Sistema
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",

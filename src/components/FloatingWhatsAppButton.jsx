@@ -13,7 +13,7 @@ const FloatingWhatsAppButton = () => {
     <motion.button
       onClick={handleClick}
       className="fixed bottom-6 right-6 z-50 flex items-center justify-center w-16 h-16 rounded-full shadow-2xl text-white hover:scale-110 transition-transform duration-300"
-      style={{ backgroundColor: 'var(--hapvida-orange)' }}
+      style={{ backgroundColor: 'var(--whatsapp-green)' }}
       initial={{ scale: 0 }}
       animate={{ scale: 1 }}
       transition={{ delay: 1, type: 'spring', stiffness: 260, damping: 20 }}
@@ -26,7 +26,7 @@ const FloatingWhatsAppButton = () => {
       {/* Pulse animation */}
       <motion.div
         className="absolute inset-0 rounded-full"
-        style={{ backgroundColor: 'var(--hapvida-orange)' }}
+        style={{ backgroundColor: 'var(--whatsapp-green)' }}
         animate={{
           scale: [1, 1.3, 1],
           opacity: [0.7, 0, 0.7],

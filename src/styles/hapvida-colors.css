@@ -7,4 +7,8 @@
   --hapvida-gray-light: #F5F5F5;
   --hapvida-gray-medium: #666666;
   --hapvida-gray-dark: #333333;
+
+  /* WhatsApp (oficial) */
+  --whatsapp-green: #25D366;
+  --whatsapp-green-hover: #1EBE5D;
 }
