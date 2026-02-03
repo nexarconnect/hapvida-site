@@ -32,3 +32,4 @@ jobs:
           local-dir: dist/
           server-dir: /home/u975902304/domains/tabelaplanosaude.com.br/public_html/
           state-name: .ftp-deploy-sync-state.json
+          
