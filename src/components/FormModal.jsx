@@ -96,13 +96,19 @@ const FormModal = ({ isOpen, onClose, onSuccess }) => {
   };
 
   // Toggle para idades pendentes
-  const toggleIdadesPendentes = () => {
-    setFormData(prev => ({
-      ...prev,
-      idades_pendentes: !prev.idades_pendentes,
-      idades: !prev.idades_pendentes ? [] : [''], // Limpa ou reseta idades
-    }));
-  };
+const toggleIdadesPendentes = () => {
+  setFormData(prev => ({
+    ...prev,
+    idades_pendentes: !prev.idades_pendentes,
+    idades: !prev.idades_pendentes ? [] : Array(Math.max(1, prev.numero_pessoas)).fill(''), // Reseta com placeholders
+  }));
+  
+  // Feedback opcional (toast leve)
+  toast({
+    title: formData.idades_pendentes ? "Idades ativadas" : "Idades pendentes",
+    description: formData.idades_pendentes ? "Preencha as idades para melhor cotação." : "Sem problema, confirme no WhatsApp.",
+  });
+};
 
   // Countdown para redirect
   useEffect(() => {
