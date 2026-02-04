@@ -7,7 +7,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 export default defineConfig({
   plugins: [react()],
-  base: '/hapvida-site/', // ← ADICIONE ESTA LINHA
+  base: '/',  // ← CORRETO PARA HOSTINGER (root do domínio)
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
