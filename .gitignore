@@ -25,3 +25,9 @@ dist-ssr/
 .DS_Storenode_modules
 
 dist/
+# Dependências
+node_modules/
+
+# Cache/artefatos do Vite (não versionar)
+node_modules/.vite/
+
