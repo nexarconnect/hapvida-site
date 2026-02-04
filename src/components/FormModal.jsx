@@ -13,7 +13,6 @@ import {
   CheckCircle,
   ExternalLink,
   Search,
-  ChevronRight,
   Heart
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -45,8 +44,8 @@ const FormModal = ({ isOpen, onClose, onSuccess }) => {
     tipo_plano: '',
     numero_pessoas: 1,
     idades: [''],
-    preferencia: '', // Nova: preferência do usuário
-    idades_pendentes: false, // Nova: toggle para idades opcionais
+    preferencia: '',
+    idades_pendentes: false,
   });
 
   // Fecha dropdown ao clicar fora
@@ -74,18 +73,18 @@ const FormModal = ({ isOpen, onClose, onSuccess }) => {
 
   // Sincroniza idades com número de pessoas
   useEffect(() => {
-    if (!formData.idades_pendentes) {
-      const count = Math.max(1, parseInt(formData.numero_pessoas) || 1);
-      setFormData(prev => {
-        const currentAges = [...prev.idades];
-        if (count > currentAges.length) {
-          return { ...prev, idades: [...currentAges, ...Array(count - currentAges.length).fill('')] };
-        } else if (count < currentAges.length) {
-          return { ...prev, idades: currentAges.slice(0, count) };
-        }
-        return prev;
-      });
-    }
+    if (formData.idades_pendentes) return;
+
+    const count = Math.max(1, parseInt(formData.numero_pessoas) || 1);
+    setFormData(prev => {
+      const currentAges = [...prev.idades];
+      if (count > currentAges.length) {
+        return { ...prev, idades: [...currentAges, ...Array(count - currentAges.length).fill('')] };
+      } else if (count < currentAges.length) {
+        return { ...prev, idades: currentAges.slice(0, count) };
+      }
+      return prev;
+    });
   }, [formData.numero_pessoas, formData.idades_pendentes]);
 
   // Atualiza idade específica
@@ -96,19 +95,13 @@ const FormModal = ({ isOpen, onClose, onSuccess }) => {
   };
 
   // Toggle para idades pendentes
-const toggleIdadesPendentes = () => {
-  setFormData(prev => ({
-    ...prev,
-    idades_pendentes: !prev.idades_pendentes,
-    idades: !prev.idades_pendentes ? [] : Array(Math.max(1, prev.numero_pessoas)).fill(''), // Reseta com placeholders
-  }));
-  
-  // Feedback opcional (toast leve)
-  toast({
-    title: formData.idades_pendentes ? "Idades ativadas" : "Idades pendentes",
-    description: formData.idades_pendentes ? "Preencha as idades para melhor cotação." : "Sem problema, confirme no WhatsApp.",
-  });
-};
+  const toggleIdadesPendentes = () => {
+    setFormData(prev => ({
+      ...prev,
+      idades_pendentes: !prev.idades_pendentes,
+      idades: !prev.idades_pendentes ? [] : [''],
+    }));
+  };
 
   // Countdown para redirect
   useEffect(() => {
@@ -213,7 +206,9 @@ const toggleIdadesPendentes = () => {
 
       // Prepara mensagem para WhatsApp
       const tipo = formData.tipo_plano === 'empresarial' ? 'Empresarial' : 'Individual/Familiar';
-      const ages = formData.idades_pendentes ? 'PENDENTE (confirmo no WhatsApp)' : formData.idades.filter(Boolean).join(', ');
+      const ages = formData.idades_pendentes
+        ? 'PENDENTE (confirmo no WhatsApp)'
+        : formData.idades.filter(Boolean).join(', ');
 
       const details = [
         `Nome: ${formData.nome_completo}`,
@@ -224,9 +219,9 @@ const toggleIdadesPendentes = () => {
         `Idades: ${ages}`,
       ].join('\n');
 
-      const preferenciaText = formData.preferencia ? `Preferência: ${formData.preferencia}` : 'Preferência: Tanto faz (me mostre opções)';
+      const preferenciaText = formData.preferencia || 'Tanto faz (me mostre opções)';
 
-      const message = `${DEFAULT_WHATSAPP_MESSAGE}\n\n*Dados para cotação:*\n${details}\n\n*${preferenciaText}*`;
+      const message = `${DEFAULT_WHATSAPP_MESSAGE}\n\n*Dados para cotação:*\n${details}\n\n*Preferência:*\n• ${preferenciaText}`;
       const url = generateWhatsAppURL(NEXAR_WHATSAPP_NUMBER, message);
       
       setWhatsUrl(url);
@@ -453,7 +448,7 @@ const toggleIdadesPendentes = () => {
                           </div>
                         ) : (
                           <div className="text-sm text-gray-600 italic">
-                            Idades pendentes (confirmo no WhatsApp)
+                            Idades: PENDENTE (confirmo no WhatsApp)
                           </div>
                         )}
                         
@@ -469,6 +464,9 @@ const toggleIdadesPendentes = () => {
                           <label htmlFor="idades_pendentes" className="text-sm text-gray-600 cursor-pointer">
                             Não sei as idades agora (preencher depois)
                           </label>
+                        </div>
+                        <div className="text-xs text-gray-500">
+                          Sem problema. O consultor confirma com você no WhatsApp.
                         </div>
                       </div>
                     </div>
