@@ -1,126 +1,94 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
-import { ArrowRight, CheckCircle2 } from 'lucide-react';
-import FormModal from '@/components/FormModal';
+import { ArrowRight, Phone } from 'lucide-react';
 
-const HeroSection = ({ onSuccess }) => {
-  const [isFormOpen, setIsFormOpen] = useState(false);
-
-  const handleSuccess = (name) => {
-    // Pass the name up to the parent to trigger the SuccessModal (which handles redirect)
-    onSuccess(name);
-  };
-
+const HeroSection = ({ onOpenForm }) => {
   return (
-    <section id="home" className="relative min-h-screen flex items-center">
-      {/* Form Modal */}
-      <FormModal 
-        isOpen={isFormOpen} 
-        onClose={() => setIsFormOpen(false)} 
-        onSuccess={handleSuccess}
-      />
-
-      {/* Background Image with Gradient Overlay */}
+    <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-white">
+      {/* Background Image */}
       <div className="absolute inset-0 z-0">
-        <img
-          src="https://images.unsplash.com/photo-1675270714610-11a5cadcc7b3"
-          alt="Hapvida Healthcare"
-          className="w-full h-full object-cover"
-        />
-        <div 
-          className="absolute inset-0"
-          style={{
-            background: 'linear-gradient(135deg, rgba(38, 82, 181, 0.9) 0%, rgba(48, 124, 191, 0.9) 100%)'
-          }}
+        <img 
+          src="/imagens/hero-hapvida.webp" 
+          alt="Hapvida Healthcare" 
+          className="w-full h-full object-cover opacity-10" 
+          loading="eager" 
+          fetchpriority="high" 
         />
       </div>
 
-      {/* Content */}
-      <div className="container mx-auto px-4 py-20 relative z-10">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Left Column - Text Content */}
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-              className="text-white"
-            >
-              {/* Highlight Badge */}
-              <motion.div
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-                className="inline-block mb-6 px-6 py-3 rounded-full shadow-lg"
-                style={{ backgroundColor: 'var(--hapvida-orange)' }}
-              >
-                <p className="font-bold text-lg">15% de desconto nas 3 primeiras parcelas</p>
-              </motion.div>
+      <div className="relative z-10 max-w-6xl mx-auto px-4 text-center">
+        {/* H1 Principal */}
+        <motion.h1 
+          className="text-4xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          Tabela de Preços Hapvida 2026: <br />
+          <span className="text-green-600">Planos a partir de R$ 64,35</span> <br />
+          para Bauru e Região
+        </motion.h1>
 
-              {/* Main Title */}
-              <h1 className="text-4xl lg:text-6xl font-bold mb-6 leading-tight">
-                Plano de saúde Hapvida: PROMOÇÃO a Partir de{' '}
-                <span className="text-yellow-300">R$ 64,35</span>
-              </h1>
+        {/* Subheadline */}
+        <motion.p 
+          className="text-xl md:text-2xl text-gray-700 mb-8 max-w-3xl mx-auto"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+        >
+          Cotação <strong>gratuita e sem compromisso</strong> com especialista local. 
+          Compare valores, cobertura e carência para encontrar o plano ideal para você e sua família.
+        </motion.p>
 
-              {/* Warning Text */}
-              <p className="text-lg text-white/90 italic mb-8">
-                *Condições válidas para algumas cidades. Verifique com um dos nossos consultores
-              </p>
-
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button 
-                  onClick={() => setIsFormOpen(true)}
-                  className="px-8 py-6 text-lg font-bold bg-white text-[var(--hapvida-blue)] hover:bg-gray-100 hover:text-[var(--hapvida-blue)] transition-all duration-300 rounded-full shadow-lg"
-                >
-                  Fazer Cotação Agora
-                </Button>
-              </div>
-            </motion.div>
-
-            {/* Right Column - CTA Card (Replaces inline form) */}
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              className="backdrop-blur-md bg-white/10 rounded-2xl shadow-2xl p-8 border border-white/20 text-center"
-            >
-              <h2 className="text-3xl font-bold text-white mb-4">Receba sua cotação personalizada!</h2>
-              <p className="text-white/90 text-lg mb-8">
-                Preencha o formulário rápido e descubra o plano ideal para você e sua família com os melhores preços do mercado.
-              </p>
-              
-              <div className="space-y-4 mb-8 text-left max-w-sm mx-auto">
-                <div className="flex items-center text-white">
-                  <CheckCircle2 className="h-6 w-6 mr-3 text-[var(--hapvida-orange)]" />
-                  <span>Atendimento em todo o Brasil</span>
-                </div>
-                <div className="flex items-center text-white">
-                  <CheckCircle2 className="h-6 w-6 mr-3 text-[var(--hapvida-orange)]" />
-                  <span>Planos sem carência (consulte condições)</span>
-                </div>
-                <div className="flex items-center text-white">
-                  <CheckCircle2 className="h-6 w-6 mr-3 text-[var(--hapvida-orange)]" />
-                  <span>Descontos exclusivos online</span>
-                </div>
-              </div>
-
-              <Button
-                onClick={() => setIsFormOpen(true)}
-                className="w-full py-8 text-xl font-bold text-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 group"
-                style={{ backgroundColor: 'var(--hapvida-orange)' }}
-              >
-                <span className="mr-2">QUERO MINHA COTAÇÃO GRÁTIS</span>
-                <ArrowRight className="inline-block h-6 w-6 group-hover:translate-x-1 transition-transform" />
-              </Button>
-              
-              <p className="mt-4 text-sm text-white/70">
-                Leva menos de 1 minuto
-              </p>
-            </motion.div>
+        {/* Bullets */}
+        <motion.div 
+          className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mb-10 max-w-4xl mx-auto"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+        >
+          <div className="bg-white/80 backdrop-blur-sm p-4 rounded-lg shadow-sm">
+            <div className="text-green-600 font-semibold">🏥 Atendimento em Bauru e região</div>
           </div>
-        </div>
+          <div className="bg-white/80 backdrop-blur-sm p-4 rounded-lg shadow-sm">
+            <div className="text-green-600 font-semibold">👥 Individual, Familiar e PME</div>
+          </div>
+          <div className="bg-white/80 backdrop-blur-sm p-4 rounded-lg shadow-sm">
+            <div className="text-green-600 font-semibold">🏥 Rede própria + credenciados</div>
+          </div>
+          <div className="bg-white/80 backdrop-blur-sm p-4 rounded-lg shadow-sm">
+            <div className="text-green-600 font-semibold">⚡ Carência reduzida</div>
+          </div>
+        </motion.div>
+
+        {/* CTAs */}
+        <motion.div 
+          className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-6"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+        >
+          <button className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-lg font-semibold text-lg flex items-center gap-2 transition-colors duration-300 shadow-lg">
+            <Phone className="h-5 w-5" />
+            📱 Cotar no WhatsApp Agora
+          </button>
+          <button 
+            onClick={onOpenForm}
+            className="border-2 border-green-600 text-green-600 hover:bg-green-600 hover:text-white px-8 py-4 rounded-lg font-semibold text-lg flex items-center gap-2 transition-colors duration-300"
+          >
+            📝 Preencher Formulário Rápido
+            <ArrowRight className="h-5 w-5" />
+          </button>
+        </motion.div>
+
+        <motion.p 
+          className="text-sm text-gray-600 max-w-2xl mx-auto"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.8 }}
+        >
+          *Ao clicar, você será atendido por um consultor especializado.*
+        </motion.p>
       </div>
     </section>
   );

@@ -2,9 +2,12 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { MessageCircle } from 'lucide-react';
 import { generateWhatsAppURL, DEFAULT_WHATSAPP_MESSAGE, NEXAR_WHATSAPP_NUMBER } from '@/lib/whatsapp';
+import { tracking } from '@/lib/tracking'; // ← ADICIONE ESTA LINHA
 
 const FloatingWhatsAppButton = () => {
   const handleClick = () => {
+    tracking.whatsappClick(); // ← ADICIONE ESTA LINHA
+    
     const url = generateWhatsAppURL(NEXAR_WHATSAPP_NUMBER, DEFAULT_WHATSAPP_MESSAGE);
     window.open(url, '_blank');
   };

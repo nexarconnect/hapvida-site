@@ -1,113 +1,224 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Loader2, Plus, Minus } from 'lucide-react';
+import {
+  X,
+  Loader2,
+  User,
+  Phone,
+  MapPin,
+  FileText,
+  Users,
+  Cake,
+  Lock,
+  CheckCircle,
+  ExternalLink,
+  Search
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { supabase, isSupabaseConfigured } from '@/lib/supabase';
 import { useToast } from '@/components/ui/use-toast';
+import { CITIES } from '@/lib/cities';
+import { generateWhatsAppURL, DEFAULT_WHATSAPP_MESSAGE, NEXAR_WHATSAPP_NUMBER } from '@/lib/whatsapp';
+import { tracking } from '@/lib/tracking';
 
 const FormModal = ({ isOpen, onClose, onSuccess }) => {
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
+  
+  // Estados para modal de sucesso e redirect
+  const [successOpen, setSuccessOpen] = useState(false);
+  const [countdown, setCountdown] = useState(3);
+  const [whatsUrl, setWhatsUrl] = useState('');
+  
+  // Estados para autocomplete
+  const [searchTerm, setSearchTerm] = useState('');
+  const [showDropdown, setShowDropdown] = useState(false);
+  const dropdownRef = useRef(null);
+  
+  // Dados do formulário
   const [formData, setFormData] = useState({
     nome_completo: '',
     whatsapp: '',
     cidade: '',
-    tipo_plano: 'Nosso Plano',
+    tipo_plano: '',
     numero_pessoas: 1,
     idades: [''],
   });
 
-  // Update ages array when number of people changes
+  // Fecha dropdown ao clicar fora
   useEffect(() => {
-    const count = parseInt(formData.numero_pessoas) || 1;
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setShowDropdown(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  // Filtra cidades para autocomplete
+  const filteredCities = searchTerm.length > 0
+    ? CITIES.filter(c => c.toLowerCase().includes(searchTerm.toLowerCase()))
+    : CITIES.slice(0, 10); // Mostra Bauru + região (10 primeiras) quando vazio
+
+  // Seleciona cidade
+  const handleSelectCity = (city) => {
+    setFormData({ ...formData, cidade: city });
+    setSearchTerm(city);
+    setShowDropdown(false);
+  };
+
+  // Sincroniza idades com número de pessoas
+  useEffect(() => {
+    const count = Math.max(1, parseInt(formData.numero_pessoas) || 1);
     setFormData(prev => {
       const currentAges = [...prev.idades];
       if (count > currentAges.length) {
-        // Add more fields
-        return {
-          ...prev,
-          idades: [...currentAges, ...Array(count - currentAges.length).fill('')]
-        };
+        return { ...prev, idades: [...currentAges, ...Array(count - currentAges.length).fill('')] };
       } else if (count < currentAges.length) {
-        // Remove fields
-        return {
-          ...prev,
-          idades: currentAges.slice(0, count)
-        };
+        return { ...prev, idades: currentAges.slice(0, count) };
       }
       return prev;
     });
   }, [formData.numero_pessoas]);
 
+  // Atualiza idade específica
   const handleAgeChange = (index, value) => {
     const newAges = [...formData.idades];
     newAges[index] = value;
     setFormData({ ...formData, idades: newAges });
   };
 
+  // Countdown para redirect
+  useEffect(() => {
+    if (!successOpen || countdown <= 0) return;
+    
+    const timer = setInterval(() => {
+      setCountdown(c => c - 1);
+    }, 1000);
+    
+    // Quando chegar a 0, abre WhatsApp
+    if (countdown === 1) {
+      const newWindow = window.open(whatsUrl, '_blank', 'noopener,noreferrer');
+      if (!newWindow) {
+        // Fallback se popup for bloqueado
+        window.location.href = whatsUrl;
+      }
+    }
+    
+    return () => clearInterval(timer);
+  }, [successOpen, countdown, whatsUrl]);
+
+  // Função para formatar WhatsApp em tempo real: (00) 00000-0000
+  const formatWhatsApp = (value) => {
+    const v = value.replace(/\D/g, '').slice(0, 11);
+    if (v.length <= 2) return v;
+    if (v.length <= 7) return `(${v.slice(0, 2)}) ${v.slice(2)}`;
+    return `(${v.slice(0, 2)}) ${v.slice(2, 7)}-${v.slice(7)}`;
+  };
+
+  // Validação Rigorosa
   const validateForm = () => {
-    if (!formData.nome_completo.trim()) return "Nome completo é obrigatório";
-    if (!formData.whatsapp.trim()) return "WhatsApp é obrigatório";
-    if (formData.whatsapp.length < 10) return "WhatsApp inválido"; // Basic check
-    if (!formData.cidade.trim()) return "Cidade é obrigatória";
-    if (formData.idades.some(age => !age)) return "Por favor, preencha todas as idades";
+    const cleanPhone = String(formData.whatsapp).replace(/\D/g, '');
+    const nameParts = formData.nome_completo.trim().split(/\s+/);
+
+    if (nameParts.length < 2) return "Por favor, insira nome e sobrenome.";
+
+    if (cleanPhone.length !== 11) return "WhatsApp inválido. Use DDD + 9 dígitos (11 números).";
+
+    // Bloqueia número óbvio de teste (ex: 11111111111)
+    if (/^(\d)\1+$/.test(cleanPhone)) return "Por favor, insira um número de WhatsApp válido.";
+
+    // Bloqueia DDD inválido (00, 01 etc.) – regra simples (pode ajustar)
+    const ddd = parseInt(cleanPhone.slice(0, 2), 10);
+    if (ddd < 11 || ddd > 99) return "DDD inválido.";
+
+    if (!(formData.cidade || searchTerm)) return "Selecione uma cidade da lista.";
+
+    if (!formData.tipo_plano) return "Selecione o tipo de plano.";
+
+    const invalidAge = formData.idades.some(age => {
+      const n = parseInt(age, 10);
+      return Number.isNaN(n) || n < 0 || n > 110;
+    });
+    if (invalidAge) return "Verifique as idades (devem estar entre 0 e 110 anos).";
+
     return null;
   };
 
+  // Envio do formulário
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
     const error = validateForm();
     if (error) {
-      toast({
-        title: "Erro na validação",
-        description: error,
-        variant: "destructive",
-      });
+      toast({ title: "Erro na validação", description: error, variant: "destructive" });
       return;
     }
 
     setLoading(true);
-
+    
+    // Usa cidade selecionada ou digitada
+    const finalCity = formData.cidade || searchTerm;
+    
     const submissionData = {
       ...formData,
-      idades: JSON.stringify(formData.idades), // Store as JSON string or comma separated
+      cidade: finalCity,
+      idades: JSON.stringify(formData.idades),
       created_at: new Date().toISOString()
     };
 
     try {
+      // Salva no Supabase ou localStorage
       if (isSupabaseConfigured()) {
         const { error: supabaseError } = await supabase
           .from('leads')
           .insert([submissionData]);
-
+        
         if (supabaseError) throw supabaseError;
       } else {
-        // Fallback to local storage
-        console.log('Supabase not configured. Saving to localStorage.');
         const existingLeads = JSON.parse(localStorage.getItem('leads') || '[]');
         const newLead = { ...submissionData, id: crypto.randomUUID() };
         localStorage.setItem('leads', JSON.stringify([...existingLeads, newLead]));
-        
-        // Simulate network delay
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise(resolve => setTimeout(resolve, 700));
       }
 
-      toast({
-        title: "Sucesso!",
-        description: "Seus dados foram enviados.",
-      });
+      // Tracking
+      tracking.leadSubmit({ lead_source: 'form_modal', value: 0 });
 
-      onSuccess(formData.nome_completo);
+      // Prepara mensagem para WhatsApp
+      const tipo = formData.tipo_plano === 'empresarial' ? 'Empresarial' : 'Individual/Familiar';
+      const ages = formData.idades.filter(Boolean).join(', ');
+
+      const details = [
+        `Nome: ${formData.nome_completo}`,
+        `WhatsApp: ${formData.whatsapp}`,
+        `Cidade: ${finalCity}`,
+        `Tipo: ${tipo}`,
+        `Nº pessoas: ${formData.numero_pessoas}`,
+        `Idades: ${ages}`,
+      ].join('\n');
+
+      const message = `${DEFAULT_WHATSAPP_MESSAGE}\n\n*Dados para cotação:*\n${details}`;
+      const url = generateWhatsAppURL(NEXAR_WHATSAPP_NUMBER, message);
+      
+      setWhatsUrl(url);
+      setSuccessOpen(true);
+      
+      onSuccess?.(formData.nome_completo);
       onClose();
-      // Reset form
+      
+      // Reseta formulário
       setFormData({
         nome_completo: '',
         whatsapp: '',
         cidade: '',
-        tipo_plano: 'Nosso Plano',
+        tipo_plano: '',
         numero_pessoas: 1,
         idades: [''],
       });
+      setSearchTerm('');
+      
     } catch (err) {
       console.error('Submission error:', err);
       toast({
@@ -121,161 +232,292 @@ const FormModal = ({ isOpen, onClose, onSuccess }) => {
   };
 
   return (
-    <AnimatePresence>
-      {isOpen && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm overflow-y-auto"
-        >
-          <div className="min-h-full flex items-center justify-center w-full py-8">
+    <>
+      {/* MODAL DO FORMULÁRIO */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm overflow-y-auto"
+            onClick={onClose}
+          >
+            <div className="min-h-full flex items-center justify-center w-full py-4">
+              <motion.div
+                initial={{ scale: 0.95, opacity: 0, y: 20 }}
+                animate={{ scale: 1, opacity: 1, y: 0 }}
+                exit={{ scale: 0.95, opacity: 0, y: 20 }}
+                className="bg-white rounded-3xl shadow-2xl w-full max-w-lg relative overflow-hidden"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {/* Header com gatilhos */}
+                <div className="bg-[#004a8e] p-6 text-white text-center relative">
+                  <button 
+                    onClick={onClose}
+                    className="absolute right-4 top-4 p-1 hover:bg-white/20 rounded-full transition-colors"
+                  >
+                    <X className="h-6 w-6" />
+                  </button>
+                  
+                  <h2 className="text-xl font-bold mb-1">Plano de saúde Hapvida 2026</h2>
+                  <div className="text-2xl font-black mb-1">
+                    Valores a partir de <span className="text-[#ff7f00]">R$ 75,70</span>
+                  </div>
+                  <p className="text-sm opacity-95">
+                    Receba as <span className="text-[#ff7f00] font-bold underline">PROMOÇÕES</span> ao preencher o formulário
+                  </p>
+                  <p className="text-xs mt-1">
+                    (cotação em <span className="font-bold text-[#ff7f00]">menos de 1 minuto</span>)
+                  </p>
+                  <p className="text-xs mt-2 opacity-90">
+                    Validamos disponibilidade e valores para seu município
+                  </p>
+                </div>
+
+                {/* Formulário */}
+                <div className="p-6 max-h-[75vh] overflow-y-auto">
+                  <form onSubmit={handleSubmit} className="space-y-4">
+                    {/* Nome Completo */}
+                    <div className="space-y-1">
+                      <label className="text-sm font-bold text-gray-700">Nome Completo</label>
+                      <div className="relative">
+                        <User className="absolute left-3 top-3.5 h-5 w-5 text-gray-400" />
+                        <input
+                          required
+                          type="text"
+                          placeholder="Digite seu nome completo"
+                          className={`w-full pl-10 pr-4 py-3 border rounded-xl outline-none transition-all ${
+                            formData.nome_completo && formData.nome_completo.trim().split(/\s+/).length < 2 
+                            ? 'border-red-500 bg-red-50' 
+                            : 'border-gray-200'
+                          }`}
+                          value={formData.nome_completo}
+                          onChange={(e) => setFormData({ ...formData, nome_completo: e.target.value })}
+                        />
+                      </div>
+                    </div>
+
+                    {/* WhatsApp */}
+                    <div className="space-y-1">
+                      <label className="text-sm font-bold text-gray-700">WhatsApp</label>
+                      <div className="relative">
+                        <Phone className="absolute left-3 top-3.5 h-5 w-5 text-gray-400" />
+                        <input
+                          required
+                          type="tel"
+                          placeholder="(00) 00000-0000"
+                          className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#004a8e] outline-none transition-all"
+                          value={formData.whatsapp}
+                          onChange={(e) => setFormData({ ...formData, whatsapp: formatWhatsApp(e.target.value) })}
+                        />
+                      </div>
+                    </div>
+
+                    {/* Cidade com Autocomplete */}
+                    <div className="space-y-1" ref={dropdownRef}>
+                      <label className="text-sm font-bold text-gray-700">Cidade</label>
+                      <div className="relative">
+                        <MapPin className="absolute left-3 top-3.5 h-5 w-5 text-gray-400" />
+                        <input
+                          required
+                          type="text"
+                          placeholder="Sua cidade"
+                          className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#004a8e] outline-none transition-all"
+                          value={searchTerm}
+                          onFocus={() => setShowDropdown(true)}
+                          onChange={(e) => {
+                            setSearchTerm(e.target.value);
+                            setFormData({ ...formData, cidade: '' });
+                            setShowDropdown(true);
+                          }}
+                        />
+                        
+                        {/* Dropdown de sugestões */}
+                        <AnimatePresence>
+                          {showDropdown && (
+                            <motion.div
+                              initial={{ opacity: 0, y: -10 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              exit={{ opacity: 0 }}
+                              className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-xl shadow-xl max-h-48 overflow-y-auto"
+                            >
+                              {filteredCities.map((city) => (
+                                <div
+                                  key={city}
+                                  className="px-4 py-3 hover:bg-gray-50 cursor-pointer text-sm border-b last:border-0 transition-colors"
+                                  onClick={() => handleSelectCity(city)}
+                                >
+                                  {city}
+                                </div>
+                              ))}
+                              
+                              {/* Opção "Não encontrei minha cidade" */}
+                              <div
+                                className="px-4 py-3 hover:bg-orange-50 cursor-pointer text-sm font-bold text-[#ff7f00] border-t border-gray-100"
+                                onClick={() => handleSelectCity(searchTerm || "Outra cidade")}
+                              >
+                                Não encontrei minha cidade: "{searchTerm || '...'}"
+                              </div>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                    </div>
+
+                    {/* Tipo de Plano */}
+                    <div className="space-y-1">
+                      <label className="text-sm font-bold text-gray-700">Tipo de Plano</label>
+                      <div className="relative">
+                        <FileText className="absolute left-3 top-3.5 h-5 w-5 text-gray-400" />
+                        <select
+                          required
+                          className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#004a8e] outline-none bg-white transition-all"
+                          value={formData.tipo_plano}
+                          onChange={(e) => setFormData({ ...formData, tipo_plano: e.target.value })}
+                        >
+                          <option value="">Selecione</option>
+                          <option value="individual">Individual/Familiar</option>
+                          <option value="empresarial">Empresarial</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    {/* Nº de Pessoas e Idades */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="space-y-1">
+                        <label className="text-sm font-bold text-gray-700">Nº de Pessoas</label>
+                        <div className="relative">
+                          <Users className="absolute left-3 top-3.5 h-5 w-5 text-gray-400" />
+                          <input
+                            required
+                            type="number"
+                            min="1"
+                            max="20"
+                            placeholder="Ex: 2"
+                            className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#004a8e] outline-none"
+                            value={formData.numero_pessoas}
+                            onChange={(e) => setFormData({ ...formData, numero_pessoas: Math.max(1, parseInt(e.target.value) || 1) })}
+                          />
+                        </div>
+                      </div>
+
+                      <div className="space-y-1">
+                        <label className="text-sm font-bold text-gray-700">Idades</label>
+                        <div className="grid grid-cols-2 gap-2">
+                          {formData.idades.map((age, index) => (
+                            <div key={index} className="relative">
+                              <Cake className="absolute left-2 top-2.5 h-4 w-4 text-gray-400" />
+                              <input
+                                required
+                                type="number"
+                                min="0"
+                                max="120"
+                                placeholder={`Idade ${index + 1}`}
+                                className="w-full pl-8 pr-2 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#004a8e] outline-none"
+                                value={age}
+                                onChange={(e) => handleAgeChange(index, e.target.value)}
+                              />
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Botão Submit */}
+                    <div className="pt-4">
+                      <Button
+                        type="submit"
+                        disabled={loading || formData.nome_completo.length < 5 || formData.whatsapp.length < 14}
+                        className="w-full py-7 text-xl font-black text-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] bg-[#ff7f00] hover:bg-[#e67300]"
+                      >
+                        {loading ? (
+                          <>
+                            <Loader2 className="mr-2 h-6 w-6 animate-spin" />
+                            Enviando...
+                          </>
+                        ) : (
+                          'SOLICITAR COTAÇÃO'
+                        )}
+                      </Button>
+
+                      <div className="flex items-center justify-center gap-2 mt-4 text-gray-500 text-xs">
+                        <Lock className="h-3 w-3" />
+                        <span>Fique tranquilo, seus dados estão seguros.</span>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </motion.div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* MODAL DE SUCESSO */}
+      <AnimatePresence>
+        {successOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm"
+            onClick={() => setSuccessOpen(false)}
+          >
             <motion.div
-              initial={{ scale: 0.9, opacity: 0, y: 20 }}
+              initial={{ scale: 0.95, opacity: 0, y: 20 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.9, opacity: 0, y: 20 }}
-              className="bg-white rounded-2xl shadow-2xl w-full max-w-lg relative overflow-hidden"
+              exit={{ scale: 0.95, opacity: 0, y: 20 }}
+              className="bg-white rounded-3xl shadow-2xl w-full max-w-md overflow-hidden"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Header */}
-              <div className="bg-[var(--hapvida-blue)] p-6 text-white flex justify-between items-center">
-                <h2 className="text-2xl font-bold">Solicitar Cotação</h2>
-                <button 
-                  onClick={onClose}
-                  className="p-2 hover:bg-white/20 rounded-full transition-colors"
+              <div className="bg-[#004a8e] p-6 text-white relative">
+                <button
+                  onClick={() => setSuccessOpen(false)}
+                  className="absolute right-4 top-4 p-1 hover:bg-white/20 rounded-full transition-colors"
                 >
                   <X className="h-6 w-6" />
                 </button>
-              </div>
 
-              {/* Form Content */}
-              <div className="p-6 max-h-[70vh] overflow-y-auto custom-scrollbar">
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  
-                  {/* Nome Completo */}
+                <div className="flex items-center gap-3">
+                  <div className="bg-white/15 rounded-full p-2">
+                    <CheckCircle className="h-7 w-7" />
+                  </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Nome Completo</label>
-                    <input
-                      type="text"
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--hapvida-blue)] focus:border-transparent outline-none transition-all"
-                      placeholder="Seu nome completo"
-                      value={formData.nome_completo}
-                      onChange={(e) => setFormData({ ...formData, nome_completo: e.target.value })}
-                    />
-                  </div>
-
-                  {/* Grid for WhatsApp and City */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">WhatsApp</label>
-                      <input
-                        type="tel"
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--hapvida-blue)] focus:border-transparent outline-none transition-all"
-                        placeholder="(DDD) 99999-9999"
-                        value={formData.whatsapp}
-                        onChange={(e) => setFormData({ ...formData, whatsapp: e.target.value })}
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Cidade</label>
-                      <input
-                        type="text"
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--hapvida-blue)] focus:border-transparent outline-none transition-all"
-                        placeholder="Sua cidade"
-                        value={formData.cidade}
-                        onChange={(e) => setFormData({ ...formData, cidade: e.target.value })}
-                      />
-                    </div>
-                  </div>
-
-                  {/* Plan Type */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Tipo de Plano</label>
-                    <select
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--hapvida-blue)] focus:border-transparent outline-none transition-all bg-white"
-                      value={formData.tipo_plano}
-                      onChange={(e) => setFormData({ ...formData, tipo_plano: e.target.value })}
-                    >
-                      <option value="Nosso Plano">Nosso Plano (Rede Própria)</option>
-                      <option value="Plano Mix">Plano Mix (Rede Própria + Credenciada)</option>
-                      <option value="Pleno">Pleno (Cobertura Premium)</option>
-                    </select>
-                  </div>
-
-                  {/* Number of People */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Número de pessoas</label>
-                    <div className="flex items-center space-x-4">
-                      <button
-                        type="button"
-                        onClick={() => setFormData(prev => ({ ...prev, numero_pessoas: Math.max(1, prev.numero_pessoas - 1) }))}
-                        className="p-2 rounded-lg border border-gray-300 hover:bg-gray-50 text-[var(--hapvida-blue)]"
-                      >
-                        <Minus className="h-4 w-4" />
-                      </button>
-                      <input
-                        type="number"
-                        min="1"
-                        className="w-20 text-center font-bold text-lg border-none focus:ring-0"
-                        value={formData.numero_pessoas}
-                        onChange={(e) => setFormData({ ...formData, numero_pessoas: Math.max(1, parseInt(e.target.value) || 1) })}
-                      />
-                      <button
-                        type="button"
-                        onClick={() => setFormData(prev => ({ ...prev, numero_pessoas: prev.numero_pessoas + 1 }))}
-                        className="p-2 rounded-lg border border-gray-300 hover:bg-gray-50 text-[var(--hapvida-blue)]"
-                      >
-                        <Plus className="h-4 w-4" />
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Dynamic Ages */}
-                  <div className="bg-gray-50 p-4 rounded-lg">
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Idades dos beneficiários</label>
-                    <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                      {formData.idades.map((age, index) => (
-                        <div key={index}>
-                          <input
-                            type="number"
-                            placeholder={`Idade ${index + 1}`}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[var(--hapvida-blue)] focus:border-transparent outline-none text-sm"
-                            value={age}
-                            onChange={(e) => handleAgeChange(index, e.target.value)}
-                          />
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Submit Button */}
-                  <div className="pt-4">
-                    <Button
-                      type="submit"
-                      disabled={loading}
-                      className="w-full py-6 text-lg font-bold text-white rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02]"
-                      style={{ backgroundColor: 'var(--hapvida-orange)' }}
-                    >
-                      {loading ? (
-                        <>
-                          <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                          Enviando...
-                        </>
-                      ) : (
-                        'VER PREÇOS AGORA'
-                      )}
-                    </Button>
-                    <p className="text-xs text-center text-gray-500 mt-2">
-                      Ao enviar, você concorda com nossos termos de privacidade.
+                    <h3 className="text-lg font-black">Formulário enviado com sucesso!</h3>
+                    <p className="text-sm opacity-95">
+                      Você receberá sua cotação com um consultor em instantes.
                     </p>
                   </div>
-                </form>
+                </div>
+              </div>
+
+              <div className="p-6 text-center space-y-4">
+                <div className="text-sm text-gray-700">
+                  Redirecionando para o WhatsApp em{' '}
+                  <span className="font-bold text-[#ff7f00]">{Math.max(0, countdown)}</span> segundos...
+                </div>
+
+                <Button
+                  type="button"
+                  onClick={() => {
+                    const newWindow = window.open(whatsUrl, '_blank', 'noopener,noreferrer');
+                    if (!newWindow) window.location.href = whatsUrl;
+                  }}
+                  className="w-full py-6 text-lg font-black text-white rounded-2xl bg-[#25D366] hover:bg-[#1fb85a] flex items-center justify-center gap-2"
+                >
+                  ABRIR WHATSAPP AGORA <ExternalLink className="h-5 w-5" />
+                </Button>
+
+                <div className="text-xs text-gray-500">
+                  Se não abrir automaticamente, clique no botão acima.
+                </div>
               </div>
             </motion.div>
-          </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 };
 

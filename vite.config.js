@@ -14,5 +14,19 @@ export default defineConfig({
   },
   server: {
     port: 3000,
-  }
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        // Isso divide o código em pedaços menores para carregar mais rápido
+        manualChunks: {
+          vendor: ['react', 'react-dom', 'react-helmet'],
+          animations: ['framer-motion'],
+          icons: ['lucide-react'],
+        },
+      },
+    },
+    // Aumenta o limite do aviso para 1MB para evitar mensagens desnecessárias
+    chunkSizeWarningLimit: 1000,
+  },
 })
