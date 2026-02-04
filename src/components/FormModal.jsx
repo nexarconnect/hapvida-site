@@ -12,7 +12,9 @@ import {
   Lock,
   CheckCircle,
   ExternalLink,
-  Search
+  Search,
+  ChevronRight,
+  Heart
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { supabase, isSupabaseConfigured } from '@/lib/supabase';
@@ -43,6 +45,8 @@ const FormModal = ({ isOpen, onClose, onSuccess }) => {
     tipo_plano: '',
     numero_pessoas: 1,
     idades: [''],
+    preferencia: '', // Nova: preferência do usuário
+    idades_pendentes: false, // Nova: toggle para idades opcionais
   });
 
   // Fecha dropdown ao clicar fora
@@ -70,23 +74,34 @@ const FormModal = ({ isOpen, onClose, onSuccess }) => {
 
   // Sincroniza idades com número de pessoas
   useEffect(() => {
-    const count = Math.max(1, parseInt(formData.numero_pessoas) || 1);
-    setFormData(prev => {
-      const currentAges = [...prev.idades];
-      if (count > currentAges.length) {
-        return { ...prev, idades: [...currentAges, ...Array(count - currentAges.length).fill('')] };
-      } else if (count < currentAges.length) {
-        return { ...prev, idades: currentAges.slice(0, count) };
-      }
-      return prev;
-    });
-  }, [formData.numero_pessoas]);
+    if (!formData.idades_pendentes) {
+      const count = Math.max(1, parseInt(formData.numero_pessoas) || 1);
+      setFormData(prev => {
+        const currentAges = [...prev.idades];
+        if (count > currentAges.length) {
+          return { ...prev, idades: [...currentAges, ...Array(count - currentAges.length).fill('')] };
+        } else if (count < currentAges.length) {
+          return { ...prev, idades: currentAges.slice(0, count) };
+        }
+        return prev;
+      });
+    }
+  }, [formData.numero_pessoas, formData.idades_pendentes]);
 
   // Atualiza idade específica
   const handleAgeChange = (index, value) => {
     const newAges = [...formData.idades];
     newAges[index] = value;
     setFormData({ ...formData, idades: newAges });
+  };
+
+  // Toggle para idades pendentes
+  const toggleIdadesPendentes = () => {
+    setFormData(prev => ({
+      ...prev,
+      idades_pendentes: !prev.idades_pendentes,
+      idades: !prev.idades_pendentes ? [] : [''], // Limpa ou reseta idades
+    }));
   };
 
   // Countdown para redirect
@@ -117,7 +132,7 @@ const FormModal = ({ isOpen, onClose, onSuccess }) => {
     return `(${v.slice(0, 2)}) ${v.slice(2, 7)}-${v.slice(7)}`;
   };
 
-  // Validação Rigorosa
+  // Validação Rigorosa (ajustada para idades opcionais)
   const validateForm = () => {
     const cleanPhone = String(formData.whatsapp).replace(/\D/g, '');
     const nameParts = formData.nome_completo.trim().split(/\s+/);
@@ -137,11 +152,14 @@ const FormModal = ({ isOpen, onClose, onSuccess }) => {
 
     if (!formData.tipo_plano) return "Selecione o tipo de plano.";
 
-    const invalidAge = formData.idades.some(age => {
-      const n = parseInt(age, 10);
-      return Number.isNaN(n) || n < 0 || n > 110;
-    });
-    if (invalidAge) return "Verifique as idades (devem estar entre 0 e 110 anos).";
+    // Validação de idades só se não estiver pendente
+    if (!formData.idades_pendentes) {
+      const invalidAge = formData.idades.some(age => {
+        const n = parseInt(age, 10);
+        return Number.isNaN(n) || n < 0 || n > 120;
+      });
+      if (invalidAge) return "Verifique as idades (devem estar entre 0 e 120 anos).";
+    }
 
     return null;
   };
@@ -164,7 +182,8 @@ const FormModal = ({ isOpen, onClose, onSuccess }) => {
     const submissionData = {
       ...formData,
       cidade: finalCity,
-      idades: JSON.stringify(formData.idades),
+      idades: formData.idades_pendentes ? 'PENDENTE' : JSON.stringify(formData.idades),
+      preferencia: formData.preferencia || 'Tanto faz (me mostre opções)',
       created_at: new Date().toISOString()
     };
 
@@ -188,7 +207,7 @@ const FormModal = ({ isOpen, onClose, onSuccess }) => {
 
       // Prepara mensagem para WhatsApp
       const tipo = formData.tipo_plano === 'empresarial' ? 'Empresarial' : 'Individual/Familiar';
-      const ages = formData.idades.filter(Boolean).join(', ');
+      const ages = formData.idades_pendentes ? 'PENDENTE (confirmo no WhatsApp)' : formData.idades.filter(Boolean).join(', ');
 
       const details = [
         `Nome: ${formData.nome_completo}`,
@@ -199,7 +218,9 @@ const FormModal = ({ isOpen, onClose, onSuccess }) => {
         `Idades: ${ages}`,
       ].join('\n');
 
-      const message = `${DEFAULT_WHATSAPP_MESSAGE}\n\n*Dados para cotação:*\n${details}`;
+      const preferenciaText = formData.preferencia ? `Preferência: ${formData.preferencia}` : 'Preferência: Tanto faz (me mostre opções)';
+
+      const message = `${DEFAULT_WHATSAPP_MESSAGE}\n\n*Dados para cotação:*\n${details}\n\n*${preferenciaText}*`;
       const url = generateWhatsAppURL(NEXAR_WHATSAPP_NUMBER, message);
       
       setWhatsUrl(url);
@@ -216,6 +237,8 @@ const FormModal = ({ isOpen, onClose, onSuccess }) => {
         tipo_plano: '',
         numero_pessoas: 1,
         idades: [''],
+        preferencia: '',
+        idades_pendentes: false,
       });
       setSearchTerm('');
       
@@ -404,23 +427,77 @@ const FormModal = ({ isOpen, onClose, onSuccess }) => {
 
                       <div className="space-y-1">
                         <label className="text-sm font-bold text-gray-700">Idades</label>
-                        <div className="grid grid-cols-2 gap-2">
-                          {formData.idades.map((age, index) => (
-                            <div key={index} className="relative">
-                              <Cake className="absolute left-2 top-2.5 h-4 w-4 text-gray-400" />
+                        {!formData.idades_pendentes ? (
+                          <div className="grid grid-cols-2 gap-2">
+                            {formData.idades.map((age, index) => (
+                              <div key={index} className="relative">
+                                <Cake className="absolute left-2 top-2.5 h-4 w-4 text-gray-400" />
+                                <input
+                                  required
+                                  type="number"
+                                  min="0"
+                                  max="120"
+                                  placeholder={`Idade ${index + 1}`}
+                                  className="w-full pl-8 pr-2 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#004a8e] outline-none"
+                                  value={age}
+                                  onChange={(e) => handleAgeChange(index, e.target.value)}
+                                />
+                              </div>
+                            ))}
+                          </div>
+                        ) : (
+                          <div className="text-sm text-gray-600 italic">
+                            Idades pendentes (confirmo no WhatsApp)
+                          </div>
+                        )}
+                        
+                        {/* Toggle para idades opcionais */}
+                        <div className="flex items-center gap-2 mt-2">
+                          <input
+                            type="checkbox"
+                            id="idades_pendentes"
+                            checked={formData.idades_pendentes}
+                            onChange={toggleIdadesPendentes}
+                            className="w-4 h-4 text-[#004a8e] bg-gray-100 border-gray-300 rounded focus:ring-[#004a8e] focus:ring-2"
+                          />
+                          <label htmlFor="idades_pendentes" className="text-sm text-gray-600 cursor-pointer">
+                            Não sei as idades agora (preencher depois)
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Mini-passo Preferência (opcional) */}
+                    <div className="space-y-2 border-t pt-4">
+                      <div className="flex items-center gap-2">
+                        <Heart className="h-5 w-5 text-[#004a8e]" />
+                        <label className="text-sm font-bold text-gray-700">Suas preferências (opcional)</label>
+                      </div>
+                      <p className="text-xs text-gray-600">Assim o consultor já te envia as melhores opções pra você.</p>
+                      
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium text-gray-700">O que é mais importante pra você?</label>
+                        <div className="space-y-2">
+                          {[
+                            { value: 'Menor preço', label: 'Menor preço' },
+                            { value: 'Melhor custo-benefício', label: 'Melhor custo-benefício' },
+                            { value: 'Melhor cobertura', label: 'Melhor cobertura' },
+                            { value: 'Tanto faz (me mostre opções)', label: 'Tanto faz (me mostre opções)' }
+                          ].map((option) => (
+                            <label key={option.value} className="flex items-center gap-2 cursor-pointer">
                               <input
-                                required
-                                type="number"
-                                min="0"
-                                max="120"
-                                placeholder={`Idade ${index + 1}`}
-                                className="w-full pl-8 pr-2 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#004a8e] outline-none"
-                                value={age}
-                                onChange={(e) => handleAgeChange(index, e.target.value)}
+                                type="radio"
+                                name="preferencia"
+                                value={option.value}
+                                checked={formData.preferencia === option.value}
+                                onChange={(e) => setFormData({ ...formData, preferencia: e.target.value })}
+                                className="w-4 h-4 text-[#004a8e] bg-gray-100 border-gray-300 focus:ring-[#004a8e] focus:ring-2"
                               />
-                            </div>
+                              <span className="text-sm text-gray-700">{option.label}</span>
+                            </label>
                           ))}
                         </div>
+                        <p className="text-xs text-gray-500">Você pode mudar isso depois no WhatsApp.</p>
                       </div>
                     </div>
 
