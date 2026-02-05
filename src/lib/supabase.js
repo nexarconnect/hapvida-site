@@ -7,7 +7,6 @@ const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 const isConfigured = 
   supabaseUrl && 
   supabaseAnonKey && 
-  supabaseUrl !== 'https://your-project-url.supabase.co' && 
   !supabaseUrl.includes('placeholder');
 
 export const isSupabaseConfigured = () => isConfigured;
@@ -18,6 +17,14 @@ const url = isConfigured ? supabaseUrl : 'https://placeholder.supabase.co';
 const key = isConfigured ? supabaseAnonKey : 'placeholder-key';
 
 export const supabase = createClient(url, key);
+
+// =====================
+// Normalization
+// =====================
+export const normalizeCityUF = (city, uf) => ({
+  city: (city || '').trim().replace(/\s+/g, ' '),
+  uf: (uf || '').trim().toUpperCase(),
+});
 
 // Database schema instructions for Supabase (Reference):
 // 
