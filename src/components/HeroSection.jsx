@@ -1,115 +1,154 @@
-import React from 'react';  // Removido: useState (não precisa mais)
+import React from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, CheckCircle2 } from 'lucide-react';
-// Removido: import FormModal from '@/components/FormModal';
+import { ArrowRight, CheckCircle2, Phone, MessageCircle } from 'lucide-react';
 
-const HeroSection = ({ onOpenForm }) => {  // Mudança: prop onOpenForm em vez de onSuccess
-  // Removido: const [isFormOpen, setIsFormOpen] = useState(false);
-  // Removido: const handleSuccess = (name) => { onSuccess(name); };
+import bannerMedicos from '../assets/banner_3_medicos.png';
 
+const HeroSection = ({ onOpenForm }) => {
   return (
-    <section id="home" className="relative min-h-screen flex items-center">
-      {/* Removido: <FormModal isOpen={isFormOpen} onClose={() => setIsFormOpen(false)} onSuccess={handleSuccess} /> */}
-
-      {/* Background Image with Gradient Overlay */}
+    <section id="home" className="relative min-h-[720px] lg:min-h-[80vh] flex items-center overflow-hidden">
+      {/* Background */}
       <div className="absolute inset-0 z-0">
         <img
-          src="https://images.unsplash.com/photo-1675270714610-11a5cadcc7b3"
-          alt="Hapvida Healthcare"
-          className="w-full h-full object-cover"
+          src={bannerMedicos}
+          alt="Equipe médica"
+          className="w-full h-full object-contain bg-[var(--hapvida-blue)]"
+          loading="eager"
         />
-        <div 
+        <div
           className="absolute inset-0"
           style={{
-            background: 'linear-gradient(135deg, rgba(38, 82, 181, 0.9) 0%, rgba(48, 124, 191, 0.9) 100%)'
+            background:
+              'linear-gradient(135deg, rgba(38, 82, 181, 0.86) 0%, rgba(48, 124, 191, 0.86) 100%)',
           }}
         />
       </div>
 
       {/* Content */}
-      <div className="container mx-auto px-4 py-20 relative z-10">
+      <div className="container mx-auto px-4 py-16 lg:py-20 relative z-10">
         <div className="max-w-6xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Left Column - Text Content */}
+          <div className="grid lg:grid-cols-12 gap-10 items-center">
+            {/* Left: Value proposition */}
             <motion.div
-              initial={{ opacity: 0, x: -50 }}
+              initial={{ opacity: 0, x: -24 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-              className="text-white"
+              transition={{ duration: 0.7 }}
+              className="text-white lg:col-span-7"
             >
-              {/* Highlight Badge */}
-              <motion.div
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-                className="inline-block mb-6 px-6 py-3 rounded-full shadow-lg"
+              {/* Badge */}
+              <div
+                className="inline-flex items-center gap-2 mb-6 px-4 py-2 rounded-full shadow-lg"
                 style={{ backgroundColor: 'var(--hapvida-orange)' }}
               >
-                <p className="font-bold text-lg">15% de desconto nas 3 primeiras parcelas</p>
-              </motion.div>
+                <span className="font-bold text-sm lg:text-base">15% de desconto nas 3 primeiras parcelas</span>
+              </div>
 
-              {/* Main Title */}
-              <h1 className="text-4xl lg:text-6xl font-bold mb-6 leading-tight">
-                Plano de saúde Hapvida: PROMOÇÃO a Partir de{' '}
-                <span className="text-yellow-300">R$ 64,35</span>
+              {/* Headline */}
+              <h1 className="text-4xl lg:text-6xl font-extrabold leading-tight tracking-tight">
+                Plano de saúde Hapvida
+                <span className="block">
+                  a partir de <span className="text-yellow-300">R$ 64,35</span>
+                </span>
               </h1>
 
-              {/* Warning Text */}
-              <p className="text-lg text-white/90 italic mb-8">
-                *Condições válidas para algumas cidades. Verifique com um dos nossos consultores
+              {/* Subheadline */}
+              <p className="mt-4 text-base lg:text-lg text-white/90 max-w-xl">
+                Cotação rápida, personalizada e sem compromisso. Descubra o melhor plano para você e sua família.
               </p>
 
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button 
-                  onClick={onOpenForm}  // Mudança: chama a função do HomePage
-                  className="px-8 py-6 text-lg font-bold bg-white text-[var(--hapvida-blue)] hover:bg-gray-100 hover:text-[var(--hapvida-blue)] transition-all duration-300 rounded-full shadow-lg"
+              {/* Trust / disclaimer */}
+              <p className="mt-3 text-sm text-white/75 italic max-w-xl">
+                *Condições válidas para algumas cidades. Consulte disponibilidade com um especialista.
+              </p>
+
+              {/* Primary CTA */}
+              <div className="mt-8 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                <Button
+                  onClick={onOpenForm}
+                  className="px-8 py-6 text-base lg:text-lg font-bold bg-white text-[var(--hapvida-blue)] hover:bg-gray-100 transition-all duration-300 rounded-full shadow-lg"
                 >
-                  Fazer Cotação Agora
+                  Fazer cotação agora
+                  <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
+
+                <a
+                  href="https://wa.me/5514991235094"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full sm:w-auto"
+                >
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="w-full px-8 py-6 text-base lg:text-lg font-bold border-2 border-white text-white hover:bg-white hover:text-[var(--hapvida-blue)] transition-all duration-300 rounded-full"
+                  >
+                    <MessageCircle className="mr-2 h-5 w-5" />
+                    Falar no WhatsApp
+                  </Button>
+                </a>
+
+                <a href="tel:+5514991235094" className="w-full sm:w-auto">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="w-full px-8 py-6 text-base lg:text-lg font-bold border-2 border-white/70 text-white hover:bg-white hover:text-[var(--hapvida-blue)] transition-all duration-300 rounded-full"
+                  >
+                    <Phone className="mr-2 h-5 w-5" />
+                    Ligar agora
+                  </Button>
+                </a>
               </div>
+
+              <p className="mt-3 text-sm text-white/80">
+                Leva menos de 1 minuto. Dados tratados com segurança.
+              </p>
             </motion.div>
 
-            {/* Right Column - CTA Card (Replaces inline form) */}
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
+            {/* Right: Compact conversion card */}
+            <motion.aside
+              initial={{ opacity: 0, x: 24 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              className="backdrop-blur-md bg-white/10 rounded-2xl shadow-2xl p-8 border border-white/20 text-center"
+              transition={{ duration: 0.7, delay: 0.1 }}
+              className="lg:col-span-5"
             >
-              <h2 className="text-3xl font-bold text-white mb-4">Receba sua cotação personalizada!</h2>
-              <p className="text-white/90 text-lg mb-8">
-                Preencha o formulário rápido e descubra o plano ideal para você e sua família com os melhores preços do mercado.
-              </p>
-              
-              <div className="space-y-4 mb-8 text-left max-w-sm mx-auto">
-                <div className="flex items-center text-white">
-                  <CheckCircle2 className="h-6 w-6 mr-3 text-[var(--hapvida-orange)]" />
-                  <span>Atendimento em todo o Brasil</span>
-                </div>
-                <div className="flex items-center text-white">
-                  <CheckCircle2 className="h-6 w-6 mr-3 text-[var(--hapvida-orange)]" />
-                  <span>Planos sem carência (consulte condições)</span>
-                </div>
-                <div className="flex items-center text-white">
-                  <CheckCircle2 className="h-6 w-6 mr-3 text-[var(--hapvida-orange)]" />
-                  <span>Descontos exclusivos online</span>
-                </div>
-              </div>
+              <div className="backdrop-blur-md bg-white/10 rounded-2xl shadow-2xl p-6 border border-white/20">
+                <h2 className="text-xl lg:text-2xl font-bold text-white">
+                  Receba sua cotação personalizada
+                </h2>
 
-              <Button
-                onClick={onOpenForm}  // Mudança: chama a função do HomePage
-                className="w-full py-8 text-xl font-bold text-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 group"
-                style={{ backgroundColor: 'var(--hapvida-orange)' }}
-              >
-                <span className="mr-2">QUERO MINHA COTAÇÃO GRÁTIS</span>
-                <ArrowRight className="inline-block h-6 w-6 group-hover:translate-x-1 transition-transform" />
-              </Button>
-              
-              <p className="mt-4 text-sm text-white/70">
-                Leva menos de 1 minuto
-              </p>
-            </motion.div>
+                <p className="mt-2 text-white/90 text-sm lg:text-base">
+                  Você fala com um consultor e recebe as melhores opções para o seu perfil.
+                </p>
+
+                <div className="mt-5 space-y-2">
+                  <div className="flex items-start gap-3 text-white">
+                    <CheckCircle2 className="h-5 w-5 mt-0.5 text-[var(--hapvida-orange)]" />
+                    <span className="text-sm">Atendimento em todo o Brasil</span>
+                  </div>
+                  <div className="flex items-start gap-3 text-white">
+                    <CheckCircle2 className="h-5 w-5 mt-0.5 text-[var(--hapvida-orange)]" />
+                    <span className="text-sm">Planos sem carência (consulte condições)</span>
+                  </div>
+                  <div className="flex items-start gap-3 text-white">
+                    <CheckCircle2 className="h-5 w-5 mt-0.5 text-[var(--hapvida-orange)]" />
+                    <span className="text-sm">Descontos exclusivos online</span>
+                  </div>
+                </div>
+
+                <Button
+                  onClick={onOpenForm}
+                  className="mt-6 w-full py-6 text-base font-bold text-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
+                  style={{ backgroundColor: 'var(--hapvida-orange)' }}
+                >
+                  Quero minha cotação grátis
+                </Button>
+
+                <p className="mt-3 text-xs text-white/70 text-center">
+                  Sem compromisso • Resposta rápida
+                </p>
+              </div>
+            </motion.aside>
           </div>
         </div>
       </div>

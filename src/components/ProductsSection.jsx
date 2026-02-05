@@ -1,8 +1,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Building2, Users, Crown } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Building2, Users, Crown, ArrowRight } from 'lucide-react';
 
-const ProductsSection = () => {
+const ProductsSection = ({ onOpenForm }) => {
   const products = [
     {
       icon: Building2,
@@ -14,7 +15,8 @@ const ProductsSection = () => {
         'Clínicas especializadas',
         'Exames e diagnósticos'
       ],
-      highlight: 'Melhor custo-benefício'
+      highlight: 'Melhor custo-benefício',
+      ctaText: 'Cotar Nosso Plano'
     },
     {
       icon: Users,
@@ -26,7 +28,8 @@ const ProductsSection = () => {
         'Mais opções de atendimento',
         'Cobertura nacional'
       ],
-      highlight: 'Maior flexibilidade'
+      highlight: 'Maior flexibilidade',
+      ctaText: 'Cotar Plano Mix'
     },
     {
       icon: Crown,
@@ -38,21 +41,22 @@ const ProductsSection = () => {
         'Atendimento VIP',
         'Cobertura internacional'
       ],
-      highlight: 'Cobertura premium'
+      highlight: 'Cobertura premium',
+      ctaText: 'Cotar Pleno'
     }
   ];
 
   return (
-    <section id="produtos" className="py-16 bg-gradient-to-br from-blue-50 to-white">
+    <section id="produtos" className="py-20 bg-gradient-to-br from-blue-50 to-white">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-12"
+          className="text-center mb-16"
         >
-          <h2 className="text-4xl lg:text-5xl font-bold mb-4" style={{ color: 'var(--hapvida-blue)' }}>
+          <h2 className="text-4xl lg:text-5xl font-bold mb-6" style={{ color: 'var(--hapvida-blue)' }}>
             Conheça nossos planos
           </h2>
           <p className="text-xl text-gray-700 max-w-3xl mx-auto">
@@ -68,7 +72,7 @@ const ProductsSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
-              whileHover={{ scale: 1.05, y: -10 }}
+              whileHover={{ scale: 1.02, y: -5 }}
               className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100"
             >
               <div className="p-8">
@@ -83,7 +87,7 @@ const ProductsSection = () => {
                 <h3 className="text-2xl font-bold mb-3 text-gray-900">{product.title}</h3>
                 <p className="text-gray-600 mb-6 leading-relaxed">{product.description}</p>
 
-                <ul className="space-y-3">
+                <ul className="space-y-3 mb-8">
                   {product.features.map((feature, idx) => (
                     <li key={idx} className="flex items-start">
                       <svg className="h-6 w-6 mr-2 flex-shrink-0" style={{ color: 'var(--hapvida-blue)' }} fill="currentColor" viewBox="0 0 20 20">
@@ -93,6 +97,15 @@ const ProductsSection = () => {
                     </li>
                   ))}
                 </ul>
+
+                {/* CTA (Funil Minhoca) */}
+                <Button
+                  onClick={onOpenForm}
+                  className="w-full py-4 text-base font-bold text-white bg-orange-500 hover:bg-orange-600 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
+                >
+                  {product.ctaText}
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
               </div>
             </motion.div>
           ))}
