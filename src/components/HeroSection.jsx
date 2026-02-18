@@ -1,154 +1,134 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
-import { ArrowRight, CheckCircle2, Phone, MessageCircle } from 'lucide-react';
+import { CheckCircle2, MessageCircle, ArrowRight } from 'lucide-react';
 
+// Importe a imagem corretamente (ajuste o caminho se necessário)
 import bannerMedicos from '../assets/banner_3_medicos.png';
 
 const HeroSection = ({ onOpenForm }) => {
+  
+  // Variantes de animação (suaves)
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+  };
+
   return (
-    <section id="home" className="relative min-h-[720px] lg:min-h-[80vh] flex items-center overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 z-0">
+    <section id="home" className="relative min-h-[720px] lg:min-h-[85vh] flex items-center overflow-hidden bg-[#0B2B5A]">
+      
+      {/* Background com Gradiente Azul Hapvida */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
         <img
           src={bannerMedicos}
-          alt="Equipe médica"
-          className="w-full h-full object-contain bg-[var(--hapvida-blue)]"
-          loading="eager"
+          alt="Equipe médica Hapvida"
+          className="w-full h-full object-cover lg:object-contain lg:object-right opacity-40 lg:opacity-100"
         />
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              'linear-gradient(135deg, rgba(38, 82, 181, 0.86) 0%, rgba(48, 124, 191, 0.86) 100%)',
-          }}
-        />
+        {/* Gradiente para garantir leitura do texto */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0B2B5A] via-[#0B2B5A]/90 to-[#0B2B5A]/20 lg:to-transparent" />
       </div>
 
-      {/* Content */}
-      <div className="container mx-auto px-4 py-16 lg:py-20 relative z-10">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid lg:grid-cols-12 gap-10 items-center">
-            {/* Left: Value proposition */}
-            <motion.div
-              initial={{ opacity: 0, x: -24 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.7 }}
+      {/* Conteúdo Principal */}
+      <div className="container mx-auto px-4 py-12 lg:py-20 relative z-20">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+            
+            {/* LADO ESQUERDO (Texto e Botões) */}
+            <motion.div 
               className="text-white lg:col-span-7"
+              initial="hidden"
+              animate="visible"
+              variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
             >
-              {/* Badge */}
-              <div
-                className="inline-flex items-center gap-2 mb-6 px-4 py-2 rounded-full shadow-lg"
-                style={{ backgroundColor: 'var(--hapvida-orange)' }}
-              >
-                <span className="font-bold text-sm lg:text-base">15% de desconto nas 3 primeiras parcelas</span>
-              </div>
-
-              {/* Headline */}
-              <h1 className="text-4xl lg:text-6xl font-extrabold leading-tight tracking-tight">
-                Plano de saúde Hapvida
-                <span className="block">
-                  a partir de <span className="text-yellow-300">R$ 64,35</span>
+              
+              {/* Badge de Desconto */}
+              <motion.div variants={fadeInUp} className="inline-flex items-center gap-2 mb-6 px-4 py-2 rounded-full bg-white/10 border border-white/20 backdrop-blur-sm">
+                <span className="font-bold text-sm text-[#FFD700]">
+                  15% de desconto nas 3 primeiras parcelas
                 </span>
-              </h1>
+              </motion.div>
 
-              {/* Subheadline */}
-              <p className="mt-4 text-base lg:text-lg text-white/90 max-w-xl">
-                Cotação rápida, personalizada e sem compromisso. Descubra o melhor plano para você e sua família.
-              </p>
+              {/* Título Principal */}
+              <motion.h1 variants={fadeInUp} className="text-4xl lg:text-6xl font-extrabold leading-tight tracking-tight mb-4 text-white">
+                Plano de saúde <span className="text-[#28A7E0]">Hapvida</span> 2026
+              </motion.h1>
+              
+              {/* Subtítulo de Preço */}
+              <motion.p variants={fadeInUp} className="text-xl lg:text-2xl text-white/90 mb-2">
+                Valores a partir de <span className="text-[#FF4E05] font-bold text-2xl lg:text-3xl">R$ 75,70</span>*
+              </motion.p>
+              
+              <motion.p variants={fadeInUp} className="text-sm text-white/70 mb-8 font-light">
+                *Validamos disponibilidade e valores para sua cidade.
+              </motion.p>
 
-              {/* Trust / disclaimer */}
-              <p className="mt-3 text-sm text-white/75 italic max-w-xl">
-                *Condições válidas para algumas cidades. Consulte disponibilidade com um especialista.
-              </p>
+              <motion.p variants={fadeInUp} className="text-lg text-white/90 mb-8 max-w-xl leading-relaxed">
+                Cotação rápida e sem compromisso. Atendimento humanizado com consultor especialista.
+              </motion.p>
 
-              {/* Primary CTA */}
-              <div className="mt-8 flex flex-col sm:flex-row items-start sm:items-center gap-4">
-                <Button
-                  onClick={onOpenForm}
-                  className="px-8 py-6 text-base lg:text-lg font-bold bg-white text-[var(--hapvida-blue)] hover:bg-gray-100 transition-all duration-300 rounded-full shadow-lg"
-                >
-                  Fazer cotação agora
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-
+              {/* GRUPO DE BOTÕES */}
+              <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row gap-4 max-w-lg relative z-50">
+                
+                {/* Botão WhatsApp (Verde) */}
                 <a
-                  href="https://wa.me/5514991235094"
+                  href="https://wa.me/5514991886868?text=Ol%C3%A1!%20Estou%20na%20p%C3%A1gina%20inicial%20do%20site%20e%20gostaria%20de%20falar%20com%20um%20consultor%20agora."
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full sm:w-auto"
+                  className="flex items-center justify-center px-8 h-14 text-lg font-bold text-white bg-[#25D366] hover:bg-[#128C7E] rounded-xl shadow-lg hover:shadow-green-500/30 transition-all transform hover:-translate-y-1"
                 >
-                  <Button
-                    type="button"
-                    variant="outline"
-                    className="w-full px-8 py-6 text-base lg:text-lg font-bold border-2 border-white text-white hover:bg-white hover:text-[var(--hapvida-blue)] transition-all duration-300 rounded-full"
-                  >
-                    <MessageCircle className="mr-2 h-5 w-5" />
-                    Falar no WhatsApp
-                  </Button>
+                  <MessageCircle className="w-5 h-5 mr-2" />
+                  Falar no WhatsApp
                 </a>
 
-                <a href="tel:+5514991235094" className="w-full sm:w-auto">
-                  <Button
-                    type="button"
-                    variant="outline"
-                    className="w-full px-8 py-6 text-base lg:text-lg font-bold border-2 border-white/70 text-white hover:bg-white hover:text-[var(--hapvida-blue)] transition-all duration-300 rounded-full"
-                  >
-                    <Phone className="mr-2 h-5 w-5" />
-                    Ligar agora
-                  </Button>
-                </a>
-              </div>
+                {/* Botão Cotação (Laranja Sólido) */}
+                <button
+                  type="button"
+                  onClick={onOpenForm}
+                  className="flex items-center justify-center px-8 h-14 text-lg font-bold text-white bg-[#FF4E05] hover:bg-[#E04000] rounded-xl shadow-lg hover:shadow-orange-500/30 transition-all transform hover:-translate-y-1 cursor-pointer relative z-50"
+                >
+                  <ArrowRight className="w-5 h-5 mr-2" />
+                  Cotação Online
+                </button>
+              </motion.div>
 
-              <p className="mt-3 text-sm text-white/80">
-                Leva menos de 1 minuto. Dados tratados com segurança.
-              </p>
+              <motion.p variants={fadeInUp} className="mt-6 text-xs text-white/60 flex items-center gap-2">
+                <CheckCircle2 className="w-3 h-3 text-green-400" />
+                Leva menos de 1 minuto • Dados tratados com segurança
+              </motion.p>
             </motion.div>
 
-            {/* Right: Compact conversion card */}
-            <motion.aside
-              initial={{ opacity: 0, x: 24 }}
+            {/* LADO DIREITO (Card de Benefícios) */}
+            <motion.div 
+              className="lg:col-span-5 hidden lg:block"
+              initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.7, delay: 0.1 }}
-              className="lg:col-span-5"
+              transition={{ delay: 0.4, duration: 0.6 }}
             >
-              <div className="backdrop-blur-md bg-white/10 rounded-2xl shadow-2xl p-6 border border-white/20">
-                <h2 className="text-xl lg:text-2xl font-bold text-white">
-                  Receba sua cotação personalizada
-                </h2>
-
-                <p className="mt-2 text-white/90 text-sm lg:text-base">
-                  Você fala com um consultor e recebe as melhores opções para o seu perfil.
+              <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8 shadow-2xl">
+                <h3 className="text-2xl font-bold text-white mb-2">
+                  O que você recebe
+                </h3>
+                <p className="text-white/80 text-sm mb-6">
+                  Um consultor autorizado te orienta e envia as melhores opções para a sua cidade.
                 </p>
 
-                <div className="mt-5 space-y-2">
-                  <div className="flex items-start gap-3 text-white">
-                    <CheckCircle2 className="h-5 w-5 mt-0.5 text-[var(--hapvida-orange)]" />
-                    <span className="text-sm">Atendimento em todo o Brasil</span>
-                  </div>
-                  <div className="flex items-start gap-3 text-white">
-                    <CheckCircle2 className="h-5 w-5 mt-0.5 text-[var(--hapvida-orange)]" />
-                    <span className="text-sm">Planos sem carência (consulte condições)</span>
-                  </div>
-                  <div className="flex items-start gap-3 text-white">
-                    <CheckCircle2 className="h-5 w-5 mt-0.5 text-[var(--hapvida-orange)]" />
-                    <span className="text-sm">Descontos exclusivos online</span>
-                  </div>
-                </div>
-
-                <Button
-                  onClick={onOpenForm}
-                  className="mt-6 w-full py-6 text-base font-bold text-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
-                  style={{ backgroundColor: 'var(--hapvida-orange)' }}
-                >
-                  Quero minha cotação grátis
-                </Button>
-
-                <p className="mt-3 text-xs text-white/70 text-center">
-                  Sem compromisso • Resposta rápida
-                </p>
+                <ul className="space-y-4">
+                  {[
+                    "Cotação conforme seu perfil", 
+                    "Opções com e sem coparticipação", 
+                    "Rede credenciada completa", 
+                    "Atendimento rápido via WhatsApp"
+                  ].map((item, index) => (
+                    <li key={index} className="flex items-start gap-3">
+                      <div className="mt-1 bg-[#FF4E05] p-1 rounded-full flex-shrink-0">
+                        <CheckCircle2 className="w-3 h-3 text-white" />
+                      </div>
+                      <span className="text-white/90 text-sm font-medium">{item}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
-            </motion.aside>
+            </motion.div>
+
           </div>
         </div>
       </div>

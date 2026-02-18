@@ -1,32 +1,18 @@
-@import './styles/hapvida-colors.css';
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    /* Tokens (compatíveis com tailwind.config.js) */
+    /* --- CORES HAPVIDA (Adicionadas) --- */
+    --hapvida-blue: #0054a6;
+    --hapvida-dark-blue: #003366;
+    --hapvida-orange: #f7941d;
+    --hapvida-light-blue: #e6f0fa;
+
+    /* --- SHADCN UI (Mantido) --- */
     --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 221.2 83.2% 53.3%;
-
-    --primary: 221.2 83.2% 53.3%;
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --foreground: 222.2 84% 4.9%; /* Texto Principal (Escuro) */
 
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
@@ -34,48 +20,114 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --radius: 0.75rem;
+    --primary: 215 100% 32.5%; /* Azul Hapvida (Convertido para HSL) */
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 32 93% 54%; /* Laranja Hapvida (Convertido para HSL) */
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%; /* Texto Secundário (Cinza) */
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 215 100% 32.5%; /* Anel de foco Azul */
+
+    --radius: 0.5rem;
   }
 
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    /* ... (resto do dark mode mantido se precisar) ... */
+  }
+}
+
+@layer base {
   * {
     @apply border-border;
   }
-
-  body {
-    @apply bg-background text-foreground;
-    font-family: 'DM Sans', sans-serif;
-  }
-
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-bold;
-  }
-
+  
   html {
     scroll-behavior: smooth;
   }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    /* Força a fonte padrão para ser legível e escura */
+    color: hsl(var(--foreground)); 
+  }
+
+  /* --- FORÇA TÍTULOS EM AZUL HAPVIDA --- */
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--hapvida-blue);
+    font-weight: 700;
+  }
+  
+  /* Exceção: Títulos dentro de áreas escuras (como Hero/Footer) devem ser brancos */
+  .bg-\[\#0B2B5A\] h1, 
+  .bg-\[\#0B2B5A\] h2, 
+  .bg-\[\#0B2B5A\] h3,
+  .bg-blue-900 h1,
+  .bg-blue-900 h2 {
+    color: white !important;
+  }
 }
 
-/* Acessibilidade (sem custo alto) */
-button:focus-visible,
-a:focus-visible,
-input:focus-visible,
-select:focus-visible,
-textarea:focus-visible {
-  outline: 2px solid var(--hapvida-green);
-  outline-offset: 2px;
+/* --- UTILITÁRIOS PERSONALIZADOS --- */
+.text-hapvida-blue { color: var(--hapvida-blue); }
+.text-hapvida-orange { color: var(--hapvida-orange); }
+.bg-hapvida-blue { background-color: var(--hapvida-blue); }
+.bg-hapvida-orange { background-color: var(--hapvida-orange); }
+
+/* --- ANIMAÇÕES --- */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes zoomIn {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+@keyframes bounce-slow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
 }
 
-/* Scrollbar (WebKit only; baixo impacto) */
-::-webkit-scrollbar {
-  width: 10px;
+.animate-in { animation-duration: 300ms; animation-fill-mode: both; }
+.fade-in { animation-name: fadeIn; }
+.zoom-in { animation-name: zoomIn; }
+.animate-bounce-slow { animation: bounce-slow 3s infinite; }
+.animate-ping { animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite; }
+
+@keyframes ping {
+  75%, 100% { transform: scale(2); opacity: 0; }
+
+  /* --- CORREÇÃO DE ÍCONES (Lucide React) --- */
+svg.lucide {
+  display: inline-block;
+  vertical-align: middle;
+  /* Garante que a cor do ícone siga o texto pai, a menos que especificado */
+  stroke: currentColor; 
 }
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
+
+/* Força ícones dentro de botões a terem tamanho correto se sumiram */
+button svg, a svg {
+  min-width: 16px;
+  min-height: 16px;
 }
-::-webkit-scrollbar-thumb {
-  background: var(--hapvida-green);
-  border-radius: 5px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--hapvida-green-dark);
+
+/* Restaura a cor dos ícones de Check no Hero e Cards */
+.text-green-400 { color: #4ade80 !important; }
+.text-green-500 { color: #22c55e !important; }
+.text-green-600 { color: #16a34a !important; }
+
+/* Restaura ícones brancos em fundos escuros */
+.text-white { color: white !important; }
 }

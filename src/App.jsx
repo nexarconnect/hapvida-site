@@ -1,67 +1,104 @@
-import React, { useState } from 'react';
-import { Helmet } from 'react-helmet';
-import Header from './components/Header';
-import HeroSection from './components/HeroSection';
-import BenefitsSection from './components/BenefitsSection';
-import ValueSection from './components/ValueSection';
-import NEXARSection from './components/NEXARSection';
-import ProductsSection from './components/ProductsSection';
-import NetworkSection from './components/NetworkSection';
-import PriceTablesSection from './components/PriceTablesSection';
-import FAQSection from './components/FAQSection';
-import Footer from './components/Footer';
-import FloatingWhatsAppButton from './components/FloatingWhatsAppButton';
-import SuccessModal from './components/SuccessModal';
-import FormModal from './components/FormModal';
+import React, { useEffect, useState } from "react";
+import { Routes, Route, useLocation } from "react-router-dom";
 
-function App() {
+// Components
+import Header from "./components/Header";
+import HeroSection from "./components/HeroSection";
+import PlansSection from "./components/PlansSection"; // <--- NOVO COMPONENTE UNIFICADO
+import NetworkSection from "./components/NetworkSection";
+import FAQSection from "./components/FAQSection";
+import Footer from "./components/Footer";
+import FormModal from "./components/FormModal";
+import FloatingWhatsappButton from "./components/FloatingWhatsappButton";
+
+// Pages
+import RedeCredenciada from "./pages/RedeCredenciada";
+import PoliticasPrivacidade from "./pages/PoliticasPrivacidade";
+import TermosDeUso from "./pages/TermosDeUso";
+
+function ScrollToHash() {
+  const { hash, pathname } = useLocation();
+  useEffect(() => {
+    if (pathname !== "/") return;
+    if (!hash) return;
+    const el = document.querySelector(hash);
+    if (el) {
+      setTimeout(() => {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 50);
+    }
+  }, [hash, pathname]);
+  return null;
+}
+
+export default function App() {
   const [isFormOpen, setIsFormOpen] = useState(false);
-  const [isSuccessOpen, setIsSuccessOpen] = useState(false);
-  const [userName, setUserName] = useState('');
 
-  const handleSuccess = (name) => {
-    setUserName(name);
-    setIsSuccessOpen(true);
-  };
+  const openForm = () => setIsFormOpen(true);
+  const closeForm = () => setIsFormOpen(false);
 
   return (
     <>
-      <Helmet>
-        <title>Plano de Saúde Hapvida - NEXAR Corretora | A partir de R$ 64,35</title>
-        <meta
-          name="description"
-          content="Planos de saúde Hapvida com 15% de desconto nas 3 primeiras parcelas. Valores a partir de R$ 64,35. Faça sua cotação grátis com a NEXAR Corretora."
+      <ScrollToHash />
+      
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <>
+              <Header onOpenForm={openForm} />
+              <HeroSection onOpenForm={openForm} />
+              
+              {/* Seção de Planos Unificada */}
+              <PlansSection onOpenForm={openForm} />
+              
+              <NetworkSection />
+              <FAQSection />
+              <Footer />
+              
+              <FormModal isOpen={isFormOpen} onClose={closeForm} />
+            </>
+          }
         />
-      </Helmet>
+        
+        <Route
+          path="/rede-credenciada"
+          element={
+            <>
+              <Header onOpenForm={openForm} />
+              <RedeCredenciada />
+              <Footer />
+              <FormModal isOpen={isFormOpen} onClose={closeForm} />
+            </>
+          }
+        />
+        
+        <Route
+          path="/politicas-privacidade"
+          element={
+            <>
+              <Header onOpenForm={openForm} />
+              <PoliticasPrivacidade />
+              <Footer />
+              <FormModal isOpen={isFormOpen} onClose={closeForm} />
+            </>
+          }
+        />
+        
+        <Route
+          path="/termos-de-uso"
+          element={
+            <>
+              <Header onOpenForm={openForm} />
+              <TermosDeUso />
+              <Footer />
+              <FormModal isOpen={isFormOpen} onClose={closeForm} />
+            </>
+          }
+        />
+      </Routes>
 
-      <Header />
-      <HeroSection onOpenForm={() => setIsFormOpen(true)} />
-      <BenefitsSection />
- <ValueSection
-  onOpenForm={() => setIsFormOpen(true)}
-  onSuccess={handleSuccess}
-/>
-      <NEXARSection />
-      <ProductsSection />
-      <NetworkSection />
-      <PriceTablesSection />
-      <FAQSection />
-      <Footer />
-      <FloatingWhatsAppButton />
-
-      <FormModal
-        isOpen={isFormOpen}
-        onClose={() => setIsFormOpen(false)}
-        onSuccess={handleSuccess}
-      />
-
-      <SuccessModal
-        isOpen={isSuccessOpen}
-        onClose={() => setIsSuccessOpen(false)}
-        userName={userName}
-      />
+      <FloatingWhatsappButton />
     </>
   );
 }
-
-export default App;
