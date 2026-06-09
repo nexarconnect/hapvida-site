@@ -1,59 +1,64 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import { Shield, Zap, Users, MapPin } from 'lucide-react';
+import { ShieldCheck, Stethoscope, Smile, Clock } from 'lucide-react';
 
 const benefits = [
   {
-    icon: <Shield className="w-8 h-8 text-[var(--hapvida-blue)]" />,
-    title: "Rede Própria Completa",
-    description: "Hospitais, clínicas e laboratórios exclusivos para garantir agilidade no seu atendimento."
+    icon: ShieldCheck,
+    title: "Sem espera para usar*",
+    desc: "Carência reduzida para você aproveitar seu plano com muito mais agilidade."
   },
   {
-    icon: <Zap className="w-8 h-8 text-[var(--hapvida-blue)]" />,
-    title: "Atendimento Digital",
-    description: "Agende consultas e exames direto pelo App. Tecnologia a serviço da sua saúde."
+    icon: Stethoscope,
+    title: "Hospitais Exclusivos",
+    desc: "Acesso à maior rede própria do Brasil com atendimento médico integrado."
   },
   {
-    icon: <Users className="w-8 h-8 text-[var(--hapvida-blue)]" />,
-    title: "Planos Flexíveis",
-    description: "Opções individuais, familiares e empresariais que cabem exatamente no seu bolso."
+    icon: Smile,
+    title: "Odonto Incluso",
+    desc: "Cuidado completo com sua saúde bucal sem nenhum custo adicional."
+  },
+  {
+    icon: Clock,
+    title: "Urgência 24h",
+    desc: "Segurança total com suporte e emergência disponíveis a qualquer momento."
   }
 ];
 
-const BenefitsSection = () => {
+export default function BenefitsSection() {
   return (
-    <section className="py-20 bg-white">
-      <div className="container mx-auto px-4">
-        {/* Hierarquia: Título Centralizado e Forte */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-3xl lg:text-4xl font-bold text-[var(--hapvida-blue)] mb-4">
-            A maior rede de saúde do Norte e Nordeste
+    <section className="py-20 bg-gray-50" id="benefits">
+      <div className="container mx-auto px-4 max-w-6xl">
+        
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-[#002b5c] mb-4">
+            Vantagens de ser Hapvida
           </h2>
-          <p className="text-gray-600 text-lg">
-            Combinamos infraestrutura moderna com os preços mais competitivos do mercado para cuidar de você.
+          <p className="text-gray-600 max-w-2xl mx-auto">
+            Mais economia e segurança para você e sua família com a maior operadora de saúde do Brasil.
           </p>
         </div>
 
-        {/* Alinhamento: Grid de 3 colunas (Lei da Proximidade) */}
-        <div className="grid md:grid-cols-3 gap-8">
-          {benefits.map((item, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              className="p-8 rounded-2xl bg-gray-50 border border-gray-100 hover:shadow-xl transition-shadow duration-300"
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {benefits.map((item) => (
+            <div 
+              key={item.title} 
+              className="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm hover:shadow-md transition-all group"
             >
-              <div className="mb-4">{item.icon}</div>
+              <div className="w-14 h-14 rounded-2xl bg-blue-50 flex items-center justify-center mb-6 group-hover:bg-[#002b5c] transition-colors">
+                <item.icon className="w-7 h-7 text-[#002b5c] group-hover:text-white transition-colors" strokeWidth={2} />
+              </div>
               <h3 className="text-xl font-bold text-gray-900 mb-3">{item.title}</h3>
-              <p className="text-gray-600 leading-relaxed">{item.description}</p>
-            </motion.div>
+              <p className="text-sm text-gray-500 leading-relaxed">
+                {item.desc}
+              </p>
+            </div>
           ))}
         </div>
+
+        <p className="text-center text-[10px] text-gray-400 mt-10 italic">
+          *Carência sujeita a análise técnica e condições contratuais da operadora.
+        </p>
       </div>
     </section>
   );
-};
-
-export default BenefitsSection;
+}

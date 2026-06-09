@@ -1,14 +1,43 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 
-export default function SEO() {
-  const title = 'Plano de Saúde Hapvida 2026 | Cotação Rápida no WhatsApp';
-  const description =
-    'Cotação rápida do Plano de Saúde Hapvida 2026. Fale com um consultor autorizado no WhatsApp e receba opções para sua cidade — sem compromisso. Método espelho: entendemos seu perfil e apresentamos as melhores opções Hapvida com clareza.';
+function normalizeDisplayPrice(price) {
+  const raw = String(price ?? '75,70').trim();
 
-  // Mantemos placeholder por enquanto (você troca no final)
-  const siteUrl = 'https://www.seudominio.com.br/';
-  const ogImage = `${siteUrl}og-hapvida-2026.jpg`;
+  if (!raw) return '75,70';
+
+  const cleaned = raw.replace(/[^\d,.-]/g, '');
+
+  return cleaned.includes(',') ? cleaned : cleaned.replace('.', ',');
+}
+
+function normalizeSchemaPrice(price) {
+  const raw = String(price ?? '75,70')
+    .trim()
+    .replace(/[^\d,.-]/g, '')
+    .replace(',', '.');
+
+  const numeric = Number(raw);
+
+  return Number.isFinite(numeric) && numeric > 0 ? numeric.toFixed(2) : '75.70';
+}
+
+function removeTrailingSlash(url) {
+  return url.endsWith('/') ? url.slice(0, -1) : url;
+}
+
+export default function SEO({ price = '75,70' }) {
+  const displayPrice = normalizeDisplayPrice(price);
+  const schemaPrice = normalizeSchemaPrice(price);
+
+  const baseUrl = removeTrailingSlash('https://tabelaplanosaude.com.br/');
+  const canonicalUrl = `${baseUrl}/`;
+  const siteName = 'Tabela Plano Saúde';
+  const ogImage = `${baseUrl}/og-hapvida-2026.jpg`;
+  const logoUrl = `${baseUrl}/logo.png`;
+
+  const pageTitle = `Plano de Saúde Hapvida 2026 | Cotação a partir de R$ ${displayPrice}`;
+  const description = `Solicite sua cotação do Plano de Saúde Hapvida 2026 com valores a partir de R$ ${displayPrice}. Atendimento rápido no WhatsApp, consultor autorizado e sem compromisso.`;
 
   const faqJsonLd = {
     '@context': 'https://schema.org',
@@ -19,71 +48,88 @@ export default function SEO() {
         name: 'Como fazer a cotação do Plano Hapvida 2026?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Você pode solicitar a cotação pelo WhatsApp. Um consultor autorizado valida disponibilidade e envia as opções para sua cidade, seguindo o método espelho da Hapvida.',
-        },
+          text: 'A cotação é feita online pelo WhatsApp. Um consultor autorizado valida a rede disponível na sua cidade e envia a tabela de preços atualizada.'
+        }
       },
       {
         '@type': 'Question',
-        name: 'Quais são os valores do Plano Hapvida 2026?',
+        name: 'Quais os valores da Hapvida para 2026?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Os valores variam por idade, cidade e tipo de plano. Existem opções a partir de R$ 149,90* (sujeito à disponibilidade e regras comerciais).',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: 'Tem plano com e sem coparticipação?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Sim. Você pode escolher opções com ou sem coparticipação, conforme seu perfil e a disponibilidade do produto na sua região.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: 'A contratação é sem compromisso?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Sim. A cotação é sem compromisso. Você recebe as opções e decide se quer contratar.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: 'A Hapvida tem rede credenciada na minha cidade?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'A rede varia por município e produto. Na cotação, validamos a rede e cobertura disponíveis para sua região.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: 'Quanto tempo demora para receber a cotação?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Normalmente o retorno é rápido pelo WhatsApp, com as opções adequadas ao seu perfil e município.',
-        },
-      },
-    ],
+          text: `Os valores variam conforme idade e região, com opções a partir de R$ ${displayPrice}.`
+        }
+      }
+    ]
+  };
+
+  const productJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: 'Plano de Saúde Hapvida 2026',
+    description,
+    image: ogImage,
+    brand: {
+      '@type': 'Brand',
+      name: 'Hapvida'
+    },
+    offers: {
+      '@type': 'Offer',
+      url: canonicalUrl,
+      priceCurrency: 'BRL',
+      price: schemaPrice,
+      availability: 'https://schema.org/InStock'
+    }
+  };
+
+  const websiteJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: siteName,
+    url: canonicalUrl
+  };
+
+  const organizationJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: siteName,
+    url: canonicalUrl,
+    logo: logoUrl
   };
 
   return (
     <Helmet>
-      <title>{title}</title>
-      <meta name="description" content={description} />
+      <html lang="pt-BR" />
+      <title>{pageTitle}</title>
 
-      <meta property="og:title" content={title} />
-      <meta property="og:description" content={description} />
+      <meta name="description" content={description} />
+      <link rel="canonical" href={canonicalUrl} />
+      <meta name="robots" content="index, follow" />
+
       <meta property="og:type" content="website" />
-      <meta property="og:url" content={siteUrl} />
+      <meta property="og:site_name" content={siteName} />
+      <meta property="og:locale" content="pt_BR" />
+      <meta property="og:url" content={canonicalUrl} />
+      <meta property="og:title" content={pageTitle} />
+      <meta property="og:description" content={description} />
       <meta property="og:image" content={ogImage} />
 
       <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content={title} />
+      <meta name="twitter:title" content={pageTitle} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={ogImage} />
 
-    
-
-      <script type="application/ld+json">{JSON.stringify(faqJsonLd)}</script>
+      <script type="application/ld+json">
+        {JSON.stringify(faqJsonLd)}
+      </script>
+      <script type="application/ld+json">
+        {JSON.stringify(productJsonLd)}
+      </script>
+      <script type="application/ld+json">
+        {JSON.stringify(websiteJsonLd)}
+      </script>
+      <script type="application/ld+json">
+        {JSON.stringify(organizationJsonLd)}
+      </script>
     </Helmet>
   );
 }

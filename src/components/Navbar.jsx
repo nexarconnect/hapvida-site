@@ -1,125 +1,139 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import React, { useEffect, useRef, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Menu, X } from 'lucide-react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import logoWhite from '../assets/logo-hapvida-branco.png';
+import logoColored from '../assets/logo-hapvida-branco-colorido.png';
 
-export default function Navbar({
-  brand = { name: "NEXAR", sub: "Corretora", to: "/" },
-  cta = { label: "Fazer cotação", to: "/cotacao" },
-}) {
+export default function Navbar() {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isPlansOpen, setIsPlansOpen] = useState(false);
+
   const location = useLocation();
-  const [openPlans, setOpenPlans] = useState(false);
+  const navigate = useNavigate();
   const plansRef = useRef(null);
 
   useEffect(() => {
-    const onClickOutside = (e) => {
-      if (!plansRef.current) return;
-      if (!plansRef.current.contains(e.target)) setOpenPlans(false);
-    };
-    document.addEventListener("mousedown", onClickOutside);
-    return () => document.removeEventListener("mousedown", onClickOutside);
+    const handleScroll = () => setIsScrolled(window.scrollY > 50);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   useEffect(() => {
-    setOpenPlans(false);
+    setIsMobileMenuOpen(false);
+    setIsPlansOpen(false);
   }, [location.pathname]);
 
-  const itemBase =
-    "text-sm font-medium text-gray-700 hover:text-[#0B2B5A] transition-colors";
-  const itemActive = "text-sm font-semibold text-[#0B2B5A]";
-  const active = (path) => (location.pathname === path ? itemActive : itemBase);
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (plansRef.current && !plansRef.current.contains(event.target)) {
+        setIsPlansOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const closeAllMenus = () => {
+    setIsMobileMenuOpen(false);
+    setIsPlansOpen(false);
+  };
+
+  const scrollToSection = (sectionId) => {
+    closeAllMenus();
+
+    const scrollToElement = () => {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    };
+
+    if (location.pathname !== '/') {
+      navigate('/');
+      setTimeout(scrollToElement, 350);
+      return;
+    }
+
+    setTimeout(scrollToElement, 50);
+  };
+
+  const navItems = [
+    { label: 'Tabelas', id: 'tabela-de-precos' },
+    { label: 'Rede', id: 'rede' },
+    { label: 'Dúvidas', id: 'faq' },
+  ];
 
   return (
-    <nav className="bg-white border-b border-gray-100">
-      <div className="container mx-auto px-4 max-w-6xl h-16 flex items-center justify-between">
-        {/* Logo (substitua pelo seu logo real quando quiser) */}
-        <Link to={brand.to} className="flex items-center gap-3">
-          {/* Se você tiver imagem:
-              <img src={logoSrc} alt={brand.name} className="h-8 w-auto" />
-           */}
-          <div className="leading-tight">
-            <div className="text-[#0B2B5A] font-extrabold text-lg">
-              {brand.name}
-            </div>
-            {brand.sub ? (
-              <div className="text-gray-500 text-xs -mt-1">{brand.sub}</div>
-            ) : null}
-          </div>
+    <header
+      className={`fixed inset-x-0 top-0 z-[1000] flex h-16 items-center transition-all duration-500 md:h-20 ${
+        isScrolled
+          ? 'border-b border-slate-200/50 bg-white/90 shadow-sm backdrop-blur-md'
+          : 'border-b border-transparent bg-transparent'
+      }`}
+    >
+      <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-6">
+        <Link to="/" onClick={closeAllMenus} className="flex items-center gap-3">
+          <img
+            src={isScrolled || isMobileMenuOpen ? logoColored : logoWhite}
+            className="h-10 w-auto transition-all duration-300 md:h-10"
+            alt="Logo Hapvida"
+          />
         </Link>
 
-        {/* Menu (desktop) */}
-        <div className="hidden md:flex items-center gap-6">
-          <Link to="/" className={active("/")}>Início</Link>
-
-          {/* Planos (dropdown) */}
-          <div className="relative" ref={plansRef}>
+        <nav className="hidden items-center gap-10 md:flex">
+          {navItems.map((item) => (
             <button
+              key={item.id}
               type="button"
-              onClick={() => setOpenPlans((v) => !v)}
-              className="flex items-center gap-2 text-sm font-medium text-gray-700 hover:text-[#0B2B5A] transition-colors"
-              aria-expanded={openPlans}
-              aria-haspopup="menu"
+              onClick={() => scrollToSection(item.id)}
+              className={`text-[10px] font-black uppercase tracking-[0.25em] transition-all ${
+                isScrolled
+                  ? 'text-slate-600 hover:text-[#ff8200]'
+                  : 'text-white/80 hover:text-white'
+              }`}
             >
-              Planos <span className="text-gray-400">▾</span>
+              {item.label}
             </button>
+          ))}
+        </nav>
 
-            {openPlans && (
-              <div
-                role="menu"
-                className="absolute left-0 mt-2 w-56 bg-white border border-gray-100 rounded-xl shadow-lg overflow-hidden z-50"
-              >
-                <Link to="/plano-familia" role="menuitem" className="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50">
-                  Plano Família
-                </Link>
-                <Link to="/plano-individual" role="menuitem" className="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50">
-                  Plano Individual
-                </Link>
-                <Link to="/plano-empresa" role="menuitem" className="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50">
-                  Plano Empresa
-                </Link>
-                <Link to="/plano-odontologico" role="menuitem" className="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50">
-                  Plano Odontológico
-                </Link>
-              </div>
-            )}
-          </div>
-
-          <Link to="/rede-credenciada" className={active("/rede-credenciada")}>
-            Rede credenciada
-          </Link>
-
-          <Link to="/como-funciona" className={active("/como-funciona")}>
-            Como funciona
-          </Link>
-
-          <Link to="/sobre" className={active("/sobre")}>
-            Sobre
-          </Link>
-
-          {/* Se você tiver FAQ na Home */}
-          <a href="/#faq" className={itemBase}>
-            Dúvidas
-          </a>
-        </div>
-
-        {/* CTA (desktop) */}
-        <div className="hidden md:flex items-center gap-3">
-          <Link
-            to={cta.to}
-            className="px-4 py-2 rounded-xl bg-[#0B2B5A] text-white text-sm font-semibold hover:opacity-95 transition"
-          >
-            {cta.label}
-          </Link>
-        </div>
-
-        {/* Mobile (deixo simples agora; se quiser eu monto completo) */}
-        <div className="md:hidden">
-          <Link
-            to={cta.to}
-            className="px-3 py-2 rounded-xl bg-[#0B2B5A] text-white text-sm font-semibold"
-          >
-            {cta.label}
-          </Link>
-        </div>
+        <button
+          type="button"
+          onClick={() => setIsMobileMenuOpen((prev) => !prev)}
+          className={`md:hidden ${isScrolled ? 'text-slate-800' : 'text-white'}`}
+          aria-label={isMobileMenuOpen ? 'Fechar menu' : 'Abrir menu'}
+        >
+          {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+        </button>
       </div>
-    </nav>
+
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.2 }}
+            className="absolute left-0 top-full w-full border-b border-slate-100 bg-white px-6 py-5 shadow-xl md:hidden"
+          >
+            <div className="flex flex-col gap-5">
+              {navItems.map((item) => (
+                <button
+                  key={item.id}
+                  type="button"
+                  onClick={() => scrollToSection(item.id)}
+                  className="text-left text-sm font-black uppercase tracking-[0.2em] text-slate-700"
+                >
+                  {item.label}
+                </button>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </header>
   );
 }

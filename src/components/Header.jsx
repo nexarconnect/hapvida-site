@@ -1,169 +1,268 @@
-import React, { useState } from "react";
-import logoHapvida from "../assets/logo-hapvida-branco-colorido.png";
-import { Link, useLocation } from "react-router-dom";
+import React, { useEffect, useRef, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Menu, X, ChevronDown } from 'lucide-react';
+import logoHapvida from '../assets/logo-hapvida-branco-colorido.png';
 
-export default function Header({ onOpenForm }) {
+export default function Header({ onOpenForm, onOpenConsultorOnline }) {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isPlansOpen, setIsPlansOpen] = useState(false);
-  const location = useLocation();
+  const [isMobilePlansOpen, setIsMobilePlansOpen] = useState(false);
 
-  const handleNavClick = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const plansRef = useRef(null);
+
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
     setIsPlansOpen(false);
+    setIsMobilePlansOpen(false);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (plansRef.current && !plansRef.current.contains(event.target)) {
+        setIsPlansOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const closeAllMenus = () => {
+    setIsMobileMenuOpen(false);
+    setIsPlansOpen(false);
+    setIsMobilePlansOpen(false);
   };
 
+  const scrollToSection = (sectionId) => {
+    closeAllMenus();
+
+    const scrollToElement = () => {
+      const element = document.getElementById(sectionId);
+      if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
+    if (location.pathname !== '/') {
+      navigate('/');
+      setTimeout(scrollToElement, 350);
+      return;
+    }
+
+    setTimeout(scrollToElement, 50);
+  };
+
+  const handleOpenForm = () => {
+    if (typeof onOpenForm === 'function') {
+      onOpenForm();
+    }
+  };
+
+  const handleOpenConsultorOnline = () => {
+    closeAllMenus();
+
+    if (typeof onOpenConsultorOnline === 'function') {
+      onOpenConsultorOnline();
+      return;
+    }
+
+    if (typeof onOpenForm === 'function') {
+      onOpenForm();
+    }
+  };
+
+  const planLinks = [
+    { label: 'Plano Individual', id: 'plan-types' },
+    { label: 'Plano Familiar', id: 'plan-types' },
+    { label: 'Plano Empresarial', id: 'plan-types' },
+  ];
+
   return (
-    <header className="bg-white border-b border-gray-100">
-      <div className="container mx-auto px-4 lg:px-8">
-        <div className="flex items-center justify-between h-20">
-          {/* Marca: logo + texto */}
-          <Link to="/" className="flex items-center gap-3 shrink-0">
-            <img src={logoHapvida} alt="Hapvida" className="h-9 w-auto" />
-            <div className="leading-tight">
-              <div
-                className="text-2xl font-bold"
-                style={{ color: "var(--hapvida-blue)" }}
-              >
-                NEXAR <span className="text-gray-700">Corretora</span>
-              </div>
-            </div>
+    <header
+      className={`sticky top-0 z-[990] w-full border-b transition-all duration-300 ${
+        isScrolled
+          ? 'border-gray-100 bg-white/95 shadow-sm backdrop-blur-md'
+          : 'border-transparent bg-white'
+      }`}
+    >
+      <div className="container mx-auto flex h-24 items-center justify-between px-4 lg:h-28">
+        <Link to="/" className="flex shrink-0 items-center gap-3" onClick={closeAllMenus}>
+          <img src={logoHapvida} alt="Hapvida" className="h-10 w-auto" />
+          <div className="hidden leading-tight sm:block">
+            <span className="block text-xl font-black text-[#002b5c]">NEXAR</span>
+            <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400">
+              Corretora
+            </span>
+          </div>
+        </Link>
+
+        <nav className="hidden items-center gap-8 lg:flex">
+          <Link
+            to="/"
+            className="font-bold text-gray-700 transition-colors hover:text-[#ff8200]"
+            onClick={closeAllMenus}
+          >
+            Home
           </Link>
 
-          {/* Menu (desktop) */}
-          <nav className="hidden lg:flex items-center gap-8">
-            <Link
-              to="/#home"
-              className="text-gray-700 hover:text-[var(--hapvida-orange)] transition-colors duration-200 font-medium"
-              onClick={handleNavClick}
+          <div className="relative" ref={plansRef}>
+            <button
+              type="button"
+              onClick={() => setIsPlansOpen((prev) => !prev)}
+              className="inline-flex items-center gap-1 font-bold text-gray-700 transition-colors hover:text-[#ff8200]"
             >
+              Planos
+              <ChevronDown
+                className={`h-4 w-4 transition-transform ${isPlansOpen ? 'rotate-180' : ''}`}
+              />
+            </button>
+
+            {isPlansOpen && (
+              <div className="absolute left-0 top-full mt-3 w-64 overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-2xl">
+                {planLinks.map((item) => (
+                  <button
+                    key={item.label}
+                    type="button"
+                    onClick={() => scrollToSection(item.id)}
+                    className="block w-full px-4 py-3 text-left text-sm text-gray-700 transition-colors hover:bg-gray-50 hover:text-[#ff8200]"
+                  >
+                    {item.label}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <button
+            type="button"
+            onClick={() => scrollToSection('produtos')}
+            className="font-bold text-gray-700 transition-colors hover:text-[#ff8200]"
+          >
+            Produtos
+          </button>
+
+          <button
+            type="button"
+            onClick={() => scrollToSection('tabela-de-precos')}
+            className="font-bold text-gray-700 transition-colors hover:text-[#ff8200]"
+          >
+            Preços
+          </button>
+        </nav>
+
+        <div className="flex items-center gap-4">
+          <button
+            type="button"
+            onClick={() => {
+              closeAllMenus();
+              handleOpenForm();
+            }}
+            className="hidden rounded-full bg-[#ff8200] px-8 py-3.5 text-xs font-black uppercase tracking-widest text-white shadow-lg shadow-orange-100 transition-all hover:bg-[#ff9529] md:block"
+          >
+            Consultor online
+          </button>
+
+          <button
+            type="button"
+            onClick={handleOpenForm}
+            className="hidden rounded-full border border-[#ff8200] bg-white px-8 py-3.5 text-xs font-black uppercase tracking-widest text-[#ff8200] transition-all hover:bg-orange-50 md:block"
+          >
+            Solicitar Cotação
+          </button>
+
+          <button
+            type="button"
+            className="p-2 text-[#002b5c] lg:hidden"
+            onClick={() => setIsMobileMenuOpen((prev) => !prev)}
+            aria-label={isMobileMenuOpen ? 'Fechar menu' : 'Abrir menu'}
+          >
+            {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+          </button>
+        </div>
+      </div>
+
+      {isMobileMenuOpen && (
+        <div className="absolute left-0 top-24 w-full border-b border-gray-100 bg-white p-6 shadow-xl lg:hidden">
+          <div className="flex flex-col gap-6">
+            <Link to="/" className="text-lg font-black text-[#002b5c]" onClick={closeAllMenus}>
               Home
             </Link>
 
-            {/* Planos (dropdown) */}
-            <div className="relative">
+            <div>
               <button
-                className="text-gray-700 hover:text-[var(--hapvida-orange)] transition-colors duration-200 font-medium inline-flex items-center gap-2"
-                onClick={() => setIsPlansOpen((v) => !v)}
-                aria-expanded={isPlansOpen}
-                aria-haspopup="menu"
                 type="button"
+                onClick={() => setIsMobilePlansOpen((prev) => !prev)}
+                className="flex w-full items-center justify-between border-b border-gray-100 pb-2 text-lg font-black text-[#002b5c]"
               >
-                Planos <span className="text-gray-400">▾</span>
+                Planos
+                <ChevronDown
+                  className={`h-5 w-5 transition-transform ${isMobilePlansOpen ? 'rotate-180' : ''}`}
+                />
               </button>
 
-              {isPlansOpen && (
-                <div
-                  role="menu"
-                  className="absolute left-0 top-full mt-3 w-64 rounded-xl border border-gray-100 bg-white shadow-lg overflow-hidden z-50"
-                >
-                  <Link
-                    to="/#tabela-de-precos"
-                    role="menuitem"
-                    className="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50"
-                    onClick={handleNavClick}
-                  >
-                    Plano Família
-                  </Link>
-                  <Link
-                    to="/#tabela-de-precos"
-                    role="menuitem"
-                    className="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50"
-                    onClick={handleNavClick}
-                  >
-                    Plano Individual
-                  </Link>
-                  <Link
-                    to="/#tabela-de-precos"
-                    role="menuitem"
-                    className="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50"
-                    onClick={handleNavClick}
-                  >
-                    Plano Empresa
-                  </Link>
-                  <Link
-                    to="/#tabela-de-precos"
-                    role="menuitem"
-                    className="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50"
-                    onClick={handleNavClick}
-                  >
-                    Plano Odontológico
-                  </Link>
+              {isMobilePlansOpen && (
+                <div className="ml-4 mt-4 flex flex-col gap-4 border-l-2 border-gray-100 pl-4">
+                  {planLinks.map((item) => (
+                    <button
+                      key={item.label}
+                      type="button"
+                      onClick={() => scrollToSection(item.id)}
+                      className="text-left font-medium text-gray-600"
+                    >
+                      {item.label}
+                    </button>
+                  ))}
                 </div>
               )}
             </div>
 
-            <Link
-              to="/rede-credenciada"
-              className="text-gray-700 hover:text-[var(--hapvida-orange)] transition-colors duration-200 font-medium"
-              onClick={handleNavClick}
-            >
-              Rede credenciada
-            </Link>
-
-            <Link
-              to="/#how-it-works"
-              className="text-gray-700 hover:text-[var(--hapvida-orange)] transition-colors duration-200 font-medium"
-              onClick={handleNavClick}
-            >
-              Como funciona
-            </Link>
-
-            <Link
-              to="/#about"
-              className="text-gray-700 hover:text-[var(--hapvida-orange)] transition-colors duration-200 font-medium"
-              onClick={handleNavClick}
-            >
-              Sobre nós
-            </Link>
-          </nav>
-
-          {/* CTA (desktop) - OTIMIZADO PARA CONVERSÃO */}
-          <div className="hidden lg:flex items-center shrink-0 ml-6">
             <button
               type="button"
-              onClick={onOpenForm}
-              className="group relative h-12 px-8 rounded-full text-white font-bold text-sm shadow-lg overflow-hidden transition-all duration-300 hover:shadow-orange-500/30 hover:-translate-y-0.5 active:translate-y-0"
-              style={{ 
-                background: 'linear-gradient(135deg, #FF6B00 0%, #FF8C00 100%)', // Laranja Vibrante
-                border: '1px solid rgba(255,255,255,0.2)'
-              }}
+              onClick={() => scrollToSection('produtos')}
+              className="border-b border-gray-100 pb-2 text-left text-lg font-black text-[#002b5c]"
             >
-              {/* Efeito de Brilho no Hover */}
-              <div className="absolute inset-0 w-full h-full bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out skew-x-12" />
-              
-              <span className="relative flex items-center gap-2">
-                FAÇA UMA COTAÇÃO
-                <svg 
-                  className="w-4 h-4 transition-transform group-hover:translate-x-1" 
-                  fill="none" 
-                  viewBox="0 0 24 24" 
-                  stroke="currentColor"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
-              </span>
+              Produtos
+            </button>
+
+            <button
+              type="button"
+              onClick={() => scrollToSection('tabela-de-precos')}
+              className="border-b border-gray-100 pb-2 text-left text-lg font-black text-[#002b5c]"
+            >
+              Preços
+            </button>
+
+            <button
+              type="button"
+              onClick={() => {
+                closeAllMenus();
+                handleOpenForm();
+              }}
+              className="w-full rounded-2xl bg-[#ff8200] py-4 font-black uppercase tracking-widest text-white"
+            >
+              Consultor online
+            </button>
+
+            <button
+              type="button"
+              onClick={() => {
+                closeAllMenus();
+                handleOpenForm();
+              }}
+              className="w-full rounded-2xl border border-[#ff8200] py-4 font-black uppercase tracking-widest text-[#ff8200]"
+            >
+              Solicitar Cotação
             </button>
           </div>
-
-          {/* Mobile (hamburguer) */}
-          <button className="lg:hidden p-2" aria-label="Toggle menu" type="button">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="h-6 w-6 text-gray-700"
-            >
-              <line x1="4" x2="20" y1="12" y2="12"></line>
-              <line x1="4" x2="20" y1="6" y2="6"></line>
-              <line x1="4" x2="20" y1="18" y2="18"></line>
-            </svg>
-          </button>
         </div>
-      </div>
+      )}
     </header>
   );
 }

@@ -1,10 +1,8 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { supabase, isSupabaseConfigured } from "../lib/supabase";
 import InfoCardsSection from "../components/InfoCardsSection";
-// Importe o fallback estático para garantir que a página nunca quebre
-import { hapvidaNetworkStats } from "../content/hapvidaNetworkStats";
+import { hapvidaNetworkStats } from "../components/HapvidaNetworkStats";
 
-// Helper de formatação (fora do componente para performance)
 const formatStatValue = (item) => {
   if (item?.format === "text" && item?.value_text) return item.value_text;
 
@@ -12,11 +10,12 @@ const formatStatValue = (item) => {
   if (n === null || n === undefined) return "-";
 
   if (item?.format === "int") return Number(n).toLocaleString("pt-BR");
-  if (item?.format === "decimal")
+  if (item?.format === "decimal") {
     return Number(n).toLocaleString("pt-BR", {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
     });
+  }
 
   return String(n);
 };
@@ -26,16 +25,15 @@ export default function RedeCredenciada() {
   const [snapshot, setSnapshot] = useState(null);
   const [items, setItems] = useState([]);
 
-  // 1. Busca dados no Supabase (com fallback silencioso)
   useEffect(() => {
     let mounted = true;
 
     const load = async () => {
       setLoading(true);
+
       try {
         if (!isSupabaseConfigured()) throw new Error("Supabase off");
 
-        // Busca snapshot ativo
         const { data: snap, error: snapErr } = await supabase
           .from("network_stats_snapshots")
           .select("slug,title,reference_label,notes")
@@ -47,7 +45,6 @@ export default function RedeCredenciada() {
         if (snapErr) throw snapErr;
         if (!snap?.slug) throw new Error("No active snapshot");
 
-        // Busca itens do snapshot
         const { data: it, error: itErr } = await supabase
           .from("network_stat_items")
           .select("section,key,label,value,value_text,format,sort_order")
@@ -63,7 +60,7 @@ export default function RedeCredenciada() {
         }
       } catch (e) {
         console.warn("Usando fallback estático:", e.message);
-        // Em caso de erro, mantemos snapshot/items vazios e o useMemo usará o fallback
+
         if (mounted) {
           setSnapshot(null);
           setItems([]);
@@ -74,14 +71,15 @@ export default function RedeCredenciada() {
     };
 
     load();
-    return () => (mounted = false);
+    return () => {
+      mounted = false;
+    };
   }, []);
 
-  // 2. Organiza dados por seção (Supabase ou Fallback)
   const data = useMemo(() => {
-    // Se temos dados do Supabase, usamos eles
     if (snapshot && items.length > 0) {
       const bySection = new Map();
+
       for (const it of items) {
         if (!bySection.has(it.section)) bySection.set(it.section, []);
         bySection.get(it.section).push(it);
@@ -99,8 +97,9 @@ export default function RedeCredenciada() {
           notes: snapshot.notes,
         },
         overview: {
-          title: "Rede própria e integrada",
-          description: "Resumo da estrutura e tipos de unidades.",
+          title: "Panorama da rede própria e integrada",
+          description:
+            "Resumo da estrutura da rede Hapvida e dos principais tipos de unidades de atendimento.",
         },
         topCards: [...totals, ...types].map((x) => ({
           key: x.key,
@@ -120,7 +119,6 @@ export default function RedeCredenciada() {
       };
     }
 
-    // Fallback: usa o arquivo estático hapvidaNetworkStats.js
     return {
       source: hapvidaNetworkStats.source,
       overview: hapvidaNetworkStats.overview,
@@ -145,11 +143,8 @@ export default function RedeCredenciada() {
     };
   }, [snapshot, items]);
 
-  // 3. Formata texto do Sudeste (ex: "SP 29 | MG 10 | RJ 4")
   const southeastText = useMemo(() => {
-    return data.southeastDetail
-      .map((x) => `${x.label} ${x.value}`)
-      .join(" | ");
+    return data.southeastDetail.map((x) => `${x.label} ${x.value}`).join(" | ");
   }, [data]);
 
   return (
@@ -157,21 +152,20 @@ export default function RedeCredenciada() {
       <div className="container mx-auto px-4 max-w-6xl">
         <header className="mb-8">
           <h1 className="text-3xl font-bold text-[#0B2B5A]">
-            Rede credenciada e unidades
+            Rede Hapvida: hospitais, clínicas e unidades de atendimento
           </h1>
           <p className="text-gray-600 mt-2 max-w-3xl">
-            Informações gerais sobre a rede própria e integrada e consulta por cidade.
+            Veja um panorama da estrutura da rede Hapvida e consulte a
+            disponibilidade de atendimento de acordo com a sua cidade.
           </p>
         </header>
 
         {loading && !snapshot ? (
-          // Loading state simples (opcional: skeleton)
           <div className="py-12 text-center text-gray-500">
-            Carregando informações da rede...
+            Carregando dados da rede Hapvida...
           </div>
         ) : (
           <div className="space-y-6">
-            {/* Seção 1: Totais e Tipos */}
             <InfoCardsSection
               title={data.overview.title}
               subtitle={data.overview.description}
@@ -179,37 +173,37 @@ export default function RedeCredenciada() {
               columns="3"
             />
 
-            {/* Seção 2: Hospitais por Região */}
             <InfoCardsSection
               title="Distribuição de hospitais por região"
-              subtitle="Quantidade de hospitais na rede própria por região."
+              subtitle="Quantidade de hospitais da rede própria distribuídos por região do país."
               items={data.hospitalsByRegion}
               columns="5"
             />
 
-            {/* Seção 3: Detalhe Sudeste + Fonte */}
             <section className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
               <h3 className="text-xl font-bold text-[#0B2B5A]">
                 Detalhe do Sudeste
               </h3>
-              <p className="text-gray-600 mt-2">{southeastText}</p>
+              <p className="text-gray-600 mt-2">
+                Recorte da presença da rede Hapvida nos principais estados do Sudeste.
+              </p>
+              <p className="text-gray-700 mt-3">{southeastText}</p>
 
               <p className="text-xs text-gray-500 mt-4">
-                Fonte: {data.source.title} ({data.source.dateLabel}).{" "}
+                Fonte de referência: {data.source.title} ({data.source.dateLabel}).{" "}
                 {data.source.notes}
               </p>
             </section>
 
-            {/* Seção 4: Consulta por Cidade */}
             <section className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
               <h3 className="text-xl font-bold text-[#0B2B5A]">
                 Consulta por cidade
               </h3>
               <p className="text-gray-600 mt-2">
-                Selecione uma cidade para verificar a disponibilidade e referências.
+                Selecione sua cidade para consultar disponibilidade, estrutura de
+                atendimento e referências da rede na sua região.
               </p>
 
-              {/* AQUI entra seu componente de busca existente */}
               {/* <UnitsSearch /> */}
             </section>
           </div>

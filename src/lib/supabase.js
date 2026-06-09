@@ -1,69 +1,122 @@
 import { createClient } from '@supabase/supabase-js';
 
-// =====================
-// LISTA DE CIDADES (Hardcoded para performance)
-// =====================
-export const CITIES = [
-  // São Paulo (SP) - Foco em Bauru e região
-  "Bauru (SP)", "Marília (SP)", "Jaú (SP)", "Lins (SP)", "Ourinhos (SP)",
-  "Botucatu (SP)", "Lençóis Paulista (SP)", "Agudos (SP)", "Pederneiras (SP)", "Avaré (SP)",
-  
-  // Restante em ordem alfabética
-  "Abreu e Lima (PE)", "Almirante Tamandaré (PR)", "Americana (SP)", "Amparo (SP)",
-  "Ananindeua (PA)", "Anápolis (GO)", "Ângulo (PR)", "Aquiraz (CE)", "Aracaju (SE)",
-  "Araraquara (SP)", "Arapongas (PR)", "Araucária (PR)", "Arujá (SP)", "Atalaia (AL)",
-  "Balneário Camboriú (SC)", "Balneário Piçarras (SC)", "Barbalha (CE)", "Barretos (SP)",
-  "Barueri (SP)", "Bayeux (PB)", "Belém (PA)", "Belo Horizonte (MG)", "Bertioga (SP)",
-  "Betim (MG)", "Bombinhas (SC)", "Brasília (DF)", "Cabedelo (PB)", "Cabo de Santo Agostinho (PE)",
-  "Caieiras (SP)", "Cajamar (SP)", "Camaçari (BA)", "Cambé (PR)", "Camboriú (SC)",
-  "Campina Grande (PB)", "Campina Grande do Sul (PR)", "Campinas (SP)", "Campo Grande (MS)",
-  "Campo Largo (PR)", "Campo Magro (PR)", "Carapicuíba (SP)", "Careiro da Várzea (AM)",
-  "Caririaçu (CE)", "Cascavel (PR)", "Caucaia (CE)", "Colombo (PR)", "Contagem (MG)", 
-  "Cotia (SP)", "Crato (CE)", "Cubatão (SP)", "Curitiba (PR)", "Diadema (SP)",
-  "Elias Fausto (SP)", "Embu das Artes (SP)", "Embu-Guaçu (SP)", "Eusébio (CE)",
-  "Fazenda Rio Grande (PR)", "Feira de Santana (BA)", "Ferraz de Vasconcelos (SP)",
-  "Floresta (PR)", "Fortaleza (CE)", "Franca (SP)", "Franco da Rocha (SP)", "Goiânia (GO)",
-  "Guararema (SP)", "Guarujá (SP)", "Guarulhos (SP)", "Horizonte (CE)", "Hortolândia (SP)",
-  "Ibiporã (PR)", "Ibirité (MG)", "Igarassu (PE)", "Iguaraçu (PR)", "Ilhota (SC)",
-  "Indaiatuba (SP)", "Itaitinga (CE)", "Itajaí (SC)", "Itatiba (SP)", "Itapecerica da Serra (SP)",
-  "Itapema (SC)", "Itaperuçu (PR)", "Itapevi (SP)", "Itaquaquecetuba (SP)", "Itupeva (SP)",
-  "Iranduba (AM)", "Jaboatão dos Guararapes (PE)", "Jaboticabal (SP)", "Jaguariúna (SP)",
-  "Jandira (SP)", "Jataizinho (PR)", "João Pessoa (PB)", "Juazeiro do Norte (CE)",
-  "Jundiaí (SP)", "Limeira (SP)", "Londrina (PR)", "Louveira (SP)", "Macaíba (RN)",
-  "Maceió (AL)", "Mandaguaçu (PR)", "Manaus (AM)", "Maracanaú (CE)", "Maranguape (CE)",
-  "Marialva (PR)", "Maringá (PR)", "Mariporã (SP)", "Mauá (SP)", "Missão Velha (CE)",
-  "Mogi das Cruzes (SP)", "Mongaguá (SP)", "Monte Mor (SP)", "Mossoró (RN)", "Murici (AL)",
-  "Natal (RN)", "Navegantes (SC)", "Nova Lima (MG)", "Olinda (PE)", "Osasco (SP)",
-  "Pacajus (CE)", "Pacatuba (CE)", "Paiçandu (PR)", "Parauapebas (PA)", "Parnamirim (RN)",
-  "Paulínia (SP)", "Paulista (PE)", "Pedreira (SP)", "Penha (SC)", "Pindoretama (CE)",
-  "Pinhais (PR)", "Piracicaba (SP)", "Piraquara (PR)", "Poá (SP)", "Porto Belo (SC)",
-  "Praia Grande (SP)", "Primeiro de Maio (PR)", "Quatro Barras (PR)", "Recife (PE)",
-  "Ribeirão das Neves (MG)", "Ribeirão Pires (SP)", "Ribeirão Preto (SP)", "Rio Branco do Sul (PR)",
-  "Rio de Janeiro (RJ)", "Rio Grande da Serra (SP)", "Rolândia (PR)", "Sabará (MG)",
-  "Salvador (BA)", "Santa Isabel (SP)", "Santa Luzia (MG)", "Santa Rita (PB)",
-  "Santo André (SP)", "Santo Antonio de Posse (SP)", "Santos (SP)", "São Bernardo do Campo (SP)",
-  "São Caetano do Sul (SP)", "São Carlos (SP)", "São Gonçalo do Amarante (CE)",
-  "São José dos Pinhais (PR)", "São Luís (MA)", "São Paulo (SP)", "São Vicente (SP)",
-  "Sarandi (PR)", "Sertãozinho (SP)", "Sumaré (SP)", "Suzano (SP)", "Taboão da Serra (SP)",
-  "Teresina (PI)", "Tijucas (SC)", "Uberaba (MG)", "Uberlândia (MG)", "Valinhos (SP)",
-  "Várzea Paulista (SP)", "Vespasiano (MG)", "Vinhedo (SP)"
-];
-
-// =====================
-// SUPABASE CONFIG
-// =====================
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-const isConfigured = supabaseUrl && supabaseAnonKey && !supabaseUrl.includes('placeholder');
-export const isSupabaseConfigured = () => isConfigured;
+export const supabase =
+  supabaseUrl && supabaseAnonKey
+    ? createClient(supabaseUrl, supabaseAnonKey)
+    : null;
 
-const url = isConfigured ? supabaseUrl : 'https://placeholder.supabase.co';
-const key = isConfigured ? supabaseAnonKey : 'placeholder-key';
+// --- VALIDAÇÕES ---
+export const validateName = (n) => String(n || '').trim().split(/\s+/).length >= 2;
+export const validateWhatsApp = (p) =>
+  /^\d{10,11}$/.test(String(p || '').replace(/\D/g, ''));
 
-export const supabase = createClient(url, key);
+// --- DADOS ---
 
-export const normalizeCityUF = (city, uf) => ({
-  city: (city || '').trim().replace(/\s+/g, ' '),
-  uf: (uf || '').trim().toUpperCase(),
-});
+/**
+ * Busca a tabela de preços completa
+ */
+export async function getPricingData() {
+  if (!supabase) return [];
+  const { data, error } = await supabase.from('pricing_table').select('*');
+  if (error) {
+    console.error('Erro ao buscar preços:', error);
+    return [];
+  }
+  return data || [];
+}
+
+/**
+ * Busca unidades da rede própria filtradas por cidade
+ */
+export async function getNetworkUnits(city) {
+  if (!supabase || !city) return [];
+
+  const { data, error } = await supabase
+    .from('network_units')
+    .select('*')
+    .eq('city', city)
+    .order('name', { ascending: true });
+
+  if (error) {
+    console.error('Erro ao buscar unidades da rede:', error);
+    return [];
+  }
+
+  return data || [];
+}
+
+/**
+ * Salva um novo lead no banco de dados
+ * Compatível com o FormModal atual e com a tabela leads
+ */
+export async function saveLead(leadData) {
+  if (!supabase) {
+    return { success: true, source: 'local', id: null };
+  }
+
+  const normalizedPayload = {
+    nome: String(leadData?.nome || '').trim(),
+    whatsapp: String(leadData?.whatsapp || '').trim(),
+    cidade: String(leadData?.cidade || '').trim(),
+    numPessoas: Number.isFinite(Number(leadData?.numPessoas))
+      ? Number(leadData.numPessoas)
+      : 1,
+    idades: Array.isArray(leadData?.idades)
+      ? leadData.idades.map((age) => {
+          const n = Number(age);
+          return Number.isFinite(n) ? n : null;
+        }).filter((age) => age !== null)
+      : [],
+    preferencia: String(leadData?.preferencia || '').trim(),
+    email: String(leadData?.email || '').trim(),
+    whatsappRaw: String(leadData?.whatsappRaw || '').trim(),
+    plano: leadData?.plano ?? null,
+    createdAt: new Date().toISOString(),
+  };
+
+  console.log('SAVELEAD -> payload enviado:', normalizedPayload);
+
+  const { data, error } = await supabase
+    .from('leads')
+    .insert([normalizedPayload])
+    .select('id, nome, whatsapp, cidade, createdAt')
+    .single();
+
+  if (error) {
+    console.error('SAVELEAD -> erro Supabase:', error);
+    return {
+      success: false,
+      error: error.message,
+      details: error.details || null,
+      hint: error.hint || null,
+      code: error.code || null,
+    };
+  }
+
+  console.log('SAVELEAD -> retorno Supabase:', data);
+
+  return {
+    success: true,
+    id: data?.id || null,
+    data,
+  };
+}
+
+// --- RASTREIO E ANALYTICS ---
+
+export const trackAnalyticsEvent = (eventName, eventData = {}) => {
+  if (typeof window !== 'undefined' && window.fbq) {
+    window.fbq('trackCustom', eventName, eventData);
+  }
+  console.log(`[Event]: ${eventName}`, eventData);
+};
+
+export const confirmWhatsAppClick = (leadData = {}) => {
+  trackAnalyticsEvent('whatsapp_conversion_confirm', {
+    ...leadData,
+    timestamp: new Date().toISOString(),
+  });
+};

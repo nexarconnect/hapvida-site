@@ -1,40 +1,26 @@
-import ReactGA from "react-ga4";
-import ReactPixel from "react-facebook-pixel";
-
-export const generateWhatsAppURL = (phoneNumber = '5514991235094', message = '') => {
-  const encodedMessage = encodeURIComponent(message);
-  return `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
-};
-
-export const DEFAULT_WHATSAPP_MESSAGE = 'Oi! Gostaria de saber mais sobre os planos de saúde Hapvida.';
-
-export const LEAD_WHATSAPP_MESSAGE = (name) => `Olá! Sou ${name} e acabei de preencher o formulário. Gostaria de receber mais informações sobre os planos Hapvida.`;
-
-export const NEXAR_WHATSAPP_NUMBER = '5514991235094'; // Atualizado
-
-// NOVO: Tracking de conversão (GA4 + Pixel)
-export function trackWhatsAppClick({ placement = "unknown" } = {}) {
-  // GA4
-  ReactGA.event({
-    category: "engagement",
-    action: "whatsapp_click",
-    label: placement,
-  });
-
-  // Meta Pixel
-  ReactPixel.track("Lead", { placement });
+export function buildWhatsAppMessage(data = {}) {
+  const { nome, whatsapp, cidade, perfil, numPessoas, preferencia, idades, email } = data;
+  
+  return [
+    'Olá! Quero receber uma cotação do plano Hapvida.',
+    '',
+    `👤 *Nome:* ${nome}`,
+    `📱 *WhatsApp:* ${whatsapp}`,
+    `📧 *E-mail:* ${email || 'Não informado'}`,
+    `📍 *Cidade:* ${cidade}`,
+    `📦 *Perfil:* ${perfil}`,
+    `👥 *Pessoas:* ${numPessoas}`,
+    `🎯 *Preferência:* ${preferencia}`,
+    `🎂 *Idades:* ${Array.isArray(idades) ? idades.join(', ') : idades}`
+  ].join('\n');
 }
 
-/**
- * NOVO: Abre WhatsApp e registra conversão automaticamente.
- * Útil para botões que chamam via onClick.
- */
-export function openWhatsApp({
-  placement = "unknown",
-  message = DEFAULT_WHATSAPP_MESSAGE,
-  phoneNumber = NEXAR_WHATSAPP_NUMBER,
-} = {}) {
-  trackWhatsAppClick({ placement });
-  const url = generateWhatsAppURL(phoneNumber, message);
-  window.open(url, "_blank", "noopener,noreferrer");
+export function openWhatsAppLead(data = {}) {
+  const phone = '551491235094';
+  const message = buildWhatsAppMessage(data);
+  const url = `https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(message)}`;
+  window.open(url, '_blank', 'noopener,noreferrer');
 }
+
+// Alias para evitar erro de import
+export const openWhatsApp = openWhatsAppLead;

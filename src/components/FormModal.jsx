@@ -1,393 +1,598 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { 
-  X, Loader2, User, Phone, MapPin, FileText, Users, 
-  Cake, Lock, CheckCircle, ExternalLink, Heart, ChevronDown 
-} from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { X, ChevronLeft, Loader2 } from 'lucide-react';
+import { saveLead, validateWhatsApp, validateName } from '../lib/supabase';
+import { tracking, trackLead } from '../lib/tracking';
+import SuccessModal from './SuccessModal';
+import { useToast } from './ui/use-toast';
 
-// --- DADOS E CONFIG ---
-const CITIES = ["Bauru", "Agudos", "Pederneiras", "Lençóis Paulista", "Piratininga", "Jaú", "Marília", "Botucatu", "Avaré", "Lins"];
-const NEXAR_WHATSAPP_NUMBER = "5514991235094"; // Seu número
+function canUseSupabaseSave() {
+  return typeof saveLead === 'function';
+}
 
-const FormModal = ({ isOpen, onClose }) => {
+function buildInitialAges(total) {
+  return Array.from({ length: total }, () => '');
+}
+
+function formatPhone(value) {
+  const digits = String(value || '').replace(/\D/g, '').slice(0, 11);
+  if (digits.length <= 2) return digits;
+  if (digits.length <= 7) return `(${digits.slice(0, 2)}) ${digits.slice(2)}`;
+  return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`;
+}
+
+function validateEmail(email) {
+  const value = String(email || '').trim().toLowerCase();
+  if (!value) return false;
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+}
+
+function normalizeDigits(value) {
+  return String(value || '').replace(/\D/g, '');
+}
+
+function isRepeatedDigits(value) {
+  const digits = normalizeDigits(value);
+  return digits.length >= 8 && /^(\d)\1+$/.test(digits);
+}
+
+function hasSequentialPattern(value) {
+  const digits = normalizeDigits(value);
+  if (digits.length < 8) return false;
+  const asc = '01234567890123456789';
+  const desc = '98765432109876543210';
+  return asc.includes(digits) || desc.includes(digits);
+}
+
+const DRAFT_KEY = 'formDraft';
+
+export default function FormModal({
+  isOpen,
+  onClose,
+  lowestPrice = '75,70',
+  initialPlan = null,
+  userCity = '',
+}) {
+  const TOTAL_STEPS = 4;
+  const { toast } = useToast();
+
+  const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
-  const [successOpen, setSuccessOpen] = useState(false);
-  const [countdown, setCountdown] = useState(3);
-  const [whatsUrl, setWhatsUrl] = useState('');
-  
-  // Autocomplete
-  const [searchTerm, setSearchTerm] = useState('');
-  const [showDropdown, setShowDropdown] = useState(false);
-  const dropdownRef = useRef(null);
-  
-  // Dados do formulário
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [leadData, setLeadData] = useState(null);
+  const [skipAges, setSkipAges] = useState(false);
+
+  const abandonmentTracked = useRef(false);
+
   const [formData, setFormData] = useState({
     nome: '',
     whatsapp: '',
-    cidade: '',
-    plano: '',
-    vidas: 1,
+    cidade: userCity || '',
+    numPessoas: '1',
     idades: [''],
-    preferencia: '',
-    idades_pendentes: false,
+    preferencia: 'Tanto faz (me mostre opções)',
+    email: '',
   });
 
-  // Fecha dropdown ao clicar fora
   useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-        setShowDropdown(false);
+    if (!isOpen) return;
+
+    setStep(1);
+    setLoading(false);
+    setIsSuccess(false);
+    setLeadData(null);
+    setSkipAges(false);
+    abandonmentTracked.current = false;
+
+    const draft = localStorage.getItem(DRAFT_KEY);
+    if (draft) {
+      try {
+        const parsed = JSON.parse(draft);
+        setFormData((prev) => ({
+          ...prev,
+          ...parsed,
+          cidade: parsed?.cidade || userCity || '',
+          numPessoas: parsed?.numPessoas || '1',
+          idades: Array.isArray(parsed?.idades) ? parsed.idades : [''],
+          preferencia: parsed?.preferencia || 'Tanto faz (me mostre opções)',
+          email: parsed?.email || '',
+        }));
+        setSkipAges(Boolean(parsed?.skipAges));
+      } catch (error) {
+        console.error('Erro ao restaurar rascunho:', error);
       }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
-
-  // Sincroniza idades com número de pessoas
-  useEffect(() => {
-    if (formData.idades_pendentes) return;
-    const count = Math.max(1, parseInt(formData.vidas) || 1);
-    
-    setFormData(prev => {
-      const currentAges = [...prev.idades];
-      if (count > currentAges.length) {
-        return { ...prev, idades: [...currentAges, ...Array(count - currentAges.length).fill('')] };
-      } else if (count < currentAges.length) {
-        return { ...prev, idades: currentAges.slice(0, count) };
-      }
-      return prev;
-    });
-  }, [formData.vidas, formData.idades_pendentes]);
-
-  // Atualiza idade específica
-  const handleAgeChange = (index, value) => {
-    const newAges = [...formData.idades];
-    newAges[index] = value;
-    setFormData(prev => ({ ...prev, idades: newAges }));
-  };
-
-  // Formata WhatsApp
-  const formatWhatsApp = (value) => {
-    const v = value.replace(/\D/g, '').slice(0, 11);
-    if (v.length <= 2) return v;
-    if (v.length <= 7) return `(${v.slice(0, 2)}) ${v.slice(2)}`;
-    return `(${v.slice(0, 2)}) ${v.slice(2, 7)}-${v.slice(7)}`;
-  };
-
-  // Submit OTIMIZADO PARA CONVERSÃO
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setLoading(true);
-
-    setTimeout(() => {
-      const finalCity = formData.cidade || searchTerm;
-      
-      // Formata as idades para ficar bonito na mensagem
-      const ages = formData.idades_pendentes 
-        ? '⚠️ *Pendente* (Vou informar no chat)' 
-        : formData.idades.filter(Boolean).join(', ');
-      
-      const preferenciaText = formData.preferencia || 'O consultor pode sugerir';
-      
-      // --- MENSAGEM OTIMIZADA ---
-      const text = 
-        `👋 *Olá! Vim pelo site e gostaria da Tabela Hapvida 2026.*\n\n` +
-        `Aqui estão os dados para a simulação:\n\n` +
-        `👤 *Nome:* ${formData.nome}\n` +
-        `📍 *Cidade:* ${finalCity}\n` +
-        `📋 *Plano:* ${formData.plano}\n` +
-        `👥 *Vidas:* ${formData.vidas}\n` +
-        `🎂 *Idades:* ${ages}\n\n` +
-        `❤️ *Prioridade:* ${preferenciaText}\n\n` +
-        `_Aguardo o retorno com os valores._`;
-        
-      const url = `https://wa.me/${NEXAR_WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
-      
-      setWhatsUrl(url);
-      setSuccessOpen(true);
-      setLoading(false);
-      
-      setCountdown(3);
-    }, 1000);
-  };
-
-  // Efeito do Countdown
-  useEffect(() => {
-    if (!successOpen || countdown <= 0) return;
-    const timer = setInterval(() => setCountdown(c => c - 1), 1000);
-    
-    if (countdown === 1) {
-      window.open(whatsUrl, '_blank');
+    } else {
+      setFormData({
+        nome: '',
+        whatsapp: '',
+        cidade: userCity || '',
+        numPessoas: '1',
+        idades: [''],
+        preferencia: 'Tanto faz (me mostre opções)',
+        email: '',
+      });
     }
-    return () => clearInterval(timer);
-  }, [successOpen, countdown, whatsUrl]);
 
-  if (!isOpen && !successOpen) return null;
+    try {
+      if (tracking?.formStart) {
+        tracking.formStart('modal', {
+          plano: initialPlan || null,
+          cidade: userCity || '',
+        });
+      } else if (tracking?.event) {
+        tracking.event('inicio_formulario', 'modal', {
+          plano: initialPlan || null,
+          cidade: userCity || '',
+        });
+      }
+    } catch (error) {
+      console.error('Erro ao registrar início do formulário:', error);
+    }
+  }, [isOpen, initialPlan, userCity]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    localStorage.setItem(
+      DRAFT_KEY,
+      JSON.stringify({
+        ...formData,
+        skipAges,
+      })
+    );
+  }, [formData, skipAges, isOpen]);
+
+  useEffect(() => {
+    if (isOpen) return;
+
+    if (!isSuccess && formData.nome && !abandonmentTracked.current) {
+      try {
+        if (tracking?.event) {
+          tracking.event('form_abandonment', 'modal', {
+            step,
+            nome: formData.nome,
+            plano: initialPlan || null,
+          });
+        }
+      } catch (error) {
+        console.error('Erro ao registrar abandono do formulário:', error);
+      }
+
+      abandonmentTracked.current = true;
+    }
+  }, [isOpen, isSuccess, formData.nome, step, initialPlan]);
+
+  const progressWidth = `${(step / TOTAL_STEPS) * 100}%`;
+
+  const updateFormField = (field, value) => {
+    setFormData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
+
+  const showErrorToast = (title, description) => {
+    toast({
+      title,
+      description,
+      variant: 'destructive',
+    });
+  };
+
+  const handlePeopleChange = (e) => {
+    const value = e.target.value;
+    updateFormField('numPessoas', value);
+    const total = Math.max(1, Math.min(20, Number(value) || 1));
+    updateFormField('idades', buildInitialAges(total));
+  };
+
+  const handleAgeChange = (index, value) => {
+    const nextAges = [...formData.idades];
+    nextAges[index] = value;
+    updateFormField('idades', nextAges);
+  };
+
+  const handleToggleSkipAges = (checked) => {
+    setSkipAges(checked);
+    if (checked) {
+      updateFormField('idades', []);
+      return;
+    }
+    const total = Math.max(1, Math.min(20, Number(formData.numPessoas) || 1));
+    updateFormField('idades', buildInitialAges(total));
+  };
+
+  const handlePhoneChange = (e) => {
+    updateFormField('whatsapp', formatPhone(e.target.value));
+  };
+
+  const validateStepOne = () => {
+    const nome = String(formData.nome || '').trim();
+    const whatsappDigits = normalizeDigits(formData.whatsapp);
+    const cidade = String(formData.cidade || '').trim();
+
+    if (!validateName(nome)) {
+      showErrorToast('Nome incompleto', 'Digite nome e sobrenome.');
+      return false;
+    }
+
+    if (!validateWhatsApp(formData.whatsapp)) {
+      showErrorToast('WhatsApp inválido', 'Digite um WhatsApp válido com DDD.');
+      return false;
+    }
+
+    if (whatsappDigits.length < 10 || whatsappDigits.length > 11) {
+      showErrorToast('WhatsApp inválido', 'Digite um número com DDD válido.');
+      return false;
+    }
+
+    const ddd = Number(whatsappDigits.slice(0, 2));
+    if (!Number.isInteger(ddd) || ddd < 11 || ddd > 99) {
+      showErrorToast('WhatsApp inválido', 'O DDD precisa estar entre 11 e 99.');
+      return false;
+    }
+
+    if (isRepeatedDigits(whatsappDigits) || hasSequentialPattern(whatsappDigits)) {
+      showErrorToast('WhatsApp inválido', 'Digite um número real de contato.');
+      return false;
+    }
+
+    if (!cidade) {
+      showErrorToast('Cidade inválida', 'Digite sua cidade.');
+      return false;
+    }
+
+    return true;
+  };
+
+  const validateStepTwo = () => {
+    const totalPeople = Number(formData.numPessoas);
+
+    if (!Number.isInteger(totalPeople) || totalPeople < 1 || totalPeople > 20) {
+      showErrorToast('Quantidade inválida', 'Informe um número de pessoas entre 1 e 20.');
+      return false;
+    }
+
+    if (skipAges) return true;
+
+    if (!formData.idades.length || formData.idades.length !== totalPeople) {
+      showErrorToast('Idades incompletas', 'Preencha uma idade para cada pessoa.');
+      return false;
+    }
+
+    const invalidAge = formData.idades.some((age) => {
+      const n = Number(age);
+      return !Number.isFinite(n) || n < 0 || n > 120;
+    });
+
+    if (invalidAge) {
+      showErrorToast('Idades inválidas', 'Preencha as idades com valores entre 0 e 120.');
+      return false;
+    }
+
+    return true;
+  };
+
+  const validateStepFour = () => {
+    if (!validateEmail(formData.email)) {
+      showErrorToast('E-mail inválido', 'Digite um e-mail válido.');
+      return false;
+    }
+
+    return true;
+  };
+
+  const handleNext = () => {
+    if (step === 1 && !validateStepOne()) return;
+    if (step === 2 && !validateStepTwo()) return;
+    if (step === 4 && !validateStepFour()) return;
+
+    if (step < TOTAL_STEPS) {
+      setStep((prev) => prev + 1);
+      return;
+    }
+
+    handleSubmit();
+  };
+
+  const handleBack = () => {
+    setStep((prev) => Math.max(1, prev - 1));
+  };
+
+  const handleSubmit = async () => {
+    try {
+      setLoading(true);
+
+      const whatsappRaw = normalizeDigits(formData.whatsapp);
+      const finalAges = skipAges
+        ? []
+        : formData.idades.map((age) => Number(age)).filter((age) => Number.isFinite(age));
+
+      const payload = {
+        nome: String(formData.nome || '').trim(),
+        whatsapp: String(formData.whatsapp || '').trim(),
+        whatsappRaw,
+        cidade: String(formData.cidade || '').trim(),
+        numPessoas: Number(formData.numPessoas) || 1,
+        idades: finalAges,
+        preferencia: String(formData.preferencia || '').trim(),
+        email: String(formData.email || '').trim(),
+        plano: initialPlan || null,
+      };
+
+      if (!canUseSupabaseSave()) {
+        showErrorToast('Erro ao enviar', 'Não foi possível salvar seus dados.');
+        return;
+      }
+
+      const result = await saveLead(payload);
+
+      if (!result || !result.success) {
+        showErrorToast('Erro ao enviar', 'Não foi possível salvar seus dados.');
+        return;
+      }
+
+      const finalLead = {
+        ...payload,
+        id: result.id,
+        savedInSupabase: true,
+      };
+
+      setLeadData(finalLead);
+      setIsSuccess(true);
+      localStorage.removeItem(DRAFT_KEY);
+
+      try {
+        if (tracking?.event) {
+          tracking.event('leadSubmit', 'modal', {
+            plano: initialPlan || null,
+            cidade: formData.cidade,
+            numPessoas: formData.numPessoas,
+            preferencia: formData.preferencia,
+            email: formData.email,
+          });
+        }
+
+        trackLead(initialPlan || null, formData.cidade, 'modal');
+      } catch (error) {
+        console.error('Erro ao registrar lead:', error);
+      }
+    } catch (error) {
+      console.error('Erro ao enviar formulário:', error);
+      showErrorToast('Erro ao enviar', 'Tente novamente em instantes.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (!isOpen && !isSuccess) return null;
 
   return (
     <>
-      {/* MODAL PRINCIPAL */}
-      {isOpen && (
-        <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm overflow-y-auto">
-          <div className="relative bg-white w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-300 my-8">
-            
-            {/* Header Premium */}
-            <div className="bg-[#004a8e] p-6 text-white text-center relative">
-              <button 
+      <AnimatePresence>
+        {isOpen && (
+          <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/35 p-4 backdrop-blur-md">
+            <motion.div
+              initial={{ y: 40, opacity: 0, scale: 0.98 }}
+              animate={{ y: 0, opacity: 1, scale: 1 }}
+              exit={{ y: 24, opacity: 0, scale: 0.98 }}
+              className="relative w-full max-w-2xl rounded-[2.5rem] border border-white/30 bg-white/75 p-8 shadow-2xl backdrop-blur-xl md:p-12"
+            >
+              <button
+                type="button"
                 onClick={onClose}
-                className="absolute right-4 top-4 p-2 hover:bg-white/20 rounded-full transition-colors"
+                className="absolute right-6 top-6 text-gray-400 transition hover:text-gray-600"
+                aria-label="Fechar modal"
               >
-                <X className="h-5 w-5" />
+                <X />
               </button>
-              
-              <div className="mb-3">
-                <div className="text-xs uppercase tracking-wide text-white/80 mb-2 font-bold">
-                  Cotação Oficial Hapvida • 2026
-                </div>
-                <h2 className="text-2xl font-black leading-tight">
-                  <span className="inline-block px-2 py-1 rounded-lg bg-[#ff7f00] text-white transform -rotate-1">
-                    Tabela Atualizada
-                  </span>
-                </h2>
+
+              <div className="mb-6 text-center">
+                <h2 className="text-2xl font-black text-[#002b5c]">Plano de saúde Hapvida 2026</h2>
+                <p className="font-bold text-[#ff8200]">Valores a partir de R$ {lowestPrice}</p>
+                <p className="mt-2 text-sm text-slate-500">
+                  Validamos disponibilidade e valores para seu município
+                </p>
               </div>
-              <p className="text-sm text-white/90">
-                Preencha para receber os valores no seu WhatsApp em <span className="font-bold text-[#ff7f00]">1 minuto</span>.
-              </p>
-            </div>
 
-            {/* Formulário */}
-            <div className="p-6 max-h-[70vh] overflow-y-auto">
-              <form onSubmit={handleSubmit} className="space-y-5">
-                
-                {/* Nome */}
-                <div className="space-y-1">
-                  <label className="text-sm font-bold text-gray-700 ml-1">Nome Completo</label>
-                  <div className="relative">
-                    <User className="absolute left-3 top-3.5 h-5 w-5 text-gray-400" />
+              <div className="mb-8">
+                <div
+                  className="h-2 w-full rounded-full bg-slate-200"
+                  role="progressbar"
+                  aria-valuenow={(step / TOTAL_STEPS) * 100}
+                  aria-valuemin={0}
+                  aria-valuemax={100}
+                  aria-label="Progresso do formulário"
+                >
+                  <div
+                    className="h-2 rounded-full bg-[#ff8200] transition-all duration-300"
+                    style={{ width: progressWidth }}
+                  />
+                </div>
+              </div>
+
+              {step === 1 && (
+                <div className="space-y-4">
+                  <div>
+                    <label className="mb-2 block text-sm font-bold text-[#002b5c]">Nome Completo</label>
                     <input
-                      required
-                      placeholder="Digite seu nome"
-                      className="w-full pl-10 pr-4 py-3 border-2 border-gray-100 rounded-xl focus:border-[#004a8e] outline-none transition-all font-medium"
+                      type="text"
+                      className="w-full rounded-2xl border border-gray-100 bg-gray-50 p-4 text-gray-900 placeholder-gray-500 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500"
+                      placeholder="Digite seu nome completo"
                       value={formData.nome}
-                      onChange={e => setFormData({ ...formData, nome: e.target.value })}
+                      onChange={(e) => updateFormField('nome', e.target.value)}
                     />
                   </div>
-                </div>
 
-                {/* WhatsApp */}
-                <div className="space-y-1">
-                  <label className="text-sm font-bold text-gray-700 ml-1">WhatsApp</label>
-                  <div className="relative">
-                    <Phone className="absolute left-3 top-3.5 h-5 w-5 text-gray-400" />
+                  <div>
+                    <label className="mb-2 block text-sm font-bold text-[#002b5c]">WhatsApp</label>
                     <input
-                      required
                       type="tel"
+                      className="w-full rounded-2xl border border-gray-100 bg-gray-50 p-4 text-gray-900 placeholder-gray-500 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500"
                       placeholder="(00) 00000-0000"
-                      className="w-full pl-10 pr-4 py-3 border-2 border-gray-100 rounded-xl focus:border-[#004a8e] outline-none transition-all font-medium"
                       value={formData.whatsapp}
-                      onChange={e => setFormData({ ...formData, whatsapp: formatWhatsApp(e.target.value) })}
+                      onChange={handlePhoneChange}
                     />
                   </div>
-                </div>
 
-                {/* Cidade (Autocomplete) */}
-                <div className="space-y-1" ref={dropdownRef}>
-                  <label className="text-sm font-bold text-gray-700 ml-1">Cidade</label>
-                  <div className="relative">
-                    <MapPin className="absolute left-3 top-3.5 h-5 w-5 text-gray-400" />
+                  <div>
+                    <label className="mb-2 block text-sm font-bold text-[#002b5c]">Cidade</label>
                     <input
-                      required
+                      type="text"
+                      className="w-full rounded-2xl border border-gray-100 bg-gray-50 p-4 text-gray-900 placeholder-gray-500 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500"
                       placeholder="Sua cidade"
-                      className="w-full pl-10 pr-4 py-3 border-2 border-gray-100 rounded-xl focus:border-[#004a8e] outline-none transition-all font-medium"
-                      value={searchTerm}
-                      onFocus={() => setShowDropdown(true)}
-                      onChange={(e) => {
-                        setSearchTerm(e.target.value);
-                        setFormData({ ...formData, cidade: '' });
-                        setShowDropdown(true);
-                      }}
+                      value={formData.cidade}
+                      onChange={(e) => updateFormField('cidade', e.target.value)}
                     />
-                    {showDropdown && (
-                      <div className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-xl shadow-xl max-h-48 overflow-y-auto">
-                        {CITIES.filter(c => c.toLowerCase().includes(searchTerm.toLowerCase())).map((city) => (
-                          <div
-                            key={city}
-                            className="px-4 py-3 hover:bg-blue-50 cursor-pointer text-sm border-b last:border-0 text-gray-700 font-medium"
-                            onClick={() => {
-                              setFormData({ ...formData, cidade: city });
-                              setSearchTerm(city);
-                              setShowDropdown(false);
-                            }}
-                          >
-                            {city}
-                          </div>
-                        ))}
-                        <div
-                          className="px-4 py-3 hover:bg-orange-50 cursor-pointer text-sm font-bold text-[#ff7f00] border-t border-gray-100"
-                          onClick={() => {
-                            setFormData({ ...formData, cidade: searchTerm });
-                            setShowDropdown(false);
-                          }}
-                        >
-                          Usar: "{searchTerm || '...'}"
-                        </div>
-                      </div>
-                    )}
                   </div>
                 </div>
+              )}
 
-                {/* Plano e Vidas */}
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="space-y-1">
-                    <label className="text-sm font-bold text-gray-700 ml-1">Plano</label>
-                    <div className="relative">
-                      <FileText className="absolute left-3 top-3.5 h-5 w-5 text-gray-400" />
-                      <select
-                        required
-                        className="w-full pl-10 pr-8 py-3 border-2 border-gray-100 rounded-xl focus:border-[#004a8e] outline-none bg-white appearance-none font-medium text-gray-700"
-                        value={formData.plano}
-                        onChange={e => setFormData({ ...formData, plano: e.target.value })}
-                      >
-                        <option value="">Tipo</option>
-                        <option value="Individual">Individual</option>
-                        <option value="Empresarial">Empresarial</option>
-                      </select>
-                      <ChevronDown className="absolute right-3 top-4 h-4 w-4 text-gray-400 pointer-events-none" />
-                    </div>
+              {step === 2 && (
+                <div className="space-y-5">
+                  <div>
+                    <label className="mb-2 block text-sm font-bold text-[#002b5c]">Nº de Pessoas</label>
+                    <input
+                      type="number"
+                      min="1"
+                      max="20"
+                      placeholder="Ex: 2"
+                      className="w-full rounded-2xl border border-gray-100 bg-gray-50 p-4 text-gray-900 placeholder-gray-500 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500"
+                      value={formData.numPessoas}
+                      onChange={handlePeopleChange}
+                    />
                   </div>
 
-                  <div className="space-y-1">
-                    <label className="text-sm font-bold text-gray-700 ml-1">Pessoas</label>
-                    <div className="relative">
-                      <Users className="absolute left-3 top-3.5 h-5 w-5 text-gray-400" />
-                      <select
-                        required
-                        className="w-full pl-10 pr-8 py-3 border-2 border-gray-100 rounded-xl focus:border-[#004a8e] outline-none bg-white appearance-none font-medium text-gray-700"
-                        value={formData.vidas}
-                        onChange={e => setFormData({ ...formData, vidas: parseInt(e.target.value) })}
-                      >
-                        {[1,2,3,4,5,6].map(n => <option key={n} value={n}>{n} {n===1?'Pessoa':'Pessoas'}</option>)}
-                      </select>
-                      <ChevronDown className="absolute right-3 top-4 h-4 w-4 text-gray-400 pointer-events-none" />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Idades Dinâmicas */}
-                <div className="space-y-2 bg-gray-50 p-4 rounded-xl border border-gray-100">
-                  <div className="flex justify-between items-center">
-                    <label className="text-sm font-bold text-gray-700 flex items-center gap-2">
-                      <Cake className="w-4 h-4 text-[#ff7f00]" /> Idades
-                    </label>
-                    <div className="flex items-center gap-2">
-                      <input
-                        type="checkbox"
-                        id="pendente"
-                        checked={formData.idades_pendentes}
-                        onChange={() => setFormData(prev => ({ ...prev, idades_pendentes: !prev.idades_pendentes }))}
-                        className="w-4 h-4 text-[#004a8e] rounded focus:ring-[#004a8e]"
-                      />
-                      <label htmlFor="pendente" className="text-xs text-gray-600 font-medium cursor-pointer">
-                        Não sei agora
-                      </label>
-                    </div>
-                  </div>
-
-                  {!formData.idades_pendentes ? (
-                    <div className="grid grid-cols-3 gap-2">
+                  {!skipAges && (
+                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                       {formData.idades.map((age, index) => (
                         <input
-                          key={index}
+                          key={`idade-${index}`}
                           type="number"
+                          min="0"
+                          max="120"
                           placeholder={`Idade ${index + 1}`}
-                          className="w-full p-2 border border-gray-200 rounded-lg text-center text-sm focus:border-[#004a8e] outline-none"
+                          className="w-full rounded-2xl border border-gray-100 bg-gray-50 p-4 text-gray-900 placeholder-gray-500 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500"
                           value={age}
-                          onChange={e => handleAgeChange(index, e.target.value)}
+                          onChange={(e) => handleAgeChange(index, e.target.value)}
                         />
                       ))}
                     </div>
-                  ) : (
-                    <div className="text-xs text-gray-500 italic text-center py-2 bg-white rounded-lg border border-dashed border-gray-300">
-                      O consultor confirmará as idades no WhatsApp.
-                    </div>
                   )}
-                </div>
 
-                {/* Preferências */}
-                <div className="space-y-2">
-                  <label className="text-sm font-bold text-gray-700 flex items-center gap-2 ml-1">
-                    <Heart className="w-4 h-4 text-red-500" /> O que é prioridade?
-                  </label>
-                  <div className="grid grid-cols-1 gap-2">
-                    {['Menor preço', 'Melhor custo-benefício', 'Melhor cobertura'].map((opt) => (
-                      <label key={opt} className={`
-                        flex items-center gap-3 p-3 rounded-xl border-2 cursor-pointer transition-all
-                        ${formData.preferencia === opt ? 'border-[#004a8e] bg-blue-50' : 'border-gray-100 hover:border-gray-200'}
-                      `}>
-                        <input
-                          type="radio"
-                          name="pref"
-                          value={opt}
-                          checked={formData.preferencia === opt}
-                          onChange={e => setFormData({ ...formData, preferencia: e.target.value })}
-                          className="w-4 h-4 text-[#004a8e] focus:ring-[#004a8e]"
-                        />
-                        <span className="text-sm font-medium text-gray-700">{opt}</span>
-                      </label>
-                    ))}
+                  <div className="rounded-2xl bg-slate-50 p-4">
+                    <label className="flex items-start gap-3">
+                      <input
+                        type="checkbox"
+                        checked={skipAges}
+                        onChange={(e) => handleToggleSkipAges(e.target.checked)}
+                        className="mt-1"
+                      />
+                      <span className="text-sm text-slate-700">
+                        Não sei as idades agora (preencher depois)
+                        <span className="mt-1 block text-xs text-slate-500">
+                          Sem problema. O consultor confirma com você no WhatsApp.
+                        </span>
+                      </span>
+                    </label>
                   </div>
                 </div>
+              )}
 
-                {/* Botão Submit */}
+              {step === 3 && (
+                <div className="space-y-4">
+                  <div>
+                    <p className="text-lg font-black text-[#002b5c]">O que é mais importante pra você?</p>
+                    <p className="mt-1 text-sm text-slate-500">Você pode mudar isso depois no WhatsApp.</p>
+                  </div>
+
+                  <div className="space-y-3">
+                    {[
+                      'Menor preço',
+                      'Melhor custo-benefício',
+                      'Melhor cobertura',
+                      'Tanto faz (me mostre opções)',
+                    ].map((option) => {
+                      const selected = formData.preferencia === option;
+
+                      return (
+                        <label
+                          key={option}
+                          className={`flex cursor-pointer items-center gap-3 rounded-2xl border p-4 transition ${
+                            selected ? 'border-[#ff8200] bg-orange-50' : 'border-gray-200 bg-white hover:bg-gray-50'
+                          }`}
+                        >
+                          <input
+                            type="radio"
+                            name="preferencia"
+                            checked={selected}
+                            onChange={() => updateFormField('preferencia', option)}
+                            className="h-4 w-4 accent-[#ff8200]"
+                          />
+                          <span className={`text-sm font-medium ${selected ? 'text-[#002b5c]' : 'text-slate-700'}`}>
+                            {option}
+                          </span>
+                        </label>
+                      );
+                    })}
+                  </div>
+
+                  <div className="rounded-2xl bg-orange-50 px-4 py-3 text-sm text-[#002b5c]">
+                    Você pode mudar isso depois no WhatsApp.
+                  </div>
+                </div>
+              )}
+
+              {step === 4 && (
+                <div className="space-y-4">
+                  <div>
+                    <label className="mb-2 block text-sm font-bold text-[#002b5c]">E-mail</label>
+                    <input
+                      type="email"
+                      className="w-full rounded-2xl border border-gray-100 bg-gray-50 p-4 text-gray-900 placeholder-gray-500 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500"
+                      placeholder="voce@exemplo.com"
+                      value={formData.email}
+                      onChange={(e) => updateFormField('email', e.target.value)}
+                    />
+                  </div>
+                </div>
+              )}
+
+              <div className="mt-8 flex gap-3">
+                {step > 1 && (
+                  <button
+                    type="button"
+                    onClick={handleBack}
+                    className="rounded-2xl bg-gray-100 p-4 text-gray-700 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-orange-500 disabled:cursor-not-allowed"
+                    aria-label="Voltar ao passo anterior"
+                    disabled={loading}
+                  >
+                    <ChevronLeft />
+                  </button>
+                )}
+
                 <button
-                  type="submit"
+                  type="button"
+                  onClick={handleNext}
                   disabled={loading}
-                  className="w-full py-4 bg-[#25D366] hover:bg-[#1ebc57] text-white font-black text-lg rounded-xl shadow-lg hover:shadow-xl transition-all transform active:scale-[0.98] flex items-center justify-center gap-2 mt-4"
+                  className="flex-1 rounded-2xl bg-[#ff8200] py-4 font-black uppercase tracking-widest text-white focus:outline-none focus:ring-2 focus:ring-orange-500 disabled:cursor-not-allowed disabled:opacity-70"
+                  aria-label={step === TOTAL_STEPS ? 'Enviar formulário' : 'Avançar para o próximo passo'}
                 >
                   {loading ? (
-                    <><Loader2 className="w-6 h-6 animate-spin" /> Enviando...</>
+                    <span className="inline-flex items-center justify-center gap-2">
+                      <Loader2 className="h-5 w-5 animate-spin" />
+                      Enviando...
+                    </span>
                   ) : (
-                    'VER TABELA DE PREÇOS'
+                    'ENVIAR E RECEBER COTAÇÃO'
                   )}
                 </button>
-
-                <div className="text-center text-xs text-gray-400 flex items-center justify-center gap-1">
-                  <Lock className="w-3 h-3" /> Seus dados estão 100% seguros
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* MODAL SUCESSO */}
-      {successOpen && (
-        <div className="fixed inset-0 z-[10000] flex items-center justify-center p-4 bg-black/90 backdrop-blur-md">
-          <div className="bg-white w-full max-w-md rounded-3xl shadow-2xl overflow-hidden animate-in zoom-in duration-300">
-            <div className="bg-[#25D366] p-8 text-center text-white">
-              <div className="mx-auto w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mb-4 animate-bounce">
-                <CheckCircle className="w-10 h-10 text-white" />
               </div>
-              <h2 className="text-2xl font-black mb-2">Sucesso!</h2>
-              <p className="opacity-90 font-medium">Abrindo seu WhatsApp...</p>
-            </div>
-            
-            <div className="p-8 text-center space-y-6">
-              <p className="text-gray-600 text-lg">
-                Redirecionando em <span className="font-bold text-[#004a8e] text-2xl">{countdown}s</span>
-              </p>
-              
-              <button
-                onClick={() => window.open(whatsUrl, '_blank')}
-                className="w-full py-4 bg-[#004a8e] hover:bg-[#003b73] text-white font-bold rounded-xl shadow-lg transition-colors flex items-center justify-center gap-2"
-              >
-                ABRIR AGORA <ExternalLink className="w-5 h-5" />
-              </button>
-            </div>
+            </motion.div>
           </div>
-        </div>
-      )}
+        )}
+      </AnimatePresence>
+
+      <SuccessModal isOpen={isSuccess} onClose={() => setIsSuccess(false)} leadData={leadData} />
     </>
   );
-};
-
-export default FormModal;
+}

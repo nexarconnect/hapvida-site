@@ -1,93 +1,102 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { FileText, ArrowLeft } from "lucide-react";
 
 export default function TermosDeUso() {
   return (
-    <main className="py-12 bg-gray-50">
-      <div className="container mx-auto px-4 max-w-4xl">
-        <header className="mb-8">
-          <p className="text-sm text-gray-600 mb-3">
-            <Link to="/#home" className="hover:underline text-[#0B2B5A]">
-              Home
-            </Link>{" "}
-            <span className="text-gray-400">/</span> Termos de uso
-          </p>
+    <main className="min-h-screen bg-slate-50 py-12">
+      <div className="container mx-auto max-w-3xl px-4">
+        <header className="mb-10">
+          <Link
+            to="/"
+            className="mb-4 flex items-center gap-2 text-sm text-slate-500 hover:text-blue-900"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Voltar para a Home
+          </Link>
 
-          <h1 className="text-3xl font-bold text-[#0B2B5A]">Termos de uso</h1>
-          <p className="text-gray-600 mt-2">Última atualização: 11/02/2026</p>
+          <div className="mb-2 flex items-center gap-3">
+            <FileText className="h-8 w-8 text-blue-900" />
+            <h1 className="text-3xl font-bold text-slate-900">Termos de Uso</h1>
+          </div>
+
+          <p className="text-slate-600">Atualizado em 14 de março de 2026</p>
         </header>
 
-        <section className="bg-white rounded-2xl border border-gray-100 shadow-sm p-8 space-y-6 text-gray-700 leading-relaxed">
+        <section className="space-y-8 rounded-2xl border border-slate-200 bg-white p-8 leading-relaxed text-slate-700 shadow-sm">
           <div>
-            <h2 className="text-xl font-bold text-[#0B2B5A] mb-2">
+            <h2 className="mb-2 text-lg font-bold text-slate-900">
               1. Sobre a Nexar
             </h2>
             <p>
-              Especialistas em planos de saúde Hapvida. Conectando você ao
-              melhor cuidado de saúde.
+              A Nexar atua na captação e atendimento de interessados em planos de
+              saúde <strong>Hapvida</strong>, conectando o usuário a consultores
+              autorizados para análise de perfil e cotação.
             </p>
           </div>
 
           <div>
-            <h2 className="text-xl font-bold text-[#0B2B5A] mb-2">
-              2. Aceite dos termos
+            <h2 className="mb-2 text-lg font-bold text-slate-900">
+              2. Finalidade do Site
             </h2>
             <p>
-              Ao acessar e utilizar este site, você concorda com estes Termos de
-              uso. Se você não concordar, recomendamos não utilizar o site.
+              Este site coleta dados para solicitação de cotação e facilita o
+              contato entre o usuário e consultores. O uso da plataforma não
+              garante contratação automática ou disponibilidade universal dos
+              produtos apresentados.
             </p>
           </div>
 
           <div>
-            <h2 className="text-xl font-bold text-[#0B2B5A] mb-2">
-              3. Uso do site
+            <h2 className="mb-2 text-lg font-bold text-slate-900">
+              3. Responsabilidade do Usuário
             </h2>
             <p>
-              Você se compromete a utilizar o site de forma lícita, sem violar
-              direitos de terceiros, e sem tentar explorar falhas, automatizar
-              abusos ou interferir no funcionamento do serviço.
+              O usuário é responsável pela veracidade e integridade das
+              informações fornecidas. Dados incorretos podem comprometer a
+              precisão da cotação e a continuidade do atendimento.
             </p>
           </div>
 
           <div>
-            <h2 className="text-xl font-bold text-[#0B2B5A] mb-2">
-              4. Informações e cotações
+            <h2 className="mb-2 text-lg font-bold text-slate-900">
+              4. Valores e Disponibilidade
             </h2>
             <p>
-              As informações exibidas podem variar por município, perfil e
-              disponibilidade. Valores e condições podem ser confirmados pelo
-              consultor durante o atendimento.
+              Valores, carências e rede credenciada podem variar conforme o
+              município, idade e perfil de contratação. As informações finais
+              devem ser confirmadas com o consultor no momento do atendimento.
             </p>
           </div>
 
           <div>
-            <h2 className="text-xl font-bold text-[#0B2B5A] mb-2">
-              5. Propriedade intelectual
+            <h2 className="mb-2 text-lg font-bold text-slate-900">
+              5. Atendimento via WhatsApp
             </h2>
             <p>
-              Conteúdos, textos e elementos visuais deste site não podem ser
-              copiados ou reproduzidos sem autorização, exceto quando permitido
-              por lei.
+              Ao solicitar uma cotação, o usuário poderá ser redirecionado para
+              atendimento via <strong>WhatsApp</strong> para validar informações
+              e receber as opções compatíveis com seu perfil.
             </p>
           </div>
 
           <div>
-            <h2 className="text-xl font-bold text-[#0B2B5A] mb-2">
-              6. Limitação de responsabilidade
+            <h2 className="mb-2 text-lg font-bold text-slate-900">
+              6. Propriedade Intelectual
             </h2>
             <p>
-              Não garantimos que o site ficará disponível de forma ininterrupta
-              e isenta de erros. Podemos atualizar o conteúdo e remover páginas
-              sem aviso prévio.
+              Os textos, elementos visuais e a estrutura desta página são
+              protegidos. A reprodução ou modificação sem autorização prévia não
+              é permitida.
             </p>
           </div>
 
-          <div>
-            <h2 className="text-xl font-bold text-[#0B2B5A] mb-2">
-              7. Contato
+          <div className="rounded-xl border border-slate-100 bg-slate-50 p-4">
+            <h2 className="mb-2 text-sm font-bold text-slate-900 uppercase tracking-wider">
+              Contato e Suporte
             </h2>
-            <p>
-              Telefone/WhatsApp: <strong>(14) 99123-5094</strong>
+            <p className="text-sm">
+              WhatsApp: <strong>(14) 99123-5094</strong>
               <br />
               E-mail: <strong>nexarconnect@gmail.com</strong>
             </p>
@@ -95,11 +104,8 @@ export default function TermosDeUso() {
 
           <div className="pt-4">
             <Link
-              to="/#home"
-              className="inline-flex items-center justify-center h-11 px-5 rounded-md text-sm font-semibold text-white transition-colors duration-200"
-              style={{ backgroundColor: "#0B2B5A" }}
-              onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.9")}
-              onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
+              to="/"
+              className="inline-flex items-center justify-center h-12 px-8 rounded-full bg-[#004b8d] text-white font-bold transition-all hover:opacity-90 active:scale-95"
             >
               Voltar para a Home
             </Link>

@@ -1,166 +1,135 @@
 import React from 'react';
-import { Link } from 'react-router-dom'; // <-- IMPORTADO PARA LINKS INTERNOS
-import { Facebook, Instagram, Linkedin, Mail, Phone } from 'lucide-react';
-import logoHapvida from "../assets/logo-hapvida-branco.png";
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import {
+  Instagram,
+  Facebook,
+  Linkedin,
+  Mail,
+  Phone,
+  MapPin,
+  ShieldCheck
+} from 'lucide-react';
+import { trackCTA } from '../lib/tracking'; // Corrigido: removido trackContact
 
-const Footer = () => {
+export default function Footer({ onOpenForm }) {
   const currentYear = new Date().getFullYear();
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  const footerLinks = {
-    planos: [
-      { label: 'Plano Família', href: '#tabela-de-precos' }, // <-- AJUSTADO PARA ID CORRETO
-      { label: 'Plano Empresa', href: '#tabela-de-precos' },
-      { label: 'Plano Individual', href: '#tabela-de-precos' },
-      { label: 'Plano Odontológico', href: '#tabela-de-precos' },
-    ],
-    institucional: [
-      { label: 'Sobre nós', href: '#about' },
-      { label: 'Home', href: '#home' },
-    ],
-    legal: [
-      { label: 'Políticas de Privacidade', to: '/politicas-privacidade' }, // <-- MUDADO PARA LINK INTERNO
-      { label: 'Termos de uso', to: '/termos-de-uso' }, // <-- MUDADO PARA LINK INTERNO
-    ]
+  const handleWhatsAppClick = () => {
+    // Corrigido: alterado para trackCTA
+    trackCTA('whatsapp_click', 'footer_contact', { canal: 'whatsapp' });
   };
 
-  const scrollToSection = (href) => {
-    const element = document.querySelector(href);
+  const handleCTAClick = () => {
+    trackCTA('solicitar_cotacao', 'footer_main');
+    onOpenForm();
+  };
+
+  const scrollToSection = (sectionId) => {
+    if (location.pathname !== '/') {
+      navigate('/');
+      setTimeout(() => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 150);
+      return;
+    }
+
+    const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
 
   return (
-    <footer id="about" className="scroll-mt-24 bg-gray-900 text-white">
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
-          {/* Brand */}
-<div>
-  <div className="flex items-center gap-3 mb-4">
-    <img
-      src={logoHapvida}
-      alt="Hapvida"
-      className="h-8 md:h-9 w-auto"
-      loading="lazy"
-    />
+    <footer className="relative z-10 bg-[#002b5c] pb-12 pt-16 text-white">
+      <div className="container mx-auto px-4">
+        <div className="mb-12 grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4">
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-2xl font-black tracking-tight text-white uppercase">Nexar</h3>
+              <p className="mt-4 text-sm leading-relaxed text-blue-100/70">
+                Consultoria especializada em planos de saúde <strong>Hapvida</strong>.
+                Focada em transparência e agilidade para sua proteção.
+              </p>
+            </div>
 
-    <div className="leading-tight">
-      <div
-        className="text-1xl font-bold"
-        style={{ color: "var(--hapvida-blue)" }}
-      >
-       <span className="text-white">NEXAR</span>
-      </div>
-    </div>
-  </div>
-
-  <p className="text-gray-400 mb-4">
-    Especialistas em planos de saúde Hapvida. Conectando você ao melhor cuidado
-    de saúde.
-  </p>
-
-  <div className="flex space-x-4">
-    <a
-      href="#"
-      className="text-gray-400 hover:text-[var(--hapvida-blue)] transition-colors"
-      aria-label="Facebook"
-    >
-      <Facebook className="h-5 w-5" />
-    </a>
-
-    <a
-      href=""
-      target="_blank"
-      rel="noopener noreferrer"
-      className="text-gray-400 hover:text-[var(--hapvida-blue)] transition-colors"
-      aria-label="Instagram"
-    >
-      <Instagram className="h-5 w-5" />
-    </a>
-
-    <a
-      href="#"
-      className="text-gray-400 hover:text-[var(--hapvida-blue)] transition-colors"
-      aria-label="LinkedIn"
-    >
-      <Linkedin className="h-5 w-5" />
-    </a>
-  </div>
-</div>
-
-          {/* Planos */}
-          <div>
-            <h3 className="text-lg font-bold mb-4">Planos</h3>
-            <ul className="space-y-2">
-              {footerLinks.planos.map((link, index) => (
-                <li key={index}>
-                  <button
-                    onClick={() => scrollToSection(link.href)}
-                    className="text-gray-400 hover:text-[var(--hapvida-blue)] transition-colors"
-                  >
-                    {link.label}
-                  </button>
-                </li>
+            <div className="flex gap-3">
+              {[Instagram, Facebook, Linkedin].map((Icon, i) => (
+                <a
+                  key={i}
+                  href="#"
+                  className="group rounded-xl border border-white/10 bg-white/5 p-2.5 transition-all hover:bg-[#ff8200]"
+                >
+                  <Icon className="h-5 w-5 text-blue-100 group-hover:text-white" />
+                </a>
               ))}
+            </div>
+          </div>
+
+          <div>
+            <h4 className="mb-6 text-lg font-bold text-white">Navegação</h4>
+            <ul className="space-y-4 text-sm text-blue-100/70">
+              <li><Link to="/" className="hover:text-white transition-colors">Página Inicial</Link></li>
+              <li><button onClick={handleCTAClick} className="hover:text-white transition-colors">Solicitar Cotação</button></li>
+              <li><button onClick={() => scrollToSection('faq')} className="hover:text-white transition-colors">Dúvidas Frequentes</button></li>
+              <li><button onClick={() => scrollToSection('network')} className="hover:text-white transition-colors">Rede Credenciada</button></li>
             </ul>
           </div>
 
-          {/* Institucional */}
           <div>
-            <h3 className="text-lg font-bold mb-4">Institucional</h3>
-            <ul className="space-y-2">
-              {footerLinks.institucional.map((link, index) => (
-                <li key={index}>
-                  <button
-                    onClick={() => scrollToSection(link.href)}
-                    className="text-gray-400 hover:text-[var(--hapvida-blue)] transition-colors"
-                  >
-                    {link.label}
-                  </button>
-                </li>
-              ))}
+            <h4 className="mb-6 text-lg font-bold text-white">Institucional</h4>
+            <ul className="space-y-4 text-sm text-blue-100/70">
+              <li><Link to="/politicas-privacidade" className="hover:text-white transition-colors">Privacidade e Segurança</Link></li>
+              <li><Link to="/termos-de-uso" className="hover:text-white transition-colors">Termos de Uso</Link></li>
+              <li><Link to="aviso-legal" className="hover:text-white transition-colors">Aviso Legal</Link></li>
             </ul>
           </div>
 
-          {/* Contato */}
           <div>
-            <h3 className="text-lg font-bold mb-4">Contato</h3>
-            <ul className="space-y-3">
-              <li className="flex items-start">
-                <Phone className="h-5 w-5 mr-2 mt-0.5 flex-shrink-0" style={{ color: 'var(--hapvida-blue)' }} />
-                <span className="text-gray-400">(14) 99123-5094</span> {/* <-- TELEFONE CORRIGIDO */}
+            <h4 className="mb-6 text-lg font-bold text-white">Atendimento</h4>
+            <ul className="space-y-4 text-sm text-blue-100/70">
+              <li className="flex items-center gap-3">
+                <Phone className="h-4 w-4 text-[#ff8200]" />
+                <a
+                  href="https://wa.me/5514991235094"
+                  onClick={handleWhatsAppClick}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white transition-colors"
+                >
+                  (14) 99123-5094
+                </a>
               </li>
-              <li className="flex items-start">
-                <Mail className="h-5 w-5 mr-2 mt-0.5 flex-shrink-0" style={{ color: 'var(--hapvida-blue)' }} />
-                <span className="text-gray-400">nexarconnect@gmail.com</span> {/* <-- EMAIL CORRIGIDO */}
+              <li className="flex items-center gap-3">
+                <Mail className="h-4 w-4 text-[#ff8200]" />
+                <a href="mailto:nexarconnect@gmail.com" className="hover:text-white transition-colors">
+                  nexarconnect@gmail.com
+                </a>
+              </li>
+              <li className="flex items-start gap-3">
+                <MapPin className="mt-1 h-4 w-4 text-[#ff8200]" />
+                <span>• Atendimento Nacional</span>
               </li>
             </ul>
           </div>
         </div>
 
-        {/* Legal Links */}
-        <div className="border-t border-gray-800 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <p className="text-gray-400 text-sm">
-              © {currentYear} NEXAR Corretora. Todos os direitos reservados.
-            </p>
-            <div className="flex space-x-6">
-              {footerLinks.legal.map((link, index) => (
-                <li key={index} className="list-none"> {/* <-- MUDADO PARA <li> PARA CONSISTÊNCIA */}
-                  <Link
-                    to={link.to}
-                    className="text-gray-400 hover:text-[var(--hapvida-blue)] transition-colors text-sm"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </div>
+        <div className="flex flex-col items-center justify-between gap-6 border-t border-white/10 pt-8 text-center md:flex-row md:text-left">
+          <div className="space-y-1 text-[11px] text-blue-100/40">
+            <p>© {currentYear} NexAR Soluções em Saúde</p>
+            <p>CNPJ: 10.157.791/0001-11 • Todos os direitos reservados.</p>
+          </div>
+
+          <div className="flex items-center gap-2 rounded-full border border-white/5 bg-white/5 px-4 py-2 text-[11px] text-blue-100/60">
+            <ShieldCheck className="h-4 w-4 text-green-400" />
+            Atendimento com segurança e suporte especializado
           </div>
         </div>
       </div>
     </footer>
   );
-};
-
-export default Footer;
+}

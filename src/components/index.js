@@ -1,0 +1,11 @@
+export { default as Navbar } from './Navbar';
+export { default as HeroSection } from './HeroSection';
+export { default as HapvidaNetworkStats } from './HapvidaNetworkStats';
+export { default as PriceTablesSection } from './PriceTablesSection';
+export { default as NationalMap } from './NationalMap';
+export { default as NetworkSection } from './NetworkSection';
+export { default as ChatInteligente } from './ChatInteligente';
+export { default as Footer } from './Footer';
+export { default as ScrollToTop } from './ScrollToTop';
+export { default as NetworkUnitsTest } from './NetworkUnitsTest';
+export { default as FormModal } from './FormModal';
