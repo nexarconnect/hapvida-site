@@ -19,6 +19,8 @@ jobs:
 
       - name: Instalar dependências
         run: npm ci
+        env:
+          PUPPETEER_SKIP_DOWNLOAD: true
 
       - name: Build (gera dist/)
         run: npm run build
