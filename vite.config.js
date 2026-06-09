@@ -7,10 +7,10 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 export default defineConfig({
   plugins: [react()],
-  base: '/',  // ← CORRETO PARA HOSTINGER (root do domínio)
+  base: '/',
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src"),
+      '@': path.resolve(__dirname, './src'),
     },
   },
   server: {
@@ -19,15 +19,13 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        // Isso divide o código em pedaços menores para carregar mais rápido
         manualChunks: {
-          vendor: ['react', 'react-dom', 'react-helmet'],
+          vendor: ['react', 'react-dom', 'react-helmet-async'],
           animations: ['framer-motion'],
           icons: ['lucide-react'],
         },
       },
     },
-    // Aumenta o limite do aviso para 1MB para evitar mensagens desnecessárias
     chunkSizeWarningLimit: 1000,
   },
 })
