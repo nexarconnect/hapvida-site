@@ -72,7 +72,7 @@ export default function HomePage({ onOpenForm }) {
         <ChatInteligente />
       </section>
       <section id="contact">
-        <Footer />
+        <Footer onOpenForm={handleOpenForm} />
       </section>
     </div>
   );
