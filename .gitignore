@@ -31,3 +31,6 @@ node_modules/
 # Cache/artefatos do Vite (não versionar)
 node_modules/.vite/
 
+# Cache de PDFs baixados do Drive (sync-prices.js)
+scripts/drive-cache/
+
