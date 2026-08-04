@@ -1,18 +1,18 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Zap, Clock3, MessageCircle, ShieldCheck } from 'lucide-react';
+import { Zap, Clock3, MessageCircle, ShieldCheck, Users } from 'lucide-react';
 import { trackCTA } from '../lib/tracking';
 import bannerImg from '../assets/banner-hero.png';
 
 export default function HeroSection({
   onOpenForm,
   city,
-  minPrice = '75,70',
+  minPrice = '157,29',
 }) {
   const formattedPrice =
     typeof minPrice === 'number'
       ? minPrice.toLocaleString('pt-BR', { minimumFractionDigits: 2 })
-      : minPrice || '75,70';
+      : minPrice || '157,29';
 
   const handleOpenForm = () => {
     trackCTA('solicitar_cotacao', 'hero_main', {
@@ -58,11 +58,20 @@ export default function HeroSection({
             transition={{ duration: 0.55 }}
             className="max-w-3xl"
           >
-            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#ff8200]/25 bg-[#ff8200]/10 px-4 py-2 backdrop-blur-md">
-              <Zap className="h-3.5 w-3.5 text-[#ff8200]" />
-              <span className="text-[10px] font-black uppercase tracking-[0.22em] text-[#ff8200]">
-                Tabela 2026
-              </span>
+            <div className="mb-5 flex flex-wrap items-center gap-2">
+              <div className="inline-flex items-center gap-2 rounded-full border border-[#ff8200]/25 bg-[#ff8200]/10 px-4 py-2 backdrop-blur-md">
+                <Zap className="h-3.5 w-3.5 text-[#ff8200]" />
+                <span className="text-[10px] font-black uppercase tracking-[0.22em] text-[#ff8200]">
+                  Tabela 2026
+                </span>
+              </div>
+
+              <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 backdrop-blur-md">
+                <ShieldCheck className="h-3.5 w-3.5 text-white" />
+                <span className="text-[10px] font-black uppercase tracking-[0.22em] text-white">
+                  Consultoria Autorizada Hapvida
+                </span>
+              </div>
             </div>
 
             <h1 className="mb-4 text-4xl font-black leading-[1.04] text-white/90 drop-shadow-[0_2px_8px_rgba(0,0,0,0.25)] sm:text-5xl md:text-[3.7rem] lg:text-[4.8rem]">
@@ -99,6 +108,11 @@ export default function HeroSection({
                 Leva menos de 1 minuto • Atendimento por consultor
               </p>
             </div>
+
+            <p className="mb-8 flex items-center gap-2 text-xs font-semibold text-[#ff8200]">
+              <Users className="h-4 w-4" />
+              Atendimento limitado por consultor — vagas por região sujeitas a disponibilidade
+            </p>
 
             <motion.div
               variants={containerVariants}

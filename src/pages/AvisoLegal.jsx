@@ -41,7 +41,7 @@ export default function AvisoLegal() {
               2. Atualização de Valores
             </h2>
             <p>
-              Os valores mencionados de <strong>R$ 75,70</strong> e demais
+              Os valores mencionados de <strong>R$ 157,29</strong> e demais
               tabelas de preços são estimativas baseadas nas tabelas vigentes e
               podem sofrer alterações sem aviso prévio pela operadora. A
               confirmação final do valor depende da idade, município e perfil de

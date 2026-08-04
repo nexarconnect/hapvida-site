@@ -6,6 +6,11 @@ import HomePage from './pages/HomePage';
 import ThankYou from './pages/ThankYou';
 import Login from './pages/Login';
 import DashboardLeads from './pages/DashboardLeads';
+import AvisoLegal from './pages/AvisoLegal';
+import PoliticasPrivacidade from './pages/PoliticasPrivacidade';
+import TermosDeUso from './pages/TermosDeUso';
+import PerguntasFrequentes from './pages/PerguntasFrequentes';
+import RedeAtendimento from './pages/RedeAtendimento';
 
 import ScrollToTop from './components/ScrollToTop';
 import NetworkUnitsTest from './components/NetworkUnitsTest';
@@ -109,6 +114,11 @@ function App() {
           }
         />
         <Route path="/obrigado" element={<ThankYou />} />
+        <Route path="/aviso-legal" element={<AvisoLegal />} />
+        <Route path="/politicas-privacidade" element={<PoliticasPrivacidade />} />
+        <Route path="/termos-de-uso" element={<TermosDeUso />} />
+        <Route path="/perguntas-frequentes" element={<PerguntasFrequentes />} />
+        <Route path="/rede-de-atendimento" element={<RedeAtendimento />} />
 
         <Route
           path="/login"

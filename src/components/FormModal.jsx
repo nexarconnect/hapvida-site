@@ -49,7 +49,7 @@ const DRAFT_KEY = 'formDraft';
 export default function FormModal({
   isOpen,
   onClose,
-  lowestPrice = '75,70',
+  lowestPrice = '157,29',
   initialPlan = null,
   userCity = '',
 }) {
