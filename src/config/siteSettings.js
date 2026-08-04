@@ -4,9 +4,9 @@ export const SITE_SETTINGS = {
   hapvida: {
     // Hero & Preços
     title: 'Plano de saúde Hapvida 2026',
-    startingFromValue: import.meta.env.VITE_HAPVIDA_STARTING_FROM || 'R$ 75,70', 
+    startingFromValue: import.meta.env.VITE_HAPVIDA_STARTING_FROM || 'R$ 157,29',
     startingFromDisclaimer: '*Valores variam por município e perfil. Autorizada pela Hapvida.',
-    heroSubtitle: 'Valores a partir de R$ 75,70', 
+    heroSubtitle: 'Valores a partir de R$ 157,29',
     heroMicrocopy: 'Leva menos de 1 minuto • Atendimento por consultor',
     
     // Formulário (Labels e Suporte)

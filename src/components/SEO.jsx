@@ -2,9 +2,9 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 
 function normalizeDisplayPrice(price) {
-  const raw = String(price ?? '75,70').trim();
+  const raw = String(price ?? '157,29').trim();
 
-  if (!raw) return '75,70';
+  if (!raw) return '157,29';
 
   const cleaned = raw.replace(/[^\d,.-]/g, '');
 
@@ -12,21 +12,21 @@ function normalizeDisplayPrice(price) {
 }
 
 function normalizeSchemaPrice(price) {
-  const raw = String(price ?? '75,70')
+  const raw = String(price ?? '157,29')
     .trim()
     .replace(/[^\d,.-]/g, '')
     .replace(',', '.');
 
   const numeric = Number(raw);
 
-  return Number.isFinite(numeric) && numeric > 0 ? numeric.toFixed(2) : '75.70';
+  return Number.isFinite(numeric) && numeric > 0 ? numeric.toFixed(2) : '157.29';
 }
 
 function removeTrailingSlash(url) {
   return url.endsWith('/') ? url.slice(0, -1) : url;
 }
 
-export default function SEO({ price = '75,70' }) {
+export default function SEO({ price = '157,29' }) {
   const displayPrice = normalizeDisplayPrice(price);
   const schemaPrice = normalizeSchemaPrice(price);
 

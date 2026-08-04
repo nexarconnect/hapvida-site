@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import {
   Instagram,
   Facebook,
@@ -13,8 +13,6 @@ import { trackCTA } from '../lib/tracking'; // Corrigido: removido trackContact
 
 export default function Footer({ onOpenForm }) {
   const currentYear = new Date().getFullYear();
-  const location = useLocation();
-  const navigate = useNavigate();
 
   const handleWhatsAppClick = () => {
     // Corrigido: alterado para trackCTA
@@ -24,24 +22,6 @@ export default function Footer({ onOpenForm }) {
   const handleCTAClick = () => {
     trackCTA('solicitar_cotacao', 'footer_main');
     onOpenForm();
-  };
-
-  const scrollToSection = (sectionId) => {
-    if (location.pathname !== '/') {
-      navigate('/');
-      setTimeout(() => {
-        const element = document.getElementById(sectionId);
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      }, 150);
-      return;
-    }
-
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
   };
 
   return (
@@ -75,8 +55,8 @@ export default function Footer({ onOpenForm }) {
             <ul className="space-y-4 text-sm text-blue-100/70">
               <li><Link to="/" className="hover:text-white transition-colors">Página Inicial</Link></li>
               <li><button onClick={handleCTAClick} className="hover:text-white transition-colors">Solicitar Cotação</button></li>
-              <li><button onClick={() => scrollToSection('faq')} className="hover:text-white transition-colors">Dúvidas Frequentes</button></li>
-              <li><button onClick={() => scrollToSection('network')} className="hover:text-white transition-colors">Rede Credenciada</button></li>
+              <li><Link to="/perguntas-frequentes" className="hover:text-white transition-colors">Dúvidas Frequentes</Link></li>
+              <li><Link to="/rede-de-atendimento" className="hover:text-white transition-colors">Rede Credenciada</Link></li>
             </ul>
           </div>
 

@@ -15,7 +15,7 @@ export default function FAQSection() {
     {
       question: 'Como funciona a tabela de preços 2026?',
       answer:
-        'Os valores a partir de R$ 75,70 são a referência inicial. A tabela oficial varia conforme a sua região, faixa etária e modalidade contratada. O consultor envia a cotação atualizada direto no WhatsApp.'
+        'Os valores a partir de R$ 157,29 são a referência inicial. A tabela oficial varia conforme a sua região, faixa etária e modalidade contratada. O consultor envia a cotação atualizada direto no WhatsApp.'
     },
     {
       question: 'Posso contratar com MEI ou CNPJ?',
