@@ -2,6 +2,8 @@ import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { MessageCircle, X, Send, RotateCcw, Check, Zap } from 'lucide-react';
 import { useChatFlow } from '../hooks/useChatFlow';
+import { saveLead } from '../lib/supabase';
+import { trackLead } from '../lib/tracking';
 
 const WHATSAPP_NUMBER = '5514991235094';
 
@@ -180,7 +182,7 @@ export default function ChatInteligente() {
     setInput('');
   }, [addMessage, input, isSending, isTyping, lastActionTs, redirectMode, step, setLead, setStep, setInput]);
 
-  const handleFinalAction = useCallback(() => {
+  const handleFinalAction = useCallback(async () => {
     if (isSending || redirectMode) return;
     if (!lead.nome || !lead.cidade || !lead.email || !lead.whatsapp) {
       addMessage('bot', 'Faltam alguns dados para continuar. Pode revisar?');
@@ -189,6 +191,29 @@ export default function ChatInteligente() {
     setIsSending(true);
     setRedirectMode(true);
     setCountdown(2);
+
+    try {
+      const whatsappRaw = String(lead.whatsapp || '').replace(/\D/g, '');
+      const result = await saveLead({
+        nome: lead.nome,
+        whatsapp: lead.whatsapp,
+        whatsappRaw,
+        cidade: lead.cidade,
+        email: lead.email,
+        plano: lead.plano || null,
+        preferencia: lead.preferencia || null,
+        numPessoas: 1,
+        idades: lead.idade ? [lead.idade] : [],
+      });
+      if (!result || !result.success) {
+        // Lead ainda segue para o WhatsApp (mensagem carrega os dados), mas não foi
+        // persistido no Supabase/dashboard — log explícito para não passar despercebido.
+        console.error('Lead do chat não foi salvo no Supabase:', result?.error);
+      }
+      trackLead(lead.plano || null, lead.cidade, 'chat');
+    } catch (err) {
+      console.error('Erro ao salvar lead do chat:', err);
+    }
   }, [addMessage, isSending, lead, redirectMode]);
 
   const handleSend = useCallback(() => {

@@ -1,15 +1,14 @@
-'use client';
-
 import React, { useState, useEffect, lazy, Suspense } from 'react';
 
 import { getPricingData } from "../lib/supabase";
 import { trackCTA } from "../lib/tracking";
 
 import { Navbar, HeroSection, HapvidaNetworkStats, PriceTablesSection, NationalMap, NetworkSection, ChatInteligente, Footer } from '../components';
+import SEO from '../components/SEO';
 
 const FAQ = lazy(() => import('../components/FAQ'));
 
-export default function HomePage() {
+export default function HomePage({ onOpenForm }) {
   const [pricing, setPricing] = useState([]);
   const [minPrice, setMinPrice] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -32,29 +31,30 @@ export default function HomePage() {
     loadPricingData();
   }, []);
 
-  const openForm = () => {
-    trackCTA('open_form');
-    // Original logic to open form, e.g., scroll to contact section or open modal
-    const contactSection = document.getElementById('contact');
-    if (contactSection) {
-      contactSection.scrollIntoView({ behavior: 'smooth' });
-    }
+  const handleOpenForm = (planName) => {
+    trackCTA('open_form', 'homepage', { plano: planName || null });
+    onOpenForm?.(planName);
   };
+
+  const formattedMinPrice = minPrice
+    ? minPrice.toLocaleString('pt-BR', { minimumFractionDigits: 2 })
+    : '157,29';
 
   return (
     <div>
+      <SEO price={formattedMinPrice} />
       <Navbar />
       <section id="hero">
-        <HeroSection onCTA={openForm} />
+        <HeroSection onOpenForm={handleOpenForm} minPrice={minPrice} />
       </section>
       <section id="stats">
         <HapvidaNetworkStats />
       </section>
       <section id="pricing">
         {loading ? (
-          <div>Carregando preços...</div>
+          <div className="py-24 text-center text-slate-400">Carregando preços...</div>
         ) : (
-          <PriceTablesSection pricing={pricing} minPrice={minPrice} />
+          <PriceTablesSection pricing={pricing} minPrice={minPrice} onOpenForm={handleOpenForm} />
         )}
       </section>
       <section id="map">
@@ -63,7 +63,7 @@ export default function HomePage() {
       <section id="network">
         <NetworkSection />
       </section>
-      <Suspense fallback={<div>Carregando FAQ...</div>}>
+      <Suspense fallback={<div className="py-12 text-center text-slate-400">Carregando FAQ...</div>}>
         <section id="faq">
           <FAQ />
         </section>

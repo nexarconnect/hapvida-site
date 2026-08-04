@@ -9,11 +9,13 @@
     "preview": "vite preview --host 0.0.0.0 --port 3000",
     "lint": "eslint . --quiet",
     "lint:warn": "eslint .",
-    "sync-network": "node sync-network.js"
+    "sync-network": "node sync-network.js",
+    "sync-prices": "node scripts/sync-prices.js",
+    "sync-prices:dry": "node scripts/sync-prices.js --dry",
+    "sync-prices:force": "node scripts/sync-prices.js --force"
   },
   "dependencies": {
     "@radix-ui/react-alert-dialog": "^1.1.4",
-    "axios": "^1.19.0",
     "@radix-ui/react-avatar": "^1.1.2",
     "@radix-ui/react-checkbox": "^1.1.3",
     "@radix-ui/react-dialog": "^1.1.4",
@@ -24,6 +26,7 @@
     "@radix-ui/react-tabs": "^1.1.2",
     "@radix-ui/react-toast": "^1.2.4",
     "@supabase/supabase-js": "^2.49.1",
+    "axios": "^1.19.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "framer-motion": "^11.15.0",
@@ -52,6 +55,7 @@
     "eslint-plugin-react": "^7.37.3",
     "eslint-plugin-react-hooks": "^5.1.0",
     "globals": "^15.14.0",
+    "pdf-parse": "^2.4.5",
     "postcss": "^8.4.49",
     "tailwindcss": "^3.4.17",
     "terser": "^5.37.0",

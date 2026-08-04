@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { supabase } from './lib/supabase';
 
@@ -17,9 +17,7 @@ import NetworkUnitsTest from './components/NetworkUnitsTest';
 import FormModal from './components/FormModal';
 import ChatInteligente from './components/ChatInteligente';
 
-const ConfigPage = () => (
-  <div className="p-8 text-center">Configurações (Em breve)</div>
-);
+const ConfigPage = lazy(() => import('./pages/ConfigPage'));
 
 function ProtectedRoute({ session, children }) {
   if (!session) return <Navigate to="/login" replace />;
@@ -35,6 +33,7 @@ function App() {
   const [session, setSession] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState(null);
 
   useEffect(() => {
     let mounted = true;
@@ -83,11 +82,8 @@ function App() {
     };
   }, []);
 
-  const handleOpenForm = () => {
-    setIsFormOpen(true);
-  };
-
-  const handleOpenConsultorOnline = () => {
+  const handleOpenForm = (planName) => {
+    setSelectedPlan(planName || null);
     setIsFormOpen(true);
   };
 
@@ -106,12 +102,7 @@ function App() {
       <Routes>
         <Route
           path="/"
-          element={
-            <HomePage
-              onOpenForm={handleOpenForm}
-              onOpenConsultorOnline={handleOpenConsultorOnline}
-            />
-          }
+          element={<HomePage onOpenForm={handleOpenForm} />}
         />
         <Route path="/obrigado" element={<ThankYou />} />
         <Route path="/aviso-legal" element={<AvisoLegal />} />
@@ -151,7 +142,9 @@ function App() {
           path="/admin/config"
           element={
             <ProtectedRoute session={session}>
-              <ConfigPage />
+              <Suspense fallback={<div className="flex min-h-screen items-center justify-center"><div className="h-8 w-8 animate-spin rounded-full border-4 border-blue-200 border-t-blue-900" /></div>}>
+                <ConfigPage />
+              </Suspense>
             </ProtectedRoute>
           }
         />
@@ -168,7 +161,11 @@ function App() {
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
 
-      <FormModal isOpen={isFormOpen} onClose={() => setIsFormOpen(false)} />
+      <FormModal
+        isOpen={isFormOpen}
+        onClose={() => { setIsFormOpen(false); setSelectedPlan(null); }}
+        initialPlan={selectedPlan}
+      />
       <ChatInteligente />
     </Router>
   );
