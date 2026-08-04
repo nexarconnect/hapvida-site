@@ -36,19 +36,7 @@ jobs:
       - name: Verificar dist/
         run: ls -la dist/ && ls -la dist/assets/ | head -20
 
-      - name: 🚀 Enviar para Hostinger via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.HOSTINGER_FTP_HOST }}
-          username: ${{ secrets.HOSTINGER_FTP_USERNAME }}
-          password: ${{ secrets.HOSTINGER_FTP_PASSWORD }}
-          local-dir: dist/
-          server-dir: /public_html/
-          state-name: .ftp-deploy-sync-state.json
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/node_modules/**
-            .github/**
-            **/.env*
-            **/*.map
+      - name: 🚀 Enviar para Hostinger via API (HTTPS)
+        run: node scripts/deploy-hostinger.js
+        env:
+          HOSTINGER_API_TOKEN: ${{ secrets.HOSTINGER_API_TOKEN }}
