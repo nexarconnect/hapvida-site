@@ -33,6 +33,11 @@ if (!SUPABASE_URL || !SUPABASE_KEY) {
 }
 
 const DRIVE_FOLDER_ID  = '1_F9UvrdcH3tmj8YHM6s9PfKxrMtHcLPA'; // Plano Individual
+// Versão da lógica de parsing. Incrementar SEMPRE que parsePricePdf/validatePrices
+// mudarem: entra na chave do cache e força reprocessar todos os PDFs, senão os
+// preços antigos (possivelmente errados) continuariam sendo servidos do estado.
+const PARSER_VERSION   = 4;
+
 const CACHE_DIR        = path.join(__dirname, 'drive-cache');
 const STATE_FILE       = path.join(__dirname, 'drive-cache', '.sync-state.json');
 
@@ -174,27 +179,131 @@ function parsePricePdf(text) {
     }
   }
 
-  // Fallback: se não encontrou pelos títulos, usa posição ordinal das linhas "00 a 18"
-  if (Object.keys(prices).length === 0) {
-    const lines18 = [];
-    const regex18 = /00\s+a\s+18\s+anos(.+?)(?=\n|19\s+a\s+23)/gi;
-    let m;
-    while ((m = regex18.exec(normalized)) !== null) {
-      const vals = [];
-      const rr = /(\d{1,3}(?:\.\d{3})*,\d{2})/g;
-      let mm;
-      while ((mm = rr.exec(m[1])) !== null) {
-        const v = parseFloat(mm[1].replace(/\./g, '').replace(',', '.'));
-        if (v >= 80 && v <= 2000) vals.push(v);
-      }
-      if (vals.length > 0) lines18.push(Math.min(...vals));
-    }
-
-    const planOrder = ['Mix', 'Nosso Plano', 'Pleno'];
-    lines18.forEach((v, i) => { if (planOrder[i]) prices[planOrder[i]] = v; });
+  // ── Identificação por CÓD. INTERNO — fonte de verdade ──────────────────────
+  //
+  // ATENÇÃO (verificado em 2026-08-04): o laço por título acima NUNCA extrai
+  // valor em nenhuma das 13 cidades. O pdf-parse emite os títulos dos planos
+  // DEPOIS das tabelas (em Bauru: tabelas nos índices 182/1419/2881, títulos só
+  // em 3879+), então `slice(índiceDoTítulo)` nunca alcança uma tabela.
+  //
+  // A versão anterior caía num fallback que rotulava pela ORDEM das tabelas, e
+  // errava feio: em São Carlos a 2ª tabela virava "Nosso Plano" R$ 339,85
+  // quando o CÓD. INTERNO mostra que é o Pleno.
+  //
+  // Agora cada tabela é identificada pelo CÓD. INTERNO do cabeçalho — a
+  // identidade real do produto. Tabela sem assinatura conhecida é DESCARTADA
+  // com aviso, nunca adivinhada.
+  const byCode  = {};
+  const unknown = [];
+  for (const table of extractPriceTables(normalized)) {
+    const plan = identifyPlanByCodes(table.codes);
+    if (!plan) { unknown.push(table); continue; }
+    // Entre variantes do mesmo plano fica o menor (copart + enfermaria).
+    if (byCode[plan] === undefined || table.min < byCode[plan]) byCode[plan] = table.min;
   }
 
-  return prices;
+  return { prices: byCode, unknown, ...validatePrices(byCode) };
+}
+
+/**
+ * Assinaturas de CÓD. INTERNO por plano — verificadas nas 13 cidades (2026-08-04).
+ * Basta UM código da lista aparecer no cabeçalho da tabela.
+ *
+ * NÃO usar o código 11412 como discriminador: ele aparece em Mix, Nosso Plano
+ * E no produto desconhecido — é compartilhado (provavelmente item avulso).
+ */
+const PLAN_SIGNATURES = [
+  // Pleno é idêntico em todas as cidades. Pirassununga traz só a cauda da lista.
+  { plan: 'Pleno',       codes: ['21092', '11827'] },
+  // Nosso Plano varia por região: 21087 (6 cidades), 21129 (Limeira), 21135 (SJC).
+  { plan: 'Nosso Plano', codes: ['21087', '21129', '21135'] },
+  // Integrado: só em Barretos, Marília, Piracicaba, Pirassununga e São Carlos.
+  // Essas 5 cidades vendem Integrado + Pleno (não têm Mix nem Nosso Plano).
+  // Confirmado pela legenda "PLANO / INTEGRADOPLENO" no PDF e pela linha
+  // TX. ADESÃO com 2 valores (contra 3 nas cidades de três planos).
+  { plan: 'Integrado',   codes: ['21096', '11832'] },
+];
+
+/**
+ * Planos que o site exibe. ESPELHA a whitelist de PriceTablesSection.jsx
+ * (`allowedPlans`) — se mudar lá, mude aqui.
+ *
+ * Integrado fica de fora de propósito: é gravado por cidade para consulta e
+ * uso futuro, mas não entra nas linhas globais (city = null) que alimentam os
+ * cards de preço da home.
+ */
+const DISPLAY_PLANS = ['Mix', 'Nosso Plano', 'Pleno'];
+
+/** Mix usa código próprio de cada cidade, sempre na faixa 36000–38999. */
+const MIX_CODE_MIN = 36000;
+const MIX_CODE_MAX = 38999;
+
+/** @returns {string|null} nome do plano, ou null se não identificado */
+function identifyPlanByCodes(codes) {
+  for (const { plan, codes: sig } of PLAN_SIGNATURES) {
+    if (codes.some(c => sig.includes(c))) return plan;
+  }
+
+  if (codes.some(c => { const n = parseInt(c, 10); return n >= MIX_CODE_MIN && n <= MIX_CODE_MAX; })) {
+    return 'Mix';
+  }
+  return null;
+}
+
+/**
+ * Extrai as tabelas de preço do texto: para cada linha "00 a 18 anos" (faixa
+ * mais barata) pega os CÓD. INTERNO do cabeçalho logo acima e o menor valor.
+ */
+function extractPriceTables(normalized) {
+  const tables = [];
+  for (const m of normalized.matchAll(/00\s+a\s+18\s+anos/gi)) {
+    const header = normalized.slice(Math.max(0, m.index - 300), m.index);
+    const codMatch = header.match(/C[ÓO]D\.?\s*INTERNO\s*([\d\s]+)/i);
+    // Os códigos vêm colados no PDF ("3860038598..."), sempre de 5 dígitos.
+    const codes = codMatch ? (codMatch[1].replace(/\s/g, '').match(/\d{5}/g) || []) : [];
+
+    const line = normalized.slice(m.index, m.index + 220).split('\n')[0];
+    const vals = [...line.matchAll(/(\d{1,3}(?:\.\d{3})*,\d{2})/g)]
+      .map(x => parseFloat(x[1].replace(/\./g, '').replace(',', '.')))
+      .filter(v => v >= 80 && v <= 2000); // mensalidade plausível
+
+    if (vals.length > 0) tables.push({ codes, min: Math.min(...vals), count: vals.length });
+  }
+  return tables;
+}
+
+/**
+ * Guarda-corpo do parser — decide se dá para CONFIAR nos rótulos de plano.
+ *
+ * A identificação em si é feita por CÓD. INTERNO em identifyPlanByCodes().
+ * Esta função é a checagem de sanidade do resultado: preferimos não publicar
+ * preço a publicar preço errado.
+ *
+ * @returns {{trusted: boolean, reason: string|null}}
+ */
+function validatePrices(prices) {
+  const found = Object.keys(prices);
+  if (found.length === 0) {
+    return { trusted: false, reason: 'nenhuma tabela do PDF pôde ser identificada por CÓD. INTERNO' };
+  }
+
+  // Gate — o preço tem de subir na ordem dos planos.
+  // Rede de segurança: se uma assinatura de código for atribuída ao plano
+  // errado no futuro, os valores saem fora de ordem e a cidade é barrada.
+  // Só planos presentes são comparados; Mix e Integrado nunca coexistem
+  // (são linhas de produto de cidades diferentes).
+  const ORDER = ['Mix', 'Integrado', 'Nosso Plano', 'Pleno'];
+  const seq = ORDER.filter(p => prices[p] !== undefined).map(p => ({ plan: p, v: prices[p] }));
+  for (let i = 1; i < seq.length; i++) {
+    if (seq[i].v <= seq[i - 1].v) {
+      return {
+        trusted: false,
+        reason: `preços fora de ordem (${seq[i - 1].plan} R$ ${seq[i - 1].v} >= ${seq[i].plan} R$ ${seq[i].v})`,
+      };
+    }
+  }
+
+  return { trusted: true, reason: null };
 }
 
 // ── Vigência ──────────────────────────────────────────────────────────────────
@@ -222,6 +331,7 @@ async function main() {
   fs.mkdirSync(CACHE_DIR, { recursive: true });
 
   const allPrices = []; // [{ city, planName, price, valid_from, valid_until, fileId }]
+  const skipped   = []; // [{ city, reason, discarded }] — cidades barradas pelos gates
 
   for (const file of KNOWN_FILES) {
     const localPath = path.join(CACHE_DIR, file.filename);
@@ -241,7 +351,7 @@ async function main() {
 
     // Verifica se já foi processado (pelo tamanho do arquivo como proxy de mudança)
     const fileStat = fs.statSync(localPath);
-    const fileKey  = `${cacheKey}:${fileStat.size}`;
+    const fileKey  = `${cacheKey}:${fileStat.size}:v${PARSER_VERSION}`;
 
     if (!isForce && state.processedFiles[fileKey]) {
       log(`Sem mudança: ${file.city} — pulando`);
@@ -266,11 +376,20 @@ async function main() {
     }
 
     const validity = parseValidityFromText(text);
-    const prices   = parsePricePdf(text);
+    const { prices, trusted, reason, unknown } = parsePricePdf(text);
 
-    if (Object.keys(prices).length === 0) {
-      warn(`Nenhum preço encontrado em ${file.filename}`);
+    if (!trusted) {
+      warn(`IGNORANDO ${file.city}: ${reason}`);
+      warn(`  valores descartados: ${JSON.stringify(prices)} — confira o PDF à mão`);
+      skipped.push({ city: file.city, reason, discarded: prices });
       continue;
+    }
+
+    // Tabelas que existem no PDF mas não casaram com nenhum plano conhecido.
+    // Não bloqueiam a cidade (os planos identificados seguem válidos), mas
+    // precisam aparecer: é assim que um produto novo vira visível.
+    for (const t of unknown) {
+      warn(`  ${file.city}: tabela não identificada ignorada — CÓD. INTERNO [${t.codes.join(' ')}], menor valor R$ ${t.min.toFixed(2)}`);
     }
 
     log(`  ${file.city}: ${JSON.stringify(prices)}`);
@@ -289,8 +408,12 @@ async function main() {
   }
 
   // ── Calcula preços globais (mínimo entre cidades) para o site ──────────────
+  // Só planos exibidos entram aqui: estas linhas (city = null) são as que o
+  // site lê para montar os cards. Integrado é gravado por cidade, mas não vira
+  // card na home — ver DISPLAY_PLANS.
   const globalMin = {};
   for (const { planName, price } of allPrices) {
+    if (!DISPLAY_PLANS.includes(planName)) continue;
     if (!globalMin[planName] || price < globalMin[planName]) {
       globalMin[planName] = price;
     }
@@ -299,6 +422,18 @@ async function main() {
   log('\n📊 Resumo de preços mínimos (a partir de):');
   for (const [plan, price] of Object.entries(globalMin)) {
     log(`  ${plan}: R$ ${price.toFixed(2).replace('.', ',')}`);
+  }
+
+  // ── Cidades barradas pelos gates de confiança ──────────────────────────────
+  // Ficam FORA de allPrices, portanto fora do banco e fora do mínimo global —
+  // um preço mal rotulado não pode virar o "a partir de" exibido no site.
+  if (skipped.length > 0) {
+    warn(`\n⚠️  ${skipped.length} cidade(s) NÃO serão gravadas (rótulo de plano não confiável):`);
+    for (const s of skipped) {
+      warn(`  • ${s.city}: ${s.reason}`);
+    }
+    warn('  Corrija o PDF ou o parser e rode de novo. Os preços destas cidades');
+    warn('  permanecem com o valor anterior no banco (nada é apagado por engano).');
   }
 
   // ── Vigência mais recente ──────────────────────────────────────────────────
@@ -346,7 +481,18 @@ async function main() {
   }
 
   // 3. Upsert por cidade (para futuro filtro por cidade)
-  for (const { city, planName, price, valid_from, valid_until } of allPrices) {
+  //
+  // Requer índice único em (plan_name, city), que a tabela pode não ter:
+  //   CREATE UNIQUE INDEX pricing_table_plan_city_uniq
+  //     ON pricing_table (plan_name, city);
+  // Sem ele o onConflict abaixo falha em TODAS as linhas.
+  //
+  // A versão anterior engolia justamente esse erro (`!message.includes('constraint')`)
+  // e ainda assim declarava "Preços por cidade atualizados (N registros)" — ou
+  // seja, reportava sucesso de trabalho que não fez. Agora contamos de verdade.
+  let cityOk = 0;
+  const cityErrors = [];
+  for (const { city, planName, price } of allPrices) {
     const { error } = await supabase
       .from('pricing_table')
       .upsert(
@@ -361,12 +507,27 @@ async function main() {
         { onConflict: 'plan_name,city', ignoreDuplicates: false }
       );
 
-    if (error && !error.message.includes('constraint')) {
-      warn(`Erro ao upsert ${city}/${planName}: ${error.message}`);
-    }
+    if (error) cityErrors.push({ city, planName, message: error.message });
+    else cityOk++;
   }
 
-  ok(`Preços por cidade atualizados (${allPrices.length} registros)`);
+  if (cityOk > 0) ok(`Preços por cidade atualizados (${cityOk}/${allPrices.length} registros)`);
+
+  if (cityErrors.length > 0) {
+    warn(`FALHA em ${cityErrors.length}/${allPrices.length} upserts por cidade.`);
+    const faltaConstraint = cityErrors.some(e =>
+      /constraint|conflict|unique|exclusion/i.test(e.message));
+    if (faltaConstraint) {
+      warn('  Causa provável: falta o índice único (plan_name, city). Rode no Supabase:');
+      warn('    CREATE UNIQUE INDEX pricing_table_plan_city_uniq ON pricing_table (plan_name, city);');
+    }
+    // Mostra alguns exemplos reais em vez de só o total.
+    for (const e of cityErrors.slice(0, 3)) {
+      warn(`  • ${e.city}/${e.planName}: ${e.message}`);
+    }
+    if (cityErrors.length > 3) warn(`  ... e mais ${cityErrors.length - 3}`);
+    warn('  Os preços GLOBAIS (usados pelo site hoje) foram gravados normalmente.');
+  }
 
   // Salva estado
   state.lastSync = new Date().toISOString();
