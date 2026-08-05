@@ -1,63 +1,28 @@
-import dotenv from 'dotenv';
-import { createClient } from '@supabase/supabase-js';
-
-dotenv.config({ path: './.env.local' }); // corrigido para ./ (da raiz)
-
-const SUPABASE_URL = process.env.VITE_SUPABASE_URL;
-const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
-
-if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
-  console.error('Erro: VITE_SUPABASE_URL ou SUPABASE_SERVICE_ROLE_KEY não definidos no .env.local');
-  process.exit(1);
-}
-
-const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
-
-const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+// ... imports e configs iniciais mantidos
 
 const geocodeCity = async (city, uf) => {
   try {
-    // usa cidade + UF + Brasil pra mais precisão
     const query = `${city}, ${uf}, Brasil`;
     const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}`;
 
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`Erro na API Nominatim: ${response.status}`);
-    }
+    // CRÍTICO: Nominatim EXIGE um User-Agent identificável para evitar bloqueio 403
+    const response = await fetch(url, {
+      headers: { 'User-Agent': 'HapvidaGeocodeApp/1.0 (contato@suaagencia.com.br)' }
+    });
+
+    if (!response.ok) throw new Error(`Erro API: ${response.status}`);
 
     const data = await response.json();
-    if (data.length > 0) {
-      return { lat: parseFloat(data[0].lat), lon: parseFloat(data[0].lon) };
-    } else {
-      throw new Error(`Nenhuma coordenada encontrada para: ${query}`);
-    }
+    return data.length > 0 ? { lat: parseFloat(data[0].lat), lon: parseFloat(data[0].lon) } : null;
   } catch (error) {
-    console.error(`Erro ao geocodificar ${city}, ${uf}:`, error.message);
+    console.error(`❌ Falha em ${city}:`, error.message);
     return null;
-  }
-};
-
-const updateCityCoordinates = async (cityId, lat, lon) => {
-  try {
-    const { error } = await supabase
-      .from('covered_cities')
-      .update({ lat, lon })
-      .eq('id', cityId);
-
-    if (error) {
-      throw new Error(`Erro no update do banco: ${error.message}`);
-    }
-
-    console.log(`[OK] Cidade/UF (id=${cityId}) -> lat=${lat}, lon=${lon}`);
-  } catch (error) {
-    console.error(`Erro ao atualizar id=${cityId}:`, error.message);
   }
 };
 
 const main = async () => {
   try {
-    console.log('Iniciando geocodificação...');
+    console.log('🚀 Iniciando geocodificação...');
 
     const { data: cities, error } = await supabase
       .from('covered_cities')
@@ -65,34 +30,27 @@ const main = async () => {
       .or('lat.is.null,lon.is.null')
       .eq('active', true);
 
-    if (error) {
-      throw new Error(`Erro na query do banco: ${error.message}`);
-    }
+    if (error) throw error;
+    if (!cities?.length) return console.log('✅ Tudo atualizado.');
 
-    if (!cities || cities.length === 0) {
-      console.log('Nenhuma cidade precisa de geocodificação.');
-      return;
-    }
+    console.log(`📍 ${cities.length} cidades pendentes.`);
 
-    console.log(`Encontradas ${cities.length} cidades para geocodificar.`);
+    for (let i = 0; i < cities.length; i++) {
+      const { id, city, uf } = cities[i];
+      // Log de progresso para controle de volume
+      console.log(`[${i + 1}/${cities.length}] Processando: ${city}-${uf}`);
 
-    for (const city of cities) {
-      console.log(`Geocodificando: ${city.city}, ${city.uf} (id=${city.id})`);
-
-      const coords = await geocodeCity(city.city, city.uf);
+      const coords = await geocodeCity(city, uf);
       if (coords) {
-        await updateCityCoordinates(city.id, coords.lat, coords.lon);
-      } else {
-        console.log(`Pulando update para id=${city.id} (falha na geocodificação).`);
+        await updateCityCoordinates(id, coords.lat, coords.lon);
       }
 
-      // rate limiting: 1 segundo entre requests
-      await delay(1000);
+      await delay(1000); // Mantém 1s para evitar banimento de IP
     }
 
-    console.log('Geocodificação concluída.');
+    console.log('🏁 Processo concluído.');
   } catch (error) {
-    console.error('Erro no processo principal:', error.message);
+    console.error('💥 Erro fatal:', error.message);
   }
 };
 

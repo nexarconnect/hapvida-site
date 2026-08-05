@@ -16,11 +16,26 @@ export const validateWhatsApp = (p) =>
 // --- DADOS ---
 
 /**
- * Busca a tabela de preços completa
+ * Busca os preços "a partir de" exibidos na home.
+ *
+ * Filtra `city IS NULL` de propósito: `pricing_table` guarda dois tipos de
+ * linha — as globais (city = null), que são o menor preço entre todas as
+ * cidades, e as por cidade, gravadas por `scripts/sync-prices.js` para
+ * consulta e uso futuro.
+ *
+ * Sem esse filtro, as linhas por cidade entram na mesma lista e o
+ * PriceTablesSection — que deduplica por nome de plano pegando a PRIMEIRA
+ * ocorrência — passaria a exibir o preço de uma cidade arbitrária no lugar do
+ * "a partir de". Hoje isso não acontece só porque os upserts por cidade vêm
+ * falhando (falta índice único em `plan_name, city`); no dia em que o índice
+ * existir, o bug apareceria no site.
  */
 export async function getPricingData() {
   if (!supabase) return [];
-  const { data, error } = await supabase.from('pricing_table').select('*');
+  const { data, error } = await supabase
+    .from('pricing_table')
+    .select('*')
+    .is('city', null);
   if (error) {
     console.error('Erro ao buscar preços:', error);
     return [];
