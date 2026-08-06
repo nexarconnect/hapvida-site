@@ -9,6 +9,17 @@
 // Adicionar um post: 1) acrescentar aqui, 2) criar src/blog/posts/<slug>.jsx.
 export const BLOG_POSTS_META = [
   {
+    slug: 'hapvida-vale-a-pena-interior-sp',
+    title: 'Plano Hapvida vale a pena no interior de SP? Preço e cobertura',
+    description:
+      'Plano Hapvida vale a pena no interior de SP? Veja o que pesa no preço, na rede e na carência, e peça a cotação da sua cidade.',
+    category: 'Guia',
+    publishedAt: '2026-08-06',
+    updatedAt: '2026-08-06',
+    excerpt:
+      'Preço baixo só compensa se a rede atender perto de casa. Veja os três pontos que decidem se o plano Hapvida vale a pena na sua cidade do interior de SP.',
+  },
+  {
     slug: 'portabilidade-para-hapvida',
     title: 'Portabilidade para o Plano Hapvida: como funciona',
     description:
