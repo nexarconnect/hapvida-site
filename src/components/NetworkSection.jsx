@@ -1,30 +1,62 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MapPin, ExternalLink, Building2, ShieldCheck, CheckCircle2, Search } from 'lucide-react';
+import { MapPin, ExternalLink, Building2, ShieldCheck, CheckCircle2, ChevronDown } from 'lucide-react';
+import { COVERED_CITIES } from '../data/coveredCities';
+import { getNetworkUnits } from '../lib/supabase';
+import { detectCityIfAlreadyGranted } from '../hooks/useCityDetection';
 
-const REDE_DETALHADA = {
-  'Bauru': {
-    hospital: 'Hospital Bauru - Hapvida',
-    endereco: 'Rua Agenor Meira, 11-27 - Centro',
-    imagem: 'https://images.unsplash.com/photo-1587351021759-3e566b6af7cc?q=80&w=800&auto=format&fit=crop',
-    mapa: 'https://www.google.com/maps/search/?api=1&query=Hospital+Bauru+Hapvida+Rua+Agenor+Meira+11-27'
-  },
-  'Ribeirão Preto': {
-    hospital: 'Hospital São Francisco (GNDI)',
-    endereco: 'Rua Bernardino de Campos, 912 - Centro',
-    imagem: null,
-    mapa: 'https://www.google.com/maps/search/?api=1&query=Hospital+Sao+Francisco+Ribeirao+Preto'
-  }
-};
+const DEFAULT_CITY = 'São Paulo';
 
 export default function NetworkSection({ sharedCity }) {
-  const [activeCity, setActiveCity] = useState(sharedCity || 'Bauru');
-  const local = useMemo(() => REDE_DETALHADA[activeCity] || null, [activeCity]);
+  const [activeCity, setActiveCity] = useState(sharedCity || DEFAULT_CITY);
+  const [units, setUnits] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [autoDetected, setAutoDetected] = useState(false);
+
+  // Se veio uma cidade de fora (prop), ela manda.
+  useEffect(() => {
+    if (sharedCity) setActiveCity(sharedCity);
+  }, [sharedCity]);
+
+  // Sem cidade vinda de fora: tenta a localização silenciosamente, só se a
+  // permissão já tiver sido concedida antes (não pede nada novo aqui).
+  useEffect(() => {
+    if (sharedCity || autoDetected) return;
+
+    let mounted = true;
+    detectCityIfAlreadyGranted().then((city) => {
+      if (mounted && city) {
+        setActiveCity(city.name);
+        setAutoDetected(true);
+      }
+    });
+    return () => {
+      mounted = false;
+    };
+  }, [sharedCity, autoDetected]);
+
+  useEffect(() => {
+    let mounted = true;
+    setLoading(true);
+
+    getNetworkUnits(activeCity).then((data) => {
+      if (mounted) {
+        setUnits(data);
+        setLoading(false);
+      }
+    });
+
+    return () => {
+      mounted = false;
+    };
+  }, [activeCity]);
+
+  const featured = useMemo(() => units[0] || null, [units]);
 
   return (
     <section id="network" className="py-16 md:py-20 bg-white">
       <div className="container mx-auto px-6 max-w-6xl">
-        
+
         {/* Header com Seletor de Cidade */}
         <header className="mb-12 flex flex-col lg:flex-row lg:items-end justify-between gap-6 text-center lg:text-left">
           <div className="max-w-xl">
@@ -36,26 +68,31 @@ export default function NetworkSection({ sharedCity }) {
             </p>
           </div>
 
-          <div className="flex items-center justify-center gap-2 bg-slate-50 p-1.5 rounded-2xl border border-slate-100">
-            {Object.keys(REDE_DETALHADA).map((city) => (
-              <button
-                key={city}
-                onClick={() => setActiveCity(city)}
-                className={`px-4 py-2 text-[11px] font-black uppercase tracking-wider rounded-xl transition-all ${
-                  activeCity === city 
-                  ? 'bg-[#002b5c] text-white shadow-lg' 
-                  : 'text-slate-400 hover:text-[#002b5c]'
-                }`}
-              >
-                {city}
-              </button>
-            ))}
+          <div className="relative w-full sm:w-64">
+            <select
+              value={activeCity}
+              onChange={(e) => setActiveCity(e.target.value)}
+              className="w-full appearance-none rounded-2xl border border-slate-100 bg-slate-50 px-5 py-3 text-sm font-bold text-[#002b5c] outline-none transition-colors hover:bg-slate-100 focus:border-[#002b5c]/30"
+            >
+              {!COVERED_CITIES.some((city) => city.name === activeCity) && (
+                <option value={activeCity}>{activeCity}</option>
+              )}
+              {COVERED_CITIES.map((city) => (
+                <option key={city.name} value={city.name}>
+                  {city.name}
+                </option>
+              ))}
+            </select>
+            <ChevronDown
+              size={18}
+              className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-[#002b5c]/50"
+            />
           </div>
         </header>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
           <AnimatePresence mode="wait">
-            <motion.div 
+            <motion.div
               key={activeCity}
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -64,8 +101,8 @@ export default function NetworkSection({ sharedCity }) {
             >
               {/* Visual da Unidade */}
               <div className="relative h-64 w-full overflow-hidden bg-slate-100">
-                {local?.imagem ? (
-                  <img src={local.imagem} alt={local.hospital} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                {featured?.image_url ? (
+                  <img src={featured.image_url} alt={featured.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                 ) : (
                   <div className="flex h-full flex-col items-center justify-center text-slate-300">
                     <Building2 size={64} strokeWidth={1} />
@@ -80,16 +117,26 @@ export default function NetworkSection({ sharedCity }) {
               {/* Info da Unidade */}
               <div className="p-8 flex-1 flex flex-col justify-between">
                 <div>
-                  <h4 className="text-xl font-black text-[#002b5c] mb-2">{local?.hospital}</h4>
+                  {loading ? (
+                    <div className="h-6 w-2/3 animate-pulse rounded bg-slate-100" />
+                  ) : featured ? (
+                    <h4 className="text-xl font-black text-[#002b5c] mb-2">{featured.name}</h4>
+                  ) : (
+                    <h4 className="text-xl font-black text-[#002b5c] mb-2">
+                      Consulte a rede em {activeCity}
+                    </h4>
+                  )}
                   <div className="flex items-start gap-2 text-slate-500 mb-8">
                     <MapPin size={16} className="text-[#ff8200] shrink-0 mt-0.5" />
-                    <span className="text-sm font-medium leading-relaxed">{local?.endereco}</span>
+                    <span className="text-sm font-medium leading-relaxed">
+                      {featured?.address || 'Um consultor confirma as unidades disponíveis na sua região.'}
+                    </span>
                   </div>
                 </div>
-                <a 
-                  href={local?.mapa} 
-                  target="_blank" 
-                  rel="noreferrer" 
+                <a
+                  href={featured?.map_link || `https://www.google.com/maps/search/?api=1&query=Hapvida+${encodeURIComponent(activeCity)}`}
+                  target="_blank"
+                  rel="noreferrer"
                   className="flex items-center justify-center gap-2 w-full py-4 bg-[#f8fafc] hover:bg-blue-50 text-[#002b5c] font-black text-[11px] uppercase tracking-[0.15em] rounded-2xl transition-all border border-slate-100"
                 >
                   Abrir no GPS <ExternalLink size={14} />

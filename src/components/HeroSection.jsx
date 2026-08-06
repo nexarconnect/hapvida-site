@@ -58,7 +58,7 @@ export default function HeroSection({
             transition={{ duration: 0.55 }}
             className="max-w-3xl"
           >
-            <div className="mb-5 flex flex-wrap items-center gap-2">
+            <div className="mb-5 mt-4 flex flex-wrap items-center gap-2 md:mt-6">
               <div className="inline-flex items-center gap-2 rounded-full border border-[#ff8200]/25 bg-[#ff8200]/10 px-4 py-2 backdrop-blur-md">
                 <Zap className="h-3.5 w-3.5 text-[#ff8200]" />
                 <span className="text-[10px] font-black uppercase tracking-[0.22em] text-[#ff8200]">

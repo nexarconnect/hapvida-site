@@ -1,4 +1,5 @@
 import React, { useState, useEffect, lazy, Suspense } from 'react';
+import { Navigate, useLocation } from 'react-router-dom';
 
 import { getPricingData } from "../lib/supabase";
 import { trackCTA } from "../lib/tracking";
@@ -6,6 +7,9 @@ import { trackCTA } from "../lib/tracking";
 import { Navbar, HeroSection, HapvidaNetworkStats, PriceTablesSection, NationalMap, NetworkSection, ChatInteligente, Footer } from '../components';
 import SEO from '../components/SEO';
 import { FAQS } from '../data/faqs';
+import { slugifyCity } from '../data/coveredCities';
+import { useCityFromQuery, shouldShowCityBanner } from '../hooks/useCityDetection';
+import CityDetectBanner from '../components/CityDetectBanner';
 
 const FAQ = lazy(() => import('../components/FAQ'));
 
@@ -13,6 +17,10 @@ export default function HomePage({ onOpenForm }) {
   const [pricing, setPricing] = useState([]);
   const [minPrice, setMinPrice] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [showCityBanner, setShowCityBanner] = useState(shouldShowCityBanner);
+
+  const routerLocation = useLocation();
+  const queryCity = useCityFromQuery();
 
   useEffect(() => {
     async function loadPricingData() {
@@ -41,6 +49,17 @@ export default function HomePage({ onOpenForm }) {
     ? minPrice.toLocaleString('pt-BR', { minimumFractionDigits: 2 })
     : '157,29';
 
+  // ?cidade=bauru (ou utm de campanha apontando pra cidade) já manda direto
+  // pra página com preço e rede reais daquela cidade — sem precisar escolher.
+  if (queryCity) {
+    return (
+      <Navigate
+        to={`/plano-hapvida/${slugifyCity(queryCity.name)}${routerLocation.search}`}
+        replace
+      />
+    );
+  }
+
   return (
     <div>
       <SEO
@@ -58,6 +77,7 @@ export default function HomePage({ onOpenForm }) {
       <section id="stats">
         <HapvidaNetworkStats />
       </section>
+      {showCityBanner && <CityDetectBanner onDismiss={() => setShowCityBanner(false)} />}
       <section id="pricing">
         {loading ? (
           <div className="py-24 text-center text-slate-400">Carregando preços...</div>
@@ -68,13 +88,13 @@ export default function HomePage({ onOpenForm }) {
       <section id="map">
         <NationalMap />
       </section>
-      <section id="network">
-        <NetworkSection />
-      </section>
+      {/* NetworkSection e FAQ já têm id próprio ("network"/"faq") no
+          <section> interno deles — sem wrapper com o mesmo id aqui, senão
+          duplica (HTML inválido) e getElementById passa a pegar o wrapper
+          vazio em vez do conteúdo real. */}
+      <NetworkSection />
       <Suspense fallback={<div className="py-12 text-center text-slate-400">Carregando FAQ...</div>}>
-        <section id="faq">
-          <FAQ />
-        </section>
+        <FAQ />
       </Suspense>
       <section id="chat">
         <ChatInteligente />

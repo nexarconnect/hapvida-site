@@ -61,8 +61,8 @@ export default function Navbar() {
   };
 
   const navItems = [
-    { label: 'Tabelas', id: 'tabela-de-precos' },
-    { label: 'Rede', id: 'rede' },
+    { label: 'Tabelas', id: 'pricing' },
+    { label: 'Rede', id: 'network' },
     { label: 'Dúvidas', id: 'faq' },
   ];
 
