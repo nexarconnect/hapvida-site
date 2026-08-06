@@ -57,6 +57,7 @@ export default function Footer({ onOpenForm }) {
               <li><button onClick={handleCTAClick} className="hover:text-white transition-colors">Solicitar Cotação</button></li>
               <li><Link to="/perguntas-frequentes" className="hover:text-white transition-colors">Dúvidas Frequentes</Link></li>
               <li><Link to="/rede-de-atendimento" className="hover:text-white transition-colors">Rede Credenciada</Link></li>
+              <li><Link to="/blog" className="hover:text-white transition-colors">Blog</Link></li>
             </ul>
           </div>
 

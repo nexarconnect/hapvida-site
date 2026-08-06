@@ -1,10 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { ShieldCheck, ArrowLeft } from "lucide-react";
+import SEO from "../components/SEO";
 
 export default function PoliticasPrivacidade() {
   return (
     <main className="min-h-screen bg-slate-50 py-12">
+      <SEO
+        path="/politicas-privacidade"
+        title="Política de Privacidade | Tabela Plano Saúde"
+        description="Como a Nexar coleta, usa e protege seus dados pessoais ao solicitar uma cotação do plano de saúde Hapvida, conforme a LGPD."
+      />
       <div className="container mx-auto max-w-3xl px-4">
         <header className="mb-10">
           <Link

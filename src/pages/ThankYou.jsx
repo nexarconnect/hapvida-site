@@ -12,6 +12,7 @@ import {
 import { Link } from 'react-router-dom';
 import { openWhatsApp } from '../lib/whatsapp';
 import { trackCTA, trackLead } from '../lib/tracking';
+import SEO from '../components/SEO';
 
 // Helper seguro para recuperar dados do lead
 function getLeadData() {
@@ -49,14 +50,19 @@ export default function ThankYou() {
     openWhatsApp({
       nome: name || 'Cliente',
       cidade: city,
-      plano: plan,
-      origem: 'Obrigado_Premium'
+      perfil: plan,
     });
   };
 
   return (
     <section className="min-h-screen flex items-center justify-center bg-[#f8fafc] px-6 py-12">
-      <motion.div 
+      <SEO
+        path="/obrigado"
+        title="Cotação enviada | Tabela Plano Saúde"
+        description="Sua cotação do plano Hapvida foi gerada. Continue pelo WhatsApp para falar com um consultor."
+        noindex
+      />
+      <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         className="max-w-2xl w-full bg-white rounded-[3rem] shadow-[0_32px_64px_-12px_rgba(0,0,0,0.08)] p-8 md:p-16 text-center border border-slate-100"

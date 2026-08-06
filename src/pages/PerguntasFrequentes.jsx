@@ -1,19 +1,19 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
 import { HelpCircle, ArrowLeft } from "lucide-react";
 import FAQSection from "../components/FAQ";
+import SEO from "../components/SEO";
+import { FAQS } from "../data/faqs";
 
 export default function PerguntasFrequentes() {
   return (
     <main className="min-h-screen bg-slate-50">
-      <Helmet>
-        <title>Perguntas Frequentes | Plano Hapvida 2026</title>
-        <meta
-          name="description"
-          content="Tire suas dúvidas sobre carência, preços, modalidades e rede de atendimento do plano de saúde Hapvida 2026."
-        />
-      </Helmet>
+      <SEO
+        path="/perguntas-frequentes"
+        title="Perguntas Frequentes | Plano Hapvida 2026"
+        description="Tire suas dúvidas sobre carência, preços, modalidades e rede de atendimento do plano de saúde Hapvida 2026."
+        faqItems={FAQS}
+      />
 
       <div className="container mx-auto max-w-3xl px-4 pt-12">
         <Link

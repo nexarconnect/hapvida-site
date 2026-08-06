@@ -5,6 +5,7 @@ import { trackCTA } from "../lib/tracking";
 
 import { Navbar, HeroSection, HapvidaNetworkStats, PriceTablesSection, NationalMap, NetworkSection, ChatInteligente, Footer } from '../components';
 import SEO from '../components/SEO';
+import { FAQS } from '../data/faqs';
 
 const FAQ = lazy(() => import('../components/FAQ'));
 
@@ -42,7 +43,14 @@ export default function HomePage({ onOpenForm }) {
 
   return (
     <div>
-      <SEO price={formattedMinPrice} />
+      <SEO
+        path="/"
+        title={`Plano de Saúde Hapvida 2026 | Cotação a partir de R$ ${formattedMinPrice}`}
+        description={`Solicite sua cotação do Plano de Saúde Hapvida 2026 com valores a partir de R$ ${formattedMinPrice}. Atendimento rápido no WhatsApp, consultor autorizado e sem compromisso.`}
+        price={formattedMinPrice}
+        includeProductSchema
+        faqItems={FAQS}
+      />
       <Navbar />
       <section id="hero">
         <HeroSection onOpenForm={handleOpenForm} minPrice={minPrice} />

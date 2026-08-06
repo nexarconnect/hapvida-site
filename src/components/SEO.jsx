@@ -1,5 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
+
+const SITE_URL = 'https://tabelaplanosaude.com.br';
+const SITE_NAME = 'Tabela Plano Saúde';
+const DEFAULT_OG_IMAGE = `${SITE_URL}/og-hapvida-2026.jpg`;
+const LOGO_URL = `${SITE_URL}/logo.png`;
+const DEFAULT_TITLE = 'Plano de Saúde Hapvida 2026 | Cotação a partir de R$ 157,29';
+const DEFAULT_DESCRIPTION =
+  'Solicite sua cotação do Plano de Saúde Hapvida 2026 com valores a partir de R$ 157,29. Atendimento rápido no WhatsApp, consultor autorizado e sem compromisso.';
 
 function normalizeDisplayPrice(price) {
   const raw = String(price ?? '157,29').trim();
@@ -22,78 +30,119 @@ function normalizeSchemaPrice(price) {
   return Number.isFinite(numeric) && numeric > 0 ? numeric.toFixed(2) : '157.29';
 }
 
-function removeTrailingSlash(url) {
-  return url.endsWith('/') ? url.slice(0, -1) : url;
+function buildCanonicalUrl(path) {
+  if (!path || path === '/') return `${SITE_URL}/`;
+  const normalized = path.startsWith('/') ? path : `/${path}`;
+  return `${SITE_URL}${normalized}`;
 }
 
-export default function SEO({ price = '157,29' }) {
+/**
+ * SEO por página. Cada rota pública deve renderizar <SEO /> com pelo menos
+ * title/description/path próprios — sem isso a página herda o <title>
+ * estático do index.html (genérico, com preço desatualizado).
+ */
+export default function SEO({
+  path = '/',
+  title,
+  description,
+  price,
+  faqItems = null,
+  includeProductSchema = false,
+  article = null,
+  noindex = false,
+  image = DEFAULT_OG_IMAGE,
+}) {
+  useEffect(() => {
+    // Remove as tags estáticas de index.html (data-default) assim que a
+    // página monta — o react-helmet-async não sabe que elas já existem e,
+    // sem isso, injeta as suas ao lado, duplicando og:*/twitter:*/canonical.
+    document.querySelectorAll('[data-default]').forEach((el) => el.remove());
+  }, []);
+
   const displayPrice = normalizeDisplayPrice(price);
   const schemaPrice = normalizeSchemaPrice(price);
 
-  const baseUrl = removeTrailingSlash('https://tabelaplanosaude.com.br/');
-  const canonicalUrl = `${baseUrl}/`;
-  const siteName = 'Tabela Plano Saúde';
-  const ogImage = `${baseUrl}/og-hapvida-2026.jpg`;
-  const logoUrl = `${baseUrl}/logo.png`;
+  const canonicalUrl = buildCanonicalUrl(path);
+  const pageTitle = title || DEFAULT_TITLE;
+  const description_ = description || DEFAULT_DESCRIPTION;
 
-  const pageTitle = `Plano de Saúde Hapvida 2026 | Cotação a partir de R$ ${displayPrice}`;
-  const description = `Solicite sua cotação do Plano de Saúde Hapvida 2026 com valores a partir de R$ ${displayPrice}. Atendimento rápido no WhatsApp, consultor autorizado e sem compromisso.`;
-
-  const faqJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: [
-      {
-        '@type': 'Question',
-        name: 'Como fazer a cotação do Plano Hapvida 2026?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'A cotação é feita online pelo WhatsApp. Um consultor autorizado valida a rede disponível na sua cidade e envia a tabela de preços atualizada.'
-        }
-      },
-      {
-        '@type': 'Question',
-        name: 'Quais os valores da Hapvida para 2026?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: `Os valores variam conforme idade e região, com opções a partir de R$ ${displayPrice}.`
-        }
+  const faqJsonLd = faqItems && faqItems.length > 0
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqItems.map((item) => ({
+          '@type': 'Question',
+          name: item.question,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: item.answer,
+          },
+        })),
       }
-    ]
-  };
+    : null;
 
-  const productJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'Product',
-    name: 'Plano de Saúde Hapvida 2026',
-    description,
-    image: ogImage,
-    brand: {
-      '@type': 'Brand',
-      name: 'Hapvida'
-    },
-    offers: {
-      '@type': 'Offer',
-      url: canonicalUrl,
-      priceCurrency: 'BRL',
-      price: schemaPrice,
-      availability: 'https://schema.org/InStock'
-    }
-  };
+  const productJsonLd = includeProductSchema
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'Product',
+        name: 'Plano de Saúde Hapvida 2026',
+        description: description_,
+        image,
+        brand: {
+          '@type': 'Brand',
+          name: 'Hapvida',
+        },
+        offers: {
+          '@type': 'Offer',
+          url: canonicalUrl,
+          priceCurrency: 'BRL',
+          price: schemaPrice,
+          availability: 'https://schema.org/InStock',
+        },
+      }
+    : null;
+
+  const articleJsonLd = article
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'BlogPosting',
+        headline: pageTitle,
+        description: description_,
+        image,
+        datePublished: article.publishedAt,
+        dateModified: article.updatedAt || article.publishedAt,
+        author: {
+          '@type': 'Organization',
+          name: SITE_NAME,
+        },
+        publisher: {
+          '@type': 'Organization',
+          name: SITE_NAME,
+          logo: {
+            '@type': 'ImageObject',
+            url: LOGO_URL,
+          },
+        },
+        mainEntityOfPage: {
+          '@type': 'WebPage',
+          '@id': canonicalUrl,
+        },
+      }
+    : null;
 
   const websiteJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    name: siteName,
-    url: canonicalUrl
+    name: SITE_NAME,
+    url: `${SITE_URL}/`,
   };
 
   const organizationJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    name: siteName,
-    url: canonicalUrl,
-    logo: logoUrl
+    name: SITE_NAME,
+    url: `${SITE_URL}/`,
+    logo: LOGO_URL,
   };
 
   return (
@@ -101,35 +150,36 @@ export default function SEO({ price = '157,29' }) {
       <html lang="pt-BR" />
       <title>{pageTitle}</title>
 
-      <meta name="description" content={description} />
+      <meta name="description" content={description_} />
       <link rel="canonical" href={canonicalUrl} />
-      <meta name="robots" content="index, follow" />
+      <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow'} />
 
       <meta property="og:type" content="website" />
-      <meta property="og:site_name" content={siteName} />
+      <meta property="og:site_name" content={SITE_NAME} />
       <meta property="og:locale" content="pt_BR" />
       <meta property="og:url" content={canonicalUrl} />
       <meta property="og:title" content={pageTitle} />
-      <meta property="og:description" content={description} />
-      <meta property="og:image" content={ogImage} />
+      <meta property="og:description" content={description_} />
+      <meta property="og:image" content={image} />
 
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={pageTitle} />
-      <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content={ogImage} />
+      <meta name="twitter:description" content={description_} />
+      <meta name="twitter:image" content={image} />
 
-      <script type="application/ld+json">
-        {JSON.stringify(faqJsonLd)}
-      </script>
-      <script type="application/ld+json">
-        {JSON.stringify(productJsonLd)}
-      </script>
-      <script type="application/ld+json">
-        {JSON.stringify(websiteJsonLd)}
-      </script>
-      <script type="application/ld+json">
-        {JSON.stringify(organizationJsonLd)}
-      </script>
+      {productJsonLd && (
+        <script type="application/ld+json">{JSON.stringify(productJsonLd)}</script>
+      )}
+      {articleJsonLd && (
+        <script type="application/ld+json">{JSON.stringify(articleJsonLd)}</script>
+      )}
+      {faqJsonLd && (
+        <script type="application/ld+json">{JSON.stringify(faqJsonLd)}</script>
+      )}
+      <script type="application/ld+json">{JSON.stringify(websiteJsonLd)}</script>
+      <script type="application/ld+json">{JSON.stringify(organizationJsonLd)}</script>
     </Helmet>
   );
 }
+
+export { DEFAULT_OG_IMAGE, SITE_URL, SITE_NAME };

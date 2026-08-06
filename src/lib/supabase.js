@@ -44,6 +44,24 @@ export async function getPricingData() {
 }
 
 /**
+ * Busca os preços "Mix / Nosso Plano / Pleno" de uma cidade específica, para
+ * as páginas /plano-hapvida-[cidade] (ver PlanoPorCidade.jsx). Ao contrário
+ * de getPricingData(), aqui city NÃO é null de propósito.
+ */
+export async function getPricingByCity(city) {
+  if (!supabase || !city) return [];
+  const { data, error } = await supabase
+    .from('pricing_table')
+    .select('*')
+    .eq('city', city);
+  if (error) {
+    console.error('Erro ao buscar preços por cidade:', error);
+    return [];
+  }
+  return data || [];
+}
+
+/**
  * Busca unidades da rede própria filtradas por cidade
  */
 export async function getNetworkUnits(city) {

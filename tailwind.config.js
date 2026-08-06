@@ -1,3 +1,5 @@
+import typography from '@tailwindcss/typography';
+
 /** @type {import('tailwindcss').Config} */
 export default {
   // 1. Varre todos os arquivos para remover CSS não utilizado
@@ -25,5 +27,5 @@ export default {
     'text-red-700', 'text-yellow-700', 'text-green-700', 'text-blue-700', 'text-slate-700',
     'text-red-600', 'text-yellow-600', 'text-green-600', 'text-blue-600', 'text-slate-800',
   ],
-  plugins: [],
+  plugins: [typography],
 };

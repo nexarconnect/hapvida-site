@@ -5,7 +5,8 @@
   "private": true,
   "scripts": {
     "dev": "vite --host 0.0.0.0 --port 3000",
-    "build": "node tools/generate-llms.js || true && vite build",
+    "build": "node scripts/generate-sitemap.js && vite build && node scripts/prerender.js",
+    "build:no-prerender": "node scripts/generate-sitemap.js && vite build",
     "preview": "vite preview --host 0.0.0.0 --port 3000",
     "lint": "eslint . --quiet",
     "lint:warn": "eslint .",
@@ -44,6 +45,7 @@
     "@babel/parser": "^7.26.3",
     "@babel/traverse": "^7.26.4",
     "@babel/types": "^7.26.3",
+    "@tailwindcss/typography": "^0.5.20",
     "@types/node": "^20.17.10",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
@@ -57,6 +59,7 @@
     "globals": "^15.14.0",
     "pdf-parse": "^2.4.5",
     "postcss": "^8.4.49",
+    "puppeteer": "^25.5.0",
     "tailwindcss": "^3.4.17",
     "terser": "^5.37.0",
     "vite": "^7.3.1"

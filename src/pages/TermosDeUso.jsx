@@ -1,10 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { FileText, ArrowLeft } from "lucide-react";
+import SEO from "../components/SEO";
 
 export default function TermosDeUso() {
   return (
     <main className="min-h-screen bg-slate-50 py-12">
+      <SEO
+        path="/termos-de-uso"
+        title="Termos de Uso | Tabela Plano Saúde"
+        description="Termos e condições de uso do site Tabela Plano Saúde, operado pela Nexar para comercialização de planos Hapvida."
+      />
       <div className="container mx-auto max-w-3xl px-4">
         <header className="mb-10">
           <Link

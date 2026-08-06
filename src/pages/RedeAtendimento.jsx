@@ -1,19 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
 import { MapPin, ArrowLeft } from "lucide-react";
 import NetworkSection from "../components/NetworkSection";
+import SEO from "../components/SEO";
 
 export default function RedeAtendimento() {
   return (
     <main className="min-h-screen bg-slate-50">
-      <Helmet>
-        <title>Rede de Atendimento Hapvida 2026 | Hospitais e Clínicas</title>
-        <meta
-          name="description"
-          content="Consulte hospitais, clínicas e prontos-atendimentos da rede própria e credenciada Hapvida na sua região."
-        />
-      </Helmet>
+      <SEO
+        path="/rede-de-atendimento"
+        title="Rede de Atendimento Hapvida 2026 | Hospitais e Clínicas"
+        description="Consulte hospitais, clínicas e prontos-atendimentos da rede própria e credenciada Hapvida na sua região."
+      />
 
       <div className="container mx-auto max-w-6xl px-4 pt-12">
         <Link

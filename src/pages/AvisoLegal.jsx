@@ -1,10 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { AlertTriangle, ArrowLeft } from "lucide-react";
+import SEO from "../components/SEO";
 
 export default function AvisoLegal() {
   return (
     <main className="min-h-screen bg-slate-50 py-12">
+      <SEO
+        path="/aviso-legal"
+        title="Aviso Legal | Tabela Plano Saúde"
+        description="Informações sobre a consultoria Nexar, atualização de valores, uso de marca e limitação de responsabilidade na comercialização de planos Hapvida."
+      />
       <div className="container mx-auto max-w-3xl px-4">
         <header className="mb-10">
           <Link

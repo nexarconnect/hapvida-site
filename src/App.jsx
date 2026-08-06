@@ -11,6 +11,10 @@ import PoliticasPrivacidade from './pages/PoliticasPrivacidade';
 import TermosDeUso from './pages/TermosDeUso';
 import PerguntasFrequentes from './pages/PerguntasFrequentes';
 import RedeAtendimento from './pages/RedeAtendimento';
+import PlanoPorCidade from './pages/PlanoPorCidade';
+import BlogIndex from './pages/BlogIndex';
+import BlogPost from './pages/BlogPost';
+import NotFound from './pages/NotFound';
 
 import ScrollToTop from './components/ScrollToTop';
 import NetworkUnitsTest from './components/NetworkUnitsTest';
@@ -110,6 +114,12 @@ function App() {
         <Route path="/termos-de-uso" element={<TermosDeUso />} />
         <Route path="/perguntas-frequentes" element={<PerguntasFrequentes />} />
         <Route path="/rede-de-atendimento" element={<RedeAtendimento />} />
+        <Route
+          path="/plano-hapvida/:slug"
+          element={<PlanoPorCidade onOpenForm={handleOpenForm} />}
+        />
+        <Route path="/blog" element={<BlogIndex onOpenForm={handleOpenForm} />} />
+        <Route path="/blog/:slug" element={<BlogPost onOpenForm={handleOpenForm} />} />
 
         <Route
           path="/login"
@@ -158,7 +168,7 @@ function App() {
           }
         />
 
-        <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
 
       <FormModal

@@ -22,9 +22,14 @@ jobs:
 
       - name: Instalar dependências
         run: npm ci
-        env:
-          PUPPETEER_SKIP_DOWNLOAD: true
-          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
+        # PUPPETEER_SKIP_DOWNLOAD ficava true aqui desde jun/2026, de uma
+        # época em que o puppeteer nem era dependência direta do projeto
+        # (ver git log deploy.yml) — provavelmente workaround para outra
+        # causa de lentidão no CI. Agora o puppeteer é usado de propósito
+        # pelo scripts/prerender.js, então o Chromium precisa baixar de
+        # verdade. Se isso voltar a causar problema no CI, o build não
+        # quebra por causa disso: o prerender.js falha graciosamente e
+        # segue sem pré-renderizar (ver etapa "Verificar dist/" abaixo).
 
       - name: Build (gera dist/)
         run: npm run build
@@ -34,7 +39,16 @@ jobs:
           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
 
       - name: Verificar dist/
-        run: ls -la dist/ && ls -la dist/assets/ | head -20
+        run: |
+          ls -la dist/ && ls -la dist/assets/ | head -20
+          echo "--- robots.txt / sitemap.xml ---"
+          head -3 dist/robots.txt dist/sitemap.xml
+          echo "--- prerender (aviso se não rodou, não quebra o build) ---"
+          if [ -f dist/perguntas-frequentes/index.html ]; then
+            echo "prerender OK: dist/perguntas-frequentes/index.html existe"
+          else
+            echo "AVISO: prerender não rodou nesta build (Chromium indisponível?) — dist/ segue só com CSR."
+          fi
 
       - name: 🚀 Enviar para Hostinger via API (HTTPS)
         run: node scripts/deploy-hostinger.js

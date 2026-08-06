@@ -1,7 +1,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { MapPin } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { MapPin, CheckCircle2 } from 'lucide-react';
 import mapaBrasil from '../assets/mapabrasil.png';
+import { COVERED_CITIES, slugifyCity } from '../data/coveredCities';
 
 export default function NationalMap() {
   return (
@@ -16,15 +18,34 @@ export default function NationalMap() {
             </h3>
 
             <p className="text-slate-500 text-base md:text-lg mb-8 max-w-lg mx-auto lg:mx-0 leading-relaxed">
-              Uma rede inteligente desenhada para oferecer atendimento de qualidade de norte a sul do país.
+              Rede própria Hapvida em todo o Brasil. Atendemos com foco nas cidades
+              abaixo, no interior de São Paulo.
             </p>
 
-            <div className="flex flex-wrap justify-center lg:justify-start gap-3 md:gap-4">
+            <div className="mb-8 flex flex-wrap justify-center lg:justify-start gap-3 md:gap-4">
               <div className="bg-slate-50 px-5 md:px-6 py-2.5 md:py-3 rounded-2xl border border-slate-100 font-bold text-sm md:text-base text-[#002b5c] hover:bg-slate-100 transition-colors">
                 +20 Estados
               </div>
               <div className="bg-slate-50 px-5 md:px-6 py-2.5 md:py-3 rounded-2xl border border-slate-100 font-bold text-sm md:text-base text-[#002b5c] hover:bg-slate-100 transition-colors">
-                Rede Integrada
+                {COVERED_CITIES.length} cidades atendidas
+              </div>
+            </div>
+
+            <div className="text-left">
+              <p className="mb-3 text-[10px] font-black uppercase tracking-widest text-slate-400">
+                Onde atendemos
+              </p>
+              <div className="flex flex-wrap justify-center gap-2 lg:justify-start">
+                {COVERED_CITIES.map((city) => (
+                  <Link
+                    key={city.name}
+                    to={`/plano-hapvida/${slugifyCity(city.name)}`}
+                    className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-3 py-1.5 text-xs font-bold text-[#002b5c] transition-colors hover:bg-blue-100"
+                  >
+                    <CheckCircle2 size={12} className="text-[#ff8200]" />
+                    {city.name}
+                  </Link>
+                ))}
               </div>
             </div>
           </div>
@@ -42,7 +63,7 @@ export default function NationalMap() {
               <div className="absolute inset-0 rounded-full border border-blue-100 animate-ping opacity-20" />
               <div className="absolute inset-4 rounded-full border border-blue-50 animate-pulse opacity-40" />
 
-              {/* Pin central */}
+              {/* Pin na região de atuação real (interior de SP) */}
               <div className="absolute right-[27%] top-[58%] flex items-center justify-center -translate-x-1/2 -translate-y-1/2">
                 <div className="relative">
                   <MapPin size={60} className="md:size-[80px] text-[#ff8200]" fill="#ff8200" />
@@ -53,16 +74,9 @@ export default function NationalMap() {
                   />
                 </div>
               </div>
-
-              {/* Pontos de presença */}
-              <div className="absolute left-[80%] top-[29%] h-2.5 w-2.5 md:h-3 md:w-3 rounded-full bg-[#002b5c] shadow-sm" />
-              <div className="absolute left-[57%] top-[33%] h-2.5 w-2.5 md:h-3 md:w-3 rounded-full bg-[#002b5c] shadow-sm" />
-              <div className="absolute left-[30%] top-[27%] h-2.5 w-2.5 md:h-3 md:w-3 rounded-full bg-[#ff8200] shadow-sm" />
-              <div className="absolute left-[42%] top-[40%] h-2.5 w-2.5 md:h-3 md:w-3 rounded-full bg-[#002b5c] shadow-sm" />
-              <div className="absolute left-[58%] top-[57%] h-2.5 w-2.5 md:h-3 md:w-3 rounded-full bg-[#ff8200] shadow-sm" />
-              <div className="absolute left-[60%] top-[71%] h-2.5 w-2.5 md:h-3 md:w-3 rounded-full bg-[#002b5c] shadow-sm" />
-              <div className="absolute left-[80%] top-[45%] h-2.5 w-2.5 md:h-3 md:w-3 rounded-full bg-[#002b5c] shadow-sm" />
-              <div className="absolute left-[71%] top-[34%] h-2.5 w-2.5 md:h-3 md:w-3 rounded-full bg-[#ff8200] shadow-sm" />
+              <p className="absolute right-[6%] top-[64%] text-[10px] font-black uppercase tracking-widest text-[#002b5c]">
+                Interior de SP — nossa região
+              </p>
             </div>
           </div>
         </div>
