@@ -10,6 +10,7 @@ import {
   ShieldCheck
 } from 'lucide-react';
 import { trackCTA } from '../lib/tracking'; // Corrigido: removido trackContact
+import { WHATSAPP_NUMBER } from '../lib/constants';
 
 export default function Footer({ onOpenForm }) {
   const currentYear = new Date().getFullYear();
@@ -76,7 +77,7 @@ export default function Footer({ onOpenForm }) {
               <li className="flex items-center gap-3">
                 <Phone className="h-4 w-4 text-[#ff8200]" />
                 <a
-                  href="https://wa.me/5514991235094"
+                  href={`https://wa.me/${WHATSAPP_NUMBER}`}
                   onClick={handleWhatsAppClick}
                   target="_blank"
                   rel="noopener noreferrer"

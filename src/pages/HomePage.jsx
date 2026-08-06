@@ -6,10 +6,8 @@ import { trackCTA } from "../lib/tracking";
 
 import { Navbar, HeroSection, HapvidaNetworkStats, PriceTablesSection, NationalMap, NetworkSection, ChatInteligente, Footer } from '../components';
 import SEO from '../components/SEO';
-import { FAQS } from '../data/faqs';
 import { slugifyCity } from '../data/coveredCities';
-import { useCityFromQuery, shouldShowCityBanner } from '../hooks/useCityDetection';
-import CityDetectBanner from '../components/CityDetectBanner';
+import { useCityFromQuery } from '../hooks/useCityDetection';
 
 const FAQ = lazy(() => import('../components/FAQ'));
 
@@ -17,7 +15,6 @@ export default function HomePage({ onOpenForm }) {
   const [pricing, setPricing] = useState([]);
   const [minPrice, setMinPrice] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [showCityBanner, setShowCityBanner] = useState(shouldShowCityBanner);
 
   const routerLocation = useLocation();
   const queryCity = useCityFromQuery();
@@ -68,7 +65,6 @@ export default function HomePage({ onOpenForm }) {
         description={`Solicite sua cotação do Plano de Saúde Hapvida 2026 com valores a partir de R$ ${formattedMinPrice}. Atendimento rápido no WhatsApp, consultor autorizado e sem compromisso.`}
         price={formattedMinPrice}
         includeProductSchema
-        faqItems={FAQS}
       />
       <Navbar />
       <section id="hero">
@@ -77,7 +73,6 @@ export default function HomePage({ onOpenForm }) {
       <section id="stats">
         <HapvidaNetworkStats />
       </section>
-      {showCityBanner && <CityDetectBanner onDismiss={() => setShowCityBanner(false)} />}
       <section id="pricing">
         {loading ? (
           <div className="py-24 text-center text-slate-400">Carregando preços...</div>

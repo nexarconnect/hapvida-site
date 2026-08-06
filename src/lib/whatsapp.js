@@ -1,3 +1,5 @@
+import { WHATSAPP_NUMBER } from './constants';
+
 export function buildWhatsAppMessage(data = {}) {
   const { nome, whatsapp, cidade, perfil, numPessoas, preferencia, idades, email } = data;
 
@@ -21,9 +23,7 @@ export function buildWhatsAppMessage(data = {}) {
 }
 
 export function openWhatsAppLead(data = {}) {
-  // Mesmo número usado em Footer.jsx, ChatInteligente.jsx e ConfigPage.jsx —
-  // estava sem o "9" do celular aqui (551491235094, 12 dígitos em vez de 13).
-  const phone = '5514991235094';
+  const phone = WHATSAPP_NUMBER;
   const message = buildWhatsAppMessage(data);
   const url = `https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(message)}`;
   window.open(url, '_blank', 'noopener,noreferrer');

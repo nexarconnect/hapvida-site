@@ -22,6 +22,10 @@ export default function NationalMap() {
               <img
                 src={mapaBrasil}
                 alt="Mapa do Brasil"
+                width={1280}
+                height={1280}
+                loading="lazy"
+                decoding="async"
                 className="w-full h-auto object-contain mx-auto drop-shadow-[0_8px_24px_rgba(0,43,92,0.10)]"
               />
 
@@ -41,7 +45,7 @@ export default function NationalMap() {
                 </div>
               </div>
               <p className="absolute right-[6%] top-[64%] text-[10px] font-black uppercase tracking-widest text-[#002b5c]">
-                Interior de SP — nossa região
+                Interior de SP: nossa região
               </p>
             </div>
           </div>

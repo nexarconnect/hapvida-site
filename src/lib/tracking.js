@@ -47,7 +47,9 @@ export function trackLead(planName = null, city = null, origin = 'unknown') {
 
   try {
     trackAnalyticsEvent('lead_conversion', payload);
-  } catch (e) {}
+  } catch {
+    // falha de tracking não pode quebrar o fluxo de conversão
+  }
 }
 
 export const tracking = {

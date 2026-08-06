@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import { getCityBySlug, getNearestCoveredCity, slugifyCity } from '../data/coveredCities';
 
-const DISMISS_KEY = 'city_banner_dismissed';
-
 function readCityFromQuery() {
   if (typeof window === 'undefined') return null;
 
@@ -24,15 +22,6 @@ function readCityFromQuery() {
 export function useCityFromQuery() {
   const [city] = useState(readCityFromQuery);
   return city;
-}
-
-export function shouldShowCityBanner() {
-  if (typeof window === 'undefined') return false;
-  return !sessionStorage.getItem(DISMISS_KEY);
-}
-
-export function dismissCityBanner() {
-  sessionStorage.setItem(DISMISS_KEY, '1');
 }
 
 /**

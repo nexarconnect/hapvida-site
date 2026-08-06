@@ -6,7 +6,7 @@ export default function Body() {
     <>
       <p>
         O plano Hapvida no interior de SP costuma entrar na conversa pelo preço, e é justamente aí que a
-        dúvida aparece: vale a pena? A resposta honesta depende de três coisas — quanto você paga, o que a
+        dúvida aparece: vale a pena? A resposta honesta depende de três coisas: quanto você paga, o que a
         rede cobre na sua cidade e quanto tempo você espera para começar a usar. Vamos por partes.
       </p>
 
@@ -15,12 +15,12 @@ export default function Body() {
         A referência inicial divulgada é de R$ 157,29, e esse número aparece em quase toda busca por preço.
         Só que ele é um ponto de partida, não uma etiqueta. Como explicamos nas nossas{' '}
         <Link to="/perguntas-frequentes">perguntas frequentes</Link>, a tabela oficial muda conforme a
-        região, a faixa etária e a modalidade contratada — individual, familiar ou empresarial.
+        região, a faixa etária e a modalidade contratada: individual, familiar ou empresarial.
       </p>
       <p>
         Na prática, duas pessoas da mesma cidade podem receber valores bem diferentes. Idade é o fator que
         mais mexe no cálculo. Município também: a tabela de Bauru não é a mesma de São José dos Campos.
-        Por isso a única forma de saber quanto ficaria para você é pedir a cotação com os seus dados —
+        Por isso a única forma de saber quanto ficaria para você é pedir a cotação com os seus dados:
         qualquer valor exato fora disso seria chute.
       </p>
       <p>
@@ -39,7 +39,7 @@ export default function Body() {
       </p>
       <p>
         O modelo da Hapvida é diferente do de outras operadoras: boa parte do atendimento acontece em rede
-        própria — hospitais, clínicas e pronto atendimentos da própria operadora — complementada por rede
+        própria (hospitais, clínicas e pronto atendimentos da própria operadora) complementada por rede
         credenciada. Segundo os números divulgados pela operadora, são mais de 87 unidades hospitalares
         próprias no país. Isso costuma explicar o preço mais competitivo, já que a operadora controla a
         própria estrutura.
@@ -48,7 +48,7 @@ export default function Body() {
         Mas olha: rede nacional grande não garante nada sobre a sua rua. O que importa é o que existe no
         seu município e nas cidades vizinhas. Antes de assinar, confira a{' '}
         <Link to="/rede-de-atendimento">rede de atendimento</Link> e peça ao consultor a lista de hospitais,
-        clínicas e laboratórios disponíveis para a sua cidade — essa validação faz parte do atendimento.
+        clínicas e laboratórios disponíveis para a sua cidade; essa validação faz parte do atendimento.
       </p>
       <p>
         A consultoria Nexar atende hoje em Bauru, Ribeirão Preto, Franca, São José dos Campos, Sertãozinho,
@@ -72,7 +72,7 @@ export default function Body() {
       <p>
         Faz sentido pesquisar se você mora em uma das cidades com rede consolidada, busca custo mensal
         previsível e usa o plano principalmente para consultas, exames e emergências. Também vale muito a
-        pena para quem tem CNPJ ativo — incluindo MEI. Planos empresariais tendem a ter condições
+        pena para quem tem CNPJ ativo (incluindo MEI). Planos empresariais tendem a ter condições
         comerciais diferentes das do individual, conforme a regra disponível para cada região. Veja o que
         muda no post sobre{' '}
         <Link to="/blog/plano-hapvida-empresarial-mei">plano Hapvida empresarial e MEI</Link>.
@@ -87,7 +87,7 @@ export default function Body() {
 
       <h3>O plano Hapvida é mais barato no interior de SP?</h3>
       <p>
-        O valor varia por município, faixa etária e modalidade — não existe um preço único do interior. A
+        O valor varia por município, faixa etária e modalidade: não existe um preço único do interior. A
         referência inicial de R$ 157,29 é estimativa baseada nas tabelas vigentes e pode mudar sem aviso
         prévio. Um consultor confirma o valor exato para a sua cidade e idade.
       </p>
@@ -125,7 +125,7 @@ export default function Body() {
 
       <h3>Este site é o site oficial da Hapvida?</h3>
       <p>
-        Não. A Nexar é uma consultoria independente e autorizada a comercializar planos Hapvida — um canal
+        Não. A Nexar é uma consultoria independente e autorizada a comercializar planos Hapvida: um canal
         de venda e suporte, não a operadora. Os detalhes estão no nosso{' '}
         <Link to="/aviso-legal">aviso legal</Link>.
       </p>

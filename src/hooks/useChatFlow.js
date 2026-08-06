@@ -59,7 +59,7 @@ export function useChatFlow(initialGreeting, initialOptions) {
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state.lead)); } catch {}
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state.lead)); } catch { /* localStorage indisponível */ }
   }, [state.lead]);
 
   const openChat   = useCallback(() => dispatch({ type: 'OPEN' }), []);
@@ -75,7 +75,7 @@ export function useChatFlow(initialGreeting, initialOptions) {
 
   const resetChat = useCallback(() => {
     dispatch({ type: 'RESET', payload: makeMsg('bot', initialGreeting, initialOptions) });
-    try { localStorage.removeItem(STORAGE_KEY); } catch {}
+    try { localStorage.removeItem(STORAGE_KEY); } catch { /* localStorage indisponível */ }
   }, [initialGreeting, initialOptions]);
 
   return useMemo(

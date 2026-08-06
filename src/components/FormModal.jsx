@@ -340,6 +340,11 @@ export default function FormModal({
       setLeadData(finalLead);
       setIsSuccess(true);
       localStorage.removeItem(DRAFT_KEY);
+      try {
+        localStorage.setItem('last_lead_data', JSON.stringify(finalLead));
+      } catch {
+        // localStorage indisponível (modo privado etc.) — não bloqueia o fluxo
+      }
 
       try {
         if (tracking?.event) {

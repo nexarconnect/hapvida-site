@@ -45,6 +45,10 @@ export default function HeroSection({
         <img
           src={bannerImg}
           alt="Plano de saúde Hapvida 2026"
+          width={1920}
+          height={1080}
+          fetchpriority="high"
+          decoding="async"
           className="h-full w-full object-cover object-center md:object-[right_22%_center]"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-[#002b5c] via-[#002b5c]/92 to-[#002b5c]/35 md:to-transparent" />
@@ -111,7 +115,7 @@ export default function HeroSection({
 
             <p className="mb-8 flex items-center gap-2 text-xs font-semibold text-[#ff8200]">
               <Users className="h-4 w-4" />
-              Atendimento limitado por consultor — vagas por região sujeitas a disponibilidade
+              Atendimento limitado por consultor, vagas por região sujeitas a disponibilidade
             </p>
 
             <motion.div

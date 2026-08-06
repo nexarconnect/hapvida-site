@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { X, MessageCircle } from 'lucide-react';
+import { WHATSAPP_NUMBER } from '../lib/constants';
 
 type LeadData = {
   nome?: string;
@@ -28,7 +30,7 @@ function formatIdades(idades?: string[] | number[] | string): string {
 }
 
 function buildWhatsAppUrl(leadData: LeadData | null): string {
-  const phone = '5514991235094';
+  const phone = WHATSAPP_NUMBER;
 
   const nome = String(leadData?.nome || '').trim();
   const cidade = String(leadData?.cidade || '').trim();
@@ -59,6 +61,7 @@ export default function SuccessModal({ isOpen, onClose, leadData }: SuccessModal
   const [countdown, setCountdown] = useState(3);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const openedRef = useRef(false);
+  const navigate = useNavigate();
 
   const whatsappUrl = buildWhatsAppUrl(leadData);
 
@@ -93,6 +96,7 @@ export default function SuccessModal({ isOpen, onClose, leadData }: SuccessModal
           if (!openedRef.current && whatsappUrl) {
             openedRef.current = true;
             window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+            navigate('/obrigado');
           }
 
           return 0;
@@ -108,7 +112,7 @@ export default function SuccessModal({ isOpen, onClose, leadData }: SuccessModal
         timerRef.current = null;
       }
     };
-  }, [isOpen, whatsappUrl]);
+  }, [isOpen, whatsappUrl, navigate]);
 
   return (
     <AnimatePresence>
@@ -164,6 +168,7 @@ export default function SuccessModal({ isOpen, onClose, leadData }: SuccessModal
               onClick={() => {
                 if (whatsappUrl) window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
                 onClose();
+                navigate('/obrigado');
               }}
               className="mt-6 flex w-full items-center justify-center gap-2 rounded-2xl bg-[#25D366] px-6 py-4 font-black uppercase tracking-widest text-white shadow-lg transition hover:bg-[#20c55a] focus:outline-none focus:ring-2 focus:ring-orange-500"
             >

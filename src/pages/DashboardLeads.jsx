@@ -205,7 +205,7 @@ export default function DashboardLeads() {
                                     WhatsApp
                                   </a>
                                 ) : (
-                                  <span className="text-xs text-slate-300">—</span>
+                                  <span className="text-xs text-slate-300">-</span>
                                 )}
                               </td>
                             </tr>

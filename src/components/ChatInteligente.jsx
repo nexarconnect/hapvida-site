@@ -1,11 +1,11 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { createPortal } from 'react-dom';
+import { useNavigate } from 'react-router-dom';
 import { MessageCircle, X, Send, RotateCcw, Check, Zap } from 'lucide-react';
 import { useChatFlow } from '../hooks/useChatFlow';
 import { saveLead } from '../lib/supabase';
 import { trackLead } from '../lib/tracking';
-
-const WHATSAPP_NUMBER = '5514991235094';
+import { WHATSAPP_NUMBER } from '../lib/constants';
 
 const INITIAL_GREETING =
   'Oi! 😊 Sou o Rafael. Vi que está interessado em simular seu plano Hapvida. Só preciso de algumas informações, é rapidinho!';
@@ -69,6 +69,7 @@ export default function ChatInteligente() {
     openChat, closeChat, setStep, setTyping, setInput, addMessage, setLead, resetChat,
   } = useChatFlow(INITIAL_GREETING, PREF_OPTIONS);
 
+  const navigate = useNavigate();
   const [lastActionTs, setLastActionTs] = useState(0);
   const [isSending,    setIsSending]    = useState(false);
   const [countdown,    setCountdown]    = useState(null);
@@ -94,19 +95,26 @@ export default function ChatInteligente() {
       const message = [
         'Olá! Gostaria de dar continuidade à minha cotação com um consultor.',
         '',
-        `*Nome:* ${lead.nome || '—'}`,
-        `*Cidade:* ${lead.cidade || '—'}`,
-        `*E-mail:* ${lead.email || '—'}`,
-        `*Preferência:* ${lead.preferencia || '—'}`,
-        `*Plano:* ${lead.plano || '—'}`,
-        `*Idade:* ${lead.idade || '—'}`,
-        `*WhatsApp:* ${lead.whatsapp || '—'}`,
+        `*Nome:* ${lead.nome || '-'}`,
+        `*Cidade:* ${lead.cidade || '-'}`,
+        `*E-mail:* ${lead.email || '-'}`,
+        `*Preferência:* ${lead.preferencia || '-'}`,
+        `*Plano:* ${lead.plano || '-'}`,
+        `*Idade:* ${lead.idade || '-'}`,
+        `*WhatsApp:* ${lead.whatsapp || '-'}`,
         '',
         'Fico no aguardo.',
       ].join('\n');
 
       const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
       window.open(url, '_blank', 'noopener,noreferrer');
+
+      try {
+        localStorage.setItem('last_lead_data', JSON.stringify(lead));
+      } catch {
+        // localStorage indisponível (modo privado etc.) — não bloqueia o fluxo
+      }
+      navigate('/obrigado');
 
       const closeTimer = setTimeout(() => {
         closeChat();
@@ -123,7 +131,7 @@ export default function ChatInteligente() {
       1000
     );
     return () => { if (countdownRef.current) clearTimeout(countdownRef.current); };
-  }, [countdown, redirectMode, lead, closeChat]);
+  }, [countdown, redirectMode, lead, closeChat, navigate]);
 
   const handleOptionClick = useCallback(
     (opt) => {
