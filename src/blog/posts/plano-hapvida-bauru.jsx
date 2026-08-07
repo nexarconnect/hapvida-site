@@ -6,7 +6,7 @@ export default function Body() {
     <>
       <p>
         Quem mora em Bauru e pesquisa plano de saúde Hapvida esbarra sempre na mesma dúvida: quanto custa
-        aqui, na minha idade? A resposta honesta é que o valor não é fixo — mas dá para entender o que
+        aqui, na minha idade? A resposta honesta é que o valor não é fixo, mas dá para entender o que
         define o preço final e como confirmar o número certo para o seu caso, sem depender de tabela
         genérica.
       </p>
@@ -15,7 +15,7 @@ export default function Body() {
       <p>
         A referência inicial divulgada pela operadora é de R$ 157,29, e esse número costuma aparecer em
         quase toda busca por preço. Só que ele é um ponto de partida, não uma etiqueta fixa: a tabela muda
-        conforme a cidade, a faixa etária e a modalidade contratada — individual, familiar ou empresarial.
+        conforme a cidade, a faixa etária e a modalidade contratada: individual, familiar ou empresarial.
         Duas pessoas da mesma idade em Bauru podem receber valores diferentes dependendo da modalidade
         escolhida.
       </p>
@@ -32,7 +32,7 @@ export default function Body() {
         própria Hapvida, incluindo a estrutura conhecida como Hapvida NDI) e rede credenciada, que completa
         a cobertura onde a rede própria não chega. A consultoria Nexar atende em Bauru com suporte local, e
         o consultor valida quais hospitais, clínicas e laboratórios estão disponíveis para a cidade antes de
-        qualquer assinatura — essa validação faz parte do atendimento. Para ver a lista completa por
+        qualquer assinatura; essa validação faz parte do atendimento. Para ver a lista completa por
         município, acesse a nossa página de{' '}
         <Link to="/rede-de-atendimento">rede de atendimento</Link>.
       </p>
@@ -42,7 +42,7 @@ export default function Body() {
         De acordo com as regras da <abbr title="Agência Nacional de Saúde Suplementar">ANS</abbr>, urgência
         e emergência têm carência máxima de 24 horas; consultas e exames simples entram em até 30 dias. Os
         demais procedimentos seguem a tabela completa da ANS. Se você já tem plano ativo em outra operadora,
-        a portabilidade pode reduzir ou eliminar essa espera — veja como no post sobre{' '}
+        a portabilidade pode reduzir ou eliminar essa espera. Veja como no post sobre{' '}
         <Link to="/blog/portabilidade-para-hapvida">portabilidade para Hapvida</Link>.
       </p>
 
@@ -57,7 +57,7 @@ export default function Body() {
       <h3>Qual plano é mais barato em Bauru?</h3>
       <p>
         Depende do seu perfil e da modalidade contratada. A comparação entre as opções disponíveis só faz
-        sentido com os seus dados na cotação — é aí que aparece o valor real de cada uma.
+        sentido com os seus dados na cotação: é aí que aparece o valor real de cada uma.
       </p>
 
       <h3>A rede atende em Bauru?</h3>
@@ -81,7 +81,7 @@ export default function Body() {
 
       <h2>Conclusão</h2>
       <p>
-        Em Bauru, o número que importa é o da sua idade — não a média divulgada. Solicite uma cotação sem
+        Em Bauru, o número que importa é o da sua idade, não a média divulgada. Solicite uma cotação sem
         compromisso e receba os valores e a lista de unidades da cidade direto pelo WhatsApp, com um
         consultor autorizado. Veja também as{' '}
         <Link to="/perguntas-frequentes">perguntas frequentes</Link> sobre o plano.

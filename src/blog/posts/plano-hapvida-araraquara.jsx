@@ -12,7 +12,7 @@ export default function Body() {
 
       <h2>Quanto custa o plano Hapvida em Araraquara</h2>
       <p>
-        A referência inicial divulgada pela operadora é de R$ 157,29 — um ponto de partida, não o preço
+        A referência inicial divulgada pela operadora é de R$ 157,29, um ponto de partida, não o preço
         fechado. O valor muda com idade, cidade e modalidade contratada, então a cotação com os seus dados é
         o que define o número real. Veja os planos disponíveis na{' '}
         <Link to="/plano-hapvida/araraquara">página do plano Hapvida em Araraquara</Link>.
@@ -20,7 +20,7 @@ export default function Body() {
 
       <h2>Rede e carência</h2>
       <p>
-        Rede própria e credenciada, com validação local pelo consultor — confira também a{' '}
+        Rede própria e credenciada, com validação local pelo consultor. Confira também a{' '}
         <Link to="/rede-de-atendimento">rede de atendimento</Link> por cidade. Urgência e emergência em 24
         horas; consultas e exames simples em 30 dias, conforme a{' '}
         <abbr title="Agência Nacional de Saúde Suplementar">ANS</abbr>.
@@ -47,7 +47,7 @@ export default function Body() {
 
       <h3>Dá para reduzir a carência com portabilidade?</h3>
       <p>
-        Sim, em alguns casos — veja como funciona no post sobre{' '}
+        Sim, em alguns casos. Veja como funciona no post sobre{' '}
         <Link to="/blog/portabilidade-para-hapvida">portabilidade para Hapvida</Link>.
       </p>
 

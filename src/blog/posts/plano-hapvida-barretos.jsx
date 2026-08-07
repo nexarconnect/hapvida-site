@@ -6,7 +6,7 @@ export default function Body() {
     <>
       <p>
         Quem mora em Barretos e pesquisa plano de saúde Hapvida encontra na internet tabelas nacionais que
-        não refletem a realidade da cidade. O caminho mais direto é falar com quem valida a região — e é
+        não refletem a realidade da cidade. O caminho mais direto é falar com quem valida a região, e é
         exatamente isso que o consultor faz.
       </p>
 
@@ -21,7 +21,7 @@ export default function Body() {
       <h2>Rede e carência</h2>
       <p>
         A operadora combina rede própria e credenciada. O consultor valida quais hospitais, clínicas e
-        laboratórios estão disponíveis para Barretos antes de qualquer decisão — confira também a{' '}
+        laboratórios estão disponíveis para Barretos antes de qualquer decisão. Confira também a{' '}
         <Link to="/rede-de-atendimento">rede de atendimento</Link> por cidade. Pela{' '}
         <abbr title="Agência Nacional de Saúde Suplementar">ANS</abbr>, urgência e emergência entram em 24
         horas e consultas e exames simples em 30 dias.
@@ -48,7 +48,7 @@ export default function Body() {
 
       <h3>Dá para reduzir a carência com portabilidade?</h3>
       <p>
-        Sim, em alguns casos — veja como funciona no post sobre{' '}
+        Sim, em alguns casos. Veja como funciona no post sobre{' '}
         <Link to="/blog/portabilidade-para-hapvida">portabilidade para Hapvida</Link>.
       </p>
 

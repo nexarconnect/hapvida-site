@@ -12,7 +12,7 @@ export default function Body() {
 
       <h2>Quanto custa o plano Hapvida em Lins</h2>
       <p>
-        Os valores variam por idade, cidade e modalidade de contratação — individual, familiar ou
+        Os valores variam por idade, cidade e modalidade de contratação: individual, familiar ou
         empresarial. A referência inicial divulgada pela operadora é de R$ 157,29, mas não existe um número
         único que valha para todos os perfis em Lins. Para saber o que se aplica ao seu caso, veja a{' '}
         <Link to="/plano-hapvida/lins">página do plano Hapvida em Lins</Link> e peça a cotação.
@@ -21,7 +21,7 @@ export default function Body() {
       <h2>Rede e carência</h2>
       <p>
         A operadora trabalha com rede própria e credenciada, e o consultor valida quais hospitais, clínicas
-        e laboratórios estão disponíveis para Lins antes de qualquer decisão — confira também a{' '}
+        e laboratórios estão disponíveis para Lins antes de qualquer decisão. Confira também a{' '}
         <Link to="/rede-de-atendimento">rede de atendimento</Link> por cidade. Pela regra da{' '}
         <abbr title="Agência Nacional de Saúde Suplementar">ANS</abbr>, urgência e emergência entram em 24
         horas e consultas e exames simples em 30 dias.
@@ -48,7 +48,7 @@ export default function Body() {
 
       <h3>Dá para reduzir a carência com portabilidade?</h3>
       <p>
-        Sim, em alguns casos — veja como funciona no post sobre{' '}
+        Sim, em alguns casos. Veja como funciona no post sobre{' '}
         <Link to="/blog/carencia-plano-hapvida">carência no plano Hapvida</Link>.
       </p>
 

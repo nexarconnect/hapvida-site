@@ -13,14 +13,14 @@ export default function Body() {
       <h2>Quanto custa o plano Hapvida em Pirassununga</h2>
       <p>
         A referência inicial divulgada pela operadora é de R$ 157,29. O valor final varia conforme a idade,
-        a modalidade contratada e a disponibilidade comercial da região — os demais planos e o número exato
+        a modalidade contratada e a disponibilidade comercial da região; os demais planos e o número exato
         para o seu caso são confirmados por um consultor. Veja as opções na{' '}
         <Link to="/plano-hapvida/pirassununga">página do plano Hapvida em Pirassununga</Link>.
       </p>
 
       <h2>Rede e carência</h2>
       <p>
-        Rede própria e credenciada, com validação local pelo consultor — confira também a{' '}
+        Rede própria e credenciada, com validação local pelo consultor. Confira também a{' '}
         <Link to="/rede-de-atendimento">rede de atendimento</Link> por cidade. Pela{' '}
         <abbr title="Agência Nacional de Saúde Suplementar">ANS</abbr>, urgência e emergência em 24 horas;
         consultas e exames simples em 30 dias.
@@ -47,7 +47,7 @@ export default function Body() {
 
       <h3>Dá para reduzir a carência?</h3>
       <p>
-        Em alguns casos, sim, por portabilidade — veja o post sobre{' '}
+        Em alguns casos, sim, por portabilidade. Veja o post sobre{' '}
         <Link to="/blog/carencia-plano-hapvida">carência no plano Hapvida</Link>.
       </p>
 
