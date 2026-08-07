@@ -15,7 +15,7 @@ const bodyBySlug = Object.fromEntries(
 );
 
 export const BLOG_POSTS = BLOG_POSTS_META
-  .map((meta) => ({ meta, Body: bodyBySlug[meta.slug] }))
+  .map((meta, index) => ({ meta, Body: bodyBySlug[meta.slug], index }))
   .filter((post) => {
     if (!post.Body) {
       console.warn(`[blog] BLOG_POSTS_META tem "${post.meta.slug}" mas não existe src/blog/posts/${post.meta.slug}.jsx`);
@@ -23,7 +23,19 @@ export const BLOG_POSTS = BLOG_POSTS_META
     }
     return true;
   })
-  .sort((a, b) => (a.meta.publishedAt < b.meta.publishedAt ? 1 : -1));
+  // publishedAt só tem granularidade de dia, então múltiplos posts do mesmo
+  // dia empatam nele. O desempate por índice descendente garante que, entre
+  // posts da mesma data, o que foi adicionado por último a BLOG_POSTS_META
+  // (o mais recente de fato) apareça primeiro — sem isso, sort() é estável e
+  // mantém a ordem de inserção, que é o oposto do que "mais recente primeiro"
+  // deveria mostrar.
+  .sort((a, b) => {
+    if (a.meta.publishedAt !== b.meta.publishedAt) {
+      return a.meta.publishedAt < b.meta.publishedAt ? 1 : -1;
+    }
+    return b.index - a.index;
+  })
+  .map(({ meta, Body }) => ({ meta, Body }));
 
 export function getPostBySlug(slug) {
   return BLOG_POSTS.find((post) => post.meta.slug === slug) || null;
