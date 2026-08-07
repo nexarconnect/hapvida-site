@@ -6,6 +6,7 @@ import { BLOG_POSTS_META } from './blogPostsMeta.js';
 // rota pública (adicionou, removeu, mudou prioridade), muda aqui.
 export const PUBLIC_ROUTES = [
   { path: '/', changefreq: 'weekly', priority: 1.0 },
+  { path: '/sobre-nos', changefreq: 'monthly', priority: 0.8 },
   { path: '/perguntas-frequentes', changefreq: 'monthly', priority: 0.8 },
   { path: '/rede-de-atendimento', changefreq: 'monthly', priority: 0.8 },
   { path: '/planos-hapvida-por-cidade', changefreq: 'monthly', priority: 0.8 },

@@ -6,6 +6,7 @@ import HomePage from './pages/HomePage';
 import ThankYou from './pages/ThankYou';
 import Login from './pages/Login';
 import DashboardLeads from './pages/DashboardLeads';
+import SobreNos from './pages/SobreNos';
 import AvisoLegal from './pages/AvisoLegal';
 import PoliticasPrivacidade from './pages/PoliticasPrivacidade';
 import TermosDeUso from './pages/TermosDeUso';
@@ -113,6 +114,7 @@ function App() {
           element={<HomePage onOpenForm={handleOpenForm} />}
         />
         <Route path="/obrigado" element={<ThankYou />} />
+        <Route path="/sobre-nos" element={<SobreNos onOpenForm={handleOpenForm} />} />
         <Route path="/aviso-legal" element={<AvisoLegal />} />
         <Route path="/politicas-privacidade" element={<PoliticasPrivacidade />} />
         <Route path="/termos-de-uso" element={<TermosDeUso />} />

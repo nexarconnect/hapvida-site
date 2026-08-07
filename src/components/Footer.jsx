@@ -55,6 +55,7 @@ export default function Footer({ onOpenForm }) {
             <h4 className="mb-6 text-lg font-bold text-white">Navegação</h4>
             <ul className="space-y-4 text-sm text-blue-100/70">
               <li><Link to="/" className="hover:text-white transition-colors">Página Inicial</Link></li>
+              <li><Link to="/sobre-nos" className="hover:text-white transition-colors">Sobre Nós</Link></li>
               <li><button onClick={handleCTAClick} className="hover:text-white transition-colors">Solicitar Cotação</button></li>
               <li><Link to="/perguntas-frequentes" className="hover:text-white transition-colors">Dúvidas Frequentes</Link></li>
               <li><Link to="/rede-de-atendimento" className="hover:text-white transition-colors">Rede Credenciada</Link></li>
