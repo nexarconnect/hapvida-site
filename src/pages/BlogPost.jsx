@@ -53,7 +53,7 @@ export default function BlogPost({ onOpenForm }) {
               {formatDate(meta.publishedAt)}
             </span>
           </div>
-          <h1 className="text-3xl font-black leading-tight md:text-5xl">{meta.title}</h1>
+          <h1 className="text-3xl font-black leading-tight text-white md:text-5xl">{meta.title}</h1>
           <p className="mt-4 text-sm font-medium text-blue-200">
             Por {BLOG_AUTHOR.name}, {BLOG_AUTHOR.role}
           </p>

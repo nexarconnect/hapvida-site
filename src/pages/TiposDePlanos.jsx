@@ -56,7 +56,7 @@ export default function TiposDePlanos({ onOpenForm }) {
           <ArrowLeft className="h-4 w-4" />
           Voltar para a Home
         </Link>
-        <h1 className="mx-auto max-w-3xl text-3xl font-black leading-tight md:text-5xl">
+        <h1 className="mx-auto max-w-3xl text-3xl font-black leading-tight text-white md:text-5xl">
           Tipos de plano Hapvida
         </h1>
         <p className="mx-auto mt-4 max-w-2xl text-blue-100">

@@ -108,7 +108,7 @@ export default function PlanoPorCidade({ onOpenForm }) {
           <MapPin className="h-4 w-4 text-[#ff8200]" />
           {city.name}, {city.state}
         </div>
-        <h1 className="mx-auto max-w-3xl text-3xl font-black leading-tight md:text-5xl">
+        <h1 className="mx-auto max-w-3xl text-3xl font-black leading-tight text-white md:text-5xl">
           Plano de Saúde Hapvida em {city.name}
         </h1>
         <p className="mx-auto mt-4 max-w-2xl text-blue-100">

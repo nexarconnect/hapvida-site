@@ -105,7 +105,7 @@ export default function SobreNos({ onOpenForm }) {
           <Award className="h-4 w-4 text-[#ff8200]" />
           Consultoria Autorizada Hapvida
         </div>
-        <h1 className="mx-auto max-w-3xl text-3xl font-black leading-tight md:text-5xl">
+        <h1 className="mx-auto max-w-3xl text-3xl font-black leading-tight text-white md:text-5xl">
           NexAR: Consultoria Autorizada Hapvida no Interior de São Paulo
         </h1>
         <p className="mx-auto mt-4 max-w-2xl text-blue-100">
@@ -319,7 +319,7 @@ export default function SobreNos({ onOpenForm }) {
 
       <section className="bg-[#002b5c] py-16 text-center text-white md:py-20">
         <div className="container mx-auto max-w-2xl px-6">
-          <h2 className="text-2xl font-black md:text-3xl">
+          <h2 className="text-2xl font-black text-white md:text-3xl">
             Pronto para encontrar o plano certo para você?
           </h2>
           <p className="mt-4 text-blue-100">

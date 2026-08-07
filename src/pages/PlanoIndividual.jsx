@@ -74,7 +74,7 @@ export default function PlanoIndividual({ onOpenForm }) {
           <UserCheck className="h-4 w-4 text-[#ff8200]" />
           Contratação por CPF
         </div>
-        <h1 className="mx-auto max-w-3xl text-3xl font-black leading-tight md:text-5xl">
+        <h1 className="mx-auto max-w-3xl text-3xl font-black leading-tight text-white md:text-5xl">
           Plano Individual Hapvida
         </h1>
         <p className="mx-auto mt-4 max-w-2xl text-blue-100">
