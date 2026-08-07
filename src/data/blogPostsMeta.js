@@ -52,4 +52,169 @@ export const BLOG_POSTS_META = [
     excerpt:
       'Ter empresa ativa, incluindo MEI, costuma abrir acesso a condições diferentes das do plano individual. Veja o que considerar antes de contratar um plano Hapvida empresarial.',
   },
+  {
+    slug: 'rede-de-atendimento-hapvida-como-funciona',
+    title: 'Rede de Atendimento Hapvida: como funciona e o que existe na sua cidade',
+    description:
+      'Rede de atendimento Hapvida: rede própria x credenciada, urgência 24h e cotação para confirmar o que existe na sua cidade.',
+    category: 'Rede',
+    publishedAt: '2026-08-07',
+    updatedAt: '2026-08-07',
+    excerpt:
+      'Rede própria e rede credenciada não são a mesma coisa, e essa diferença muda o que existe perto de você. Veja como funciona a rede Hapvida e como confirmar o que atende na sua cidade.',
+  },
+  {
+    slug: 'coparticipacao-plano-de-saude-explicada',
+    title: 'Coparticipação no Plano de Saúde: como funciona e quando compensa',
+    description:
+      'Coparticipação no plano de saúde: o que é, quando compensa e cotação para comparar com o plano sem coparticipação.',
+    category: 'Contratação',
+    publishedAt: '2026-08-07',
+    updatedAt: '2026-08-07',
+    excerpt:
+      'Coparticipação não é boa nem ruim por si só — depende de como você usa o plano. Entenda o modelo e quando ele compensa antes de contratar.',
+  },
+  {
+    slug: 'plano-hapvida-bauru',
+    title: 'Plano Hapvida em Bauru: preço, rede e como contratar',
+    description:
+      'Plano Hapvida em Bauru: como funciona o preço, a rede de atendimento e a carência. Peça a cotação com os valores da sua idade.',
+    category: 'Cidades',
+    publishedAt: '2026-08-07',
+    updatedAt: '2026-08-07',
+    excerpt:
+      'Quanto custa o plano Hapvida em Bauru? Veja o que define o preço, como funciona a rede local e como confirmar o valor exato para a sua idade.',
+  },
+  {
+    slug: 'plano-hapvida-ribeirao-preto',
+    title: 'Plano Hapvida em Ribeirão Preto: preço, rede e como contratar',
+    description:
+      'Plano Hapvida em Ribeirão Preto: preço, rede de atendimento e carência. Cotação com os valores confirmados para a sua idade.',
+    category: 'Cidades',
+    publishedAt: '2026-08-07',
+    updatedAt: '2026-08-07',
+    excerpt:
+      'O plano Hapvida em Ribeirão Preto varia por idade e modalidade. Veja como funciona a rede local e como pedir a cotação com o valor certo.',
+  },
+  {
+    slug: 'plano-hapvida-franca',
+    title: 'Plano Hapvida em Franca: preço, rede e como contratar',
+    description:
+      'Plano Hapvida em Franca: entenda o preço, a rede de atendimento e a carência. Peça a cotação para confirmar o valor da sua idade.',
+    category: 'Cidades',
+    publishedAt: '2026-08-07',
+    updatedAt: '2026-08-07',
+    excerpt:
+      'O plano Hapvida cabe no bolso em Franca? Veja o que define o preço, a rede local e como confirmar o valor exato para o seu perfil.',
+  },
+  {
+    slug: 'plano-hapvida-sao-jose-dos-campos',
+    title: 'Plano Hapvida em São José dos Campos: preço, rede e como contratar',
+    description:
+      'Plano Hapvida em São José dos Campos: preço, rede de atendimento e carência. Cotação com o valor confirmado para o seu perfil.',
+    category: 'Cidades',
+    publishedAt: '2026-08-07',
+    updatedAt: '2026-08-07',
+    excerpt:
+      'Quanto custa o plano Hapvida em São José dos Campos? Veja como funciona o preço, a rede local e a carência antes de pedir a cotação.',
+  },
+  {
+    slug: 'plano-hapvida-sertaozinho',
+    title: 'Plano Hapvida em Sertãozinho: preço, rede e como contratar',
+    description:
+      'Plano Hapvida em Sertãozinho: preço, rede de atendimento e carência. Peça a cotação e confirme o valor da sua idade.',
+    category: 'Cidades',
+    publishedAt: '2026-08-07',
+    updatedAt: '2026-08-07',
+    excerpt:
+      'O plano Hapvida em Sertãozinho varia por idade e modalidade. Veja como funciona a rede local e como confirmar o valor certo.',
+  },
+  {
+    slug: 'plano-hapvida-lins',
+    title: 'Plano Hapvida em Lins: preço, rede e como contratar',
+    description:
+      'Plano Hapvida em Lins: como funciona o preço, a rede de atendimento local e a carência. Cotação com valor confirmado.',
+    category: 'Cidades',
+    publishedAt: '2026-08-07',
+    updatedAt: '2026-08-07',
+    excerpt:
+      'A consultoria Nexar atende em Lins com suporte local. Veja como funciona o preço do plano Hapvida e a rede de atendimento na cidade.',
+  },
+  {
+    slug: 'plano-hapvida-araraquara',
+    title: 'Plano Hapvida em Araraquara: preço, rede e como contratar',
+    description:
+      'Plano Hapvida em Araraquara: preço, rede de atendimento e carência. Peça a cotação para confirmar o valor da sua idade.',
+    category: 'Cidades',
+    publishedAt: '2026-08-07',
+    updatedAt: '2026-08-07',
+    excerpt:
+      'O plano Hapvida costuma chamar atenção pelo preço em Araraquara. Veja como funciona a rede local e como confirmar o valor exato.',
+  },
+  {
+    slug: 'plano-hapvida-limeira',
+    title: 'Plano Hapvida em Limeira: preço, rede e como contratar',
+    description:
+      'Plano Hapvida em Limeira: preço, rede de atendimento e carência. Cotação com o valor confirmado para o seu perfil.',
+    category: 'Cidades',
+    publishedAt: '2026-08-07',
+    updatedAt: '2026-08-07',
+    excerpt:
+      'Quanto custa o plano Hapvida em Limeira? Veja o que define o preço, a rede local e como pedir a cotação com o valor certo.',
+  },
+  {
+    slug: 'plano-hapvida-barretos',
+    title: 'Plano Hapvida em Barretos: preço, rede e como contratar',
+    description:
+      'Plano Hapvida em Barretos: preço, rede de atendimento local e carência. Peça a cotação e confirme o valor exato.',
+    category: 'Cidades',
+    publishedAt: '2026-08-07',
+    updatedAt: '2026-08-07',
+    excerpt:
+      'Tabelas nacionais não refletem o preço real em Barretos. Veja como funciona a rede local e como confirmar o valor com um consultor.',
+  },
+  {
+    slug: 'plano-hapvida-pirassununga',
+    title: 'Plano Hapvida em Pirassununga: preço, rede e como contratar',
+    description:
+      'Plano Hapvida em Pirassununga: preço, rede de atendimento e carência. Cotação com o valor confirmado para a sua idade.',
+    category: 'Cidades',
+    publishedAt: '2026-08-07',
+    updatedAt: '2026-08-07',
+    excerpt:
+      'Quem pesquisa o plano Hapvida em Pirassununga costuma priorizar cobertura robusta. Veja como funciona o preço e a rede local.',
+  },
+  {
+    slug: 'plano-hapvida-marilia',
+    title: 'Plano Hapvida em Marília: preço, rede e como contratar',
+    description:
+      'Plano Hapvida em Marília: preço, rede de atendimento e carência. Peça a cotação para confirmar o valor do seu perfil.',
+    category: 'Cidades',
+    publishedAt: '2026-08-07',
+    updatedAt: '2026-08-07',
+    excerpt:
+      'O plano Hapvida se posiciona pela cobertura completa em Marília. Veja como funciona o preço e a rede local antes de contratar.',
+  },
+  {
+    slug: 'plano-hapvida-sao-carlos',
+    title: 'Plano Hapvida em São Carlos: preço, rede e como contratar',
+    description:
+      'Plano Hapvida em São Carlos: preço, rede de atendimento e carência. Cotação com o valor confirmado para a sua idade.',
+    category: 'Cidades',
+    publishedAt: '2026-08-07',
+    updatedAt: '2026-08-07',
+    excerpt:
+      'Quem pesquisa o plano Hapvida em São Carlos costuma priorizar cobertura robusta. Veja como funciona o preço e a rede local.',
+  },
+  {
+    slug: 'plano-hapvida-piracicaba',
+    title: 'Plano Hapvida em Piracicaba: preço, rede e como contratar',
+    description:
+      'Plano Hapvida em Piracicaba: preço, rede de atendimento e carência. Peça a cotação e confirme o valor do seu perfil.',
+    category: 'Cidades',
+    publishedAt: '2026-08-07',
+    updatedAt: '2026-08-07',
+    excerpt:
+      'Piracicaba fecha a lista das cidades atendidas pela Nexar. Veja como funciona o preço do plano Hapvida e a rede local.',
+  },
 ];
