@@ -33,12 +33,16 @@ function CityAccordionItem({ city }) {
     }
   };
 
+  const panelId = `rede-cidade-${slugifyCity(city.name)}`;
+
   return (
     <div className="rounded-3xl border border-slate-100 bg-white shadow-sm">
       <button
         type="button"
         onClick={handleToggle}
         className="flex w-full items-center justify-between gap-4 p-6 text-left"
+        aria-expanded={isOpen}
+        aria-controls={panelId}
       >
         <div className="flex items-center gap-3">
           <MapPin className="h-5 w-5 flex-shrink-0 text-[#ff8200]" />
@@ -52,7 +56,7 @@ function CityAccordionItem({ city }) {
       </button>
 
       {isOpen && (
-        <div className="border-t border-slate-100 px-6 pb-6 pt-4">
+        <div id={panelId} className="border-t border-slate-100 px-6 pb-6 pt-4">
           {loading ? (
             <p className="text-sm text-slate-400">Carregando unidades de {city.name}...</p>
           ) : units && units.length > 0 ? (

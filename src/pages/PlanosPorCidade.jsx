@@ -32,8 +32,8 @@ export default function PlanosPorCidade({ onOpenForm }) {
           Plano Hapvida por cidade
         </h1>
         <p className="mx-auto mt-4 max-w-2xl text-blue-100">
-          A Nexar atende hoje {COVERED_CITIES.length} cidades no interior de São Paulo. Escolha a
-          sua para ver preços e rede de atendimento local.
+          A Nexar atende em todo o Brasil, onde a Hapvida está presente. Temos página com preços e
+          rede detalhados para estas {COVERED_CITIES.length} cidades do interior de São Paulo.
         </p>
       </header>
 
@@ -65,8 +65,9 @@ export default function PlanosPorCidade({ onOpenForm }) {
               Não encontrou a sua cidade?
             </h2>
             <p className="mt-3 text-sm text-slate-500">
-              Fale com um consultor pelo WhatsApp e confirme a disponibilidade de rede e valores
-              para a sua região.
+              A Nexar atende em todo o Brasil, em qualquer cidade onde a Hapvida tenha rede. Fale
+              com um consultor pelo WhatsApp e confirme a disponibilidade e os valores para a sua
+              região.
             </p>
             <button
               type="button"
