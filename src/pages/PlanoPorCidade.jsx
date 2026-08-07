@@ -84,6 +84,12 @@ export default function PlanoPorCidade({ onOpenForm }) {
         path={`/plano-hapvida/${slug}`}
         title={title}
         description={description}
+        localBusiness={{ city: city.name, state: city.state }}
+        breadcrumbs={[
+          { name: 'Início', path: '/' },
+          { name: 'Planos por Cidade', path: '/planos-hapvida-por-cidade' },
+          { name: city.name, path: `/plano-hapvida/${slug}` },
+        ]}
       />
       <Navbar />
 

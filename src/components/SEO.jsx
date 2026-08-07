@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 
 import { BLOG_AUTHOR } from '../data/author';
+import { WHATSAPP_NUMBER } from '../lib/constants';
 
 const SITE_URL = 'https://tabelaplanosaude.com.br';
 const SITE_NAME = 'Tabela Plano Saúde';
@@ -53,6 +54,8 @@ export default function SEO({
   article = null,
   noindex = false,
   image = DEFAULT_OG_IMAGE,
+  localBusiness = null,
+  breadcrumbs = null,
 }) {
   useEffect(() => {
     // Remove as tags estáticas de index.html (data-default) assim que a
@@ -133,6 +136,43 @@ export default function SEO({
       }
     : null;
 
+  const localBusinessJsonLd = localBusiness
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'InsuranceAgency',
+        name: `Nexar - Consultoria Hapvida em ${localBusiness.city}`,
+        description: description_,
+        url: canonicalUrl,
+        telephone: `+${WHATSAPP_NUMBER}`,
+        areaServed: {
+          '@type': 'City',
+          name: localBusiness.city,
+          containedInPlace: {
+            '@type': 'State',
+            name: localBusiness.state,
+          },
+        },
+        parentOrganization: {
+          '@type': 'Organization',
+          name: SITE_NAME,
+          url: `${SITE_URL}/`,
+        },
+      }
+    : null;
+
+  const breadcrumbJsonLd = breadcrumbs && breadcrumbs.length > 0
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: breadcrumbs.map((crumb, index) => ({
+          '@type': 'ListItem',
+          position: index + 1,
+          name: crumb.name,
+          item: buildCanonicalUrl(crumb.path),
+        })),
+      }
+    : null;
+
   const websiteJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
@@ -178,6 +218,12 @@ export default function SEO({
       )}
       {faqJsonLd && (
         <script type="application/ld+json">{JSON.stringify(faqJsonLd)}</script>
+      )}
+      {localBusinessJsonLd && (
+        <script type="application/ld+json">{JSON.stringify(localBusinessJsonLd)}</script>
+      )}
+      {breadcrumbJsonLd && (
+        <script type="application/ld+json">{JSON.stringify(breadcrumbJsonLd)}</script>
       )}
       <script type="application/ld+json">{JSON.stringify(websiteJsonLd)}</script>
       <script type="application/ld+json">{JSON.stringify(organizationJsonLd)}</script>
