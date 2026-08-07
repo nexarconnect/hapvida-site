@@ -58,6 +58,10 @@ export default function Footer({ onOpenForm }) {
               <li><button onClick={handleCTAClick} className="hover:text-white transition-colors">Solicitar Cotação</button></li>
               <li><Link to="/perguntas-frequentes" className="hover:text-white transition-colors">Dúvidas Frequentes</Link></li>
               <li><Link to="/rede-de-atendimento" className="hover:text-white transition-colors">Rede Credenciada</Link></li>
+              <li><Link to="/planos-hapvida-por-cidade" className="hover:text-white transition-colors">Planos por Cidade</Link></li>
+              <li><Link to="/plano-individual-hapvida" className="hover:text-white transition-colors">Plano Individual</Link></li>
+              <li><Link to="/plano-empresarial-hapvida" className="hover:text-white transition-colors">Plano Empresarial</Link></li>
+              <li><Link to="/tipos-de-planos" className="hover:text-white transition-colors">Tipos de Plano</Link></li>
               <li><Link to="/blog" className="hover:text-white transition-colors">Blog</Link></li>
             </ul>
           </div>

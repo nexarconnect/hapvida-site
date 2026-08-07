@@ -4,14 +4,14 @@ import { ChevronDown, HelpCircle, MessageCircle } from 'lucide-react';
 import { openWhatsApp } from '../lib/whatsapp';
 import { FAQS } from '../data/faqs';
 
-export default function FAQSection() {
+export default function FAQSection({ faqs = FAQS, title, subtitle }) {
   const [openIndex, setOpenIndex] = useState(null);
-
-  const faqs = FAQS;
 
   const handleToggle = (index) => {
     setOpenIndex((prev) => (prev === index ? null : index));
   };
+
+  let lastCategory = null;
 
   const handleWhatsAppClick = () => {
     openWhatsApp({ placement: 'faq_footer' });
@@ -32,21 +32,28 @@ export default function FAQSection() {
           </div>
 
           <h2 className="mb-4 text-3xl font-bold tracking-tight text-[#002b5c] md:text-4xl">
-            Tire suas dúvidas antes de contratar
+            {title || 'Tire suas dúvidas antes de contratar'}
           </h2>
 
           <p className="mx-auto max-w-2xl text-base leading-relaxed text-gray-600 md:text-lg">
-            Veja os pontos mais importantes sobre carência, preços, modalidade e rede de atendimento.
+            {subtitle || 'Veja os pontos mais importantes sobre carência, preços, modalidade e rede de atendimento.'}
           </p>
         </motion.div>
 
         <div className="space-y-4">
           {faqs.map((faq, index) => {
             const isOpen = openIndex === index;
+            const showCategoryHeading = faq.category && faq.category !== lastCategory;
+            lastCategory = faq.category || lastCategory;
 
             return (
-              <motion.div
-                key={faq.question}
+              <React.Fragment key={faq.question}>
+                {showCategoryHeading && (
+                  <h3 className="pt-4 text-xs font-black uppercase tracking-widest text-[#ff8200] first:pt-0">
+                    {faq.category}
+                  </h3>
+                )}
+                <motion.div
                 initial={{ opacity: 0, y: 18 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.2 }}
@@ -89,6 +96,7 @@ export default function FAQSection() {
                   )}
                 </AnimatePresence>
               </motion.div>
+              </React.Fragment>
             );
           })}
         </div>

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { HelpCircle, ArrowLeft } from "lucide-react";
 import FAQSection from "../components/FAQ";
 import SEO from "../components/SEO";
-import { FAQS } from "../data/faqs";
+import { EXTENDED_FAQS } from "../data/faqs";
 
 export default function PerguntasFrequentes() {
   return (
@@ -11,8 +11,8 @@ export default function PerguntasFrequentes() {
       <SEO
         path="/perguntas-frequentes"
         title="Perguntas Frequentes | Plano Hapvida 2026"
-        description="Tire suas dúvidas sobre carência, preços, modalidades e rede de atendimento do plano de saúde Hapvida 2026."
-        faqItems={FAQS}
+        description="Tire suas dúvidas sobre carência, preços, modalidades, rede de atendimento, coparticipação e cancelamento do plano de saúde Hapvida 2026."
+        faqItems={EXTENDED_FAQS}
       />
 
       <div className="container mx-auto max-w-3xl px-4 pt-12">
@@ -30,7 +30,11 @@ export default function PerguntasFrequentes() {
         </div>
       </div>
 
-      <FAQSection />
+      <FAQSection
+        faqs={EXTENDED_FAQS}
+        title="Todas as perguntas sobre o plano Hapvida"
+        subtitle="Organizadas por tema: carência, preços, rede de atendimento e pós-contratação."
+      />
     </main>
   );
 }
