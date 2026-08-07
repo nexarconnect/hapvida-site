@@ -208,6 +208,34 @@ function LoadingCard() {
   );
 }
 
+/**
+ * Filtra `pricing` para os planos exibidos nos cards (mix/nosso plano/pleno,
+ * excluindo "Integrado"), deduplicados e ordenados por preço. Usada tanto
+ * pelo card visual (abaixo) quanto pelo schema.org de Product/AggregateOffer
+ * em SEO.jsx, para as duas fontes nunca divergirem sobre quais planos existem.
+ */
+export function selectDisplayPlans(pricing = []) {
+  const allowedPlans = ['mix', 'nosso plano', 'pleno'];
+  const unique = new Map();
+
+  pricing.forEach((plan) => {
+    const rawName = getPlanName(plan, 0);
+    const normalized = normalizeName(rawName);
+
+    const isAllowed = allowedPlans.some((allowed) =>
+      normalized.includes(allowed)
+    );
+
+    if (!isAllowed) return;
+
+    if (!unique.has(normalized)) {
+      unique.set(normalized, { name: rawName, price: parsePrice(plan?.price) });
+    }
+  });
+
+  return Array.from(unique.values()).sort((a, b) => a.price - b.price);
+}
+
 export default function PriceTablesSection({
   pricing = [],
   isLoading = false,

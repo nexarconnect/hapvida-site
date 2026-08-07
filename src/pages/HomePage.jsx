@@ -4,10 +4,11 @@ import { Navigate, useLocation } from 'react-router-dom';
 import { getPricingData } from "../lib/supabase";
 import { trackCTA } from "../lib/tracking";
 
-import { Navbar, HeroSection, HapvidaNetworkStats, PriceTablesSection, NationalMap, NetworkSection, ChatInteligente, Footer } from '../components';
+import { Navbar, HeroSection, HapvidaNetworkStats, PriceTablesSection, NationalMap, NetworkSection, ChatInteligente, Footer, selectDisplayPlans } from '../components';
 import SEO from '../components/SEO';
 import { slugifyCity } from '../data/coveredCities';
 import { useCityFromQuery } from '../hooks/useCityDetection';
+import { FAQS } from '../data/faqs';
 
 const FAQ = lazy(() => import('../components/FAQ'));
 
@@ -63,8 +64,9 @@ export default function HomePage({ onOpenForm }) {
         path="/"
         title={`Plano de Saúde Hapvida 2026 | Cotação a partir de R$ ${formattedMinPrice}`}
         description={`Solicite sua cotação do Plano de Saúde Hapvida 2026 com valores a partir de R$ ${formattedMinPrice}. Atendimento rápido no WhatsApp, consultor autorizado e sem compromisso.`}
-        price={formattedMinPrice}
-        includeProductSchema
+        products={selectDisplayPlans(pricing)}
+        faqItems={FAQS}
+        mainBusiness
       />
       <Navbar />
       <section id="hero">

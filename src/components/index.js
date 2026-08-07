@@ -1,7 +1,7 @@
 export { default as Navbar } from './Navbar';
 export { default as HeroSection } from './HeroSection';
 export { default as HapvidaNetworkStats } from './HapvidaNetworkStats';
-export { default as PriceTablesSection } from './PriceTablesSection';
+export { default as PriceTablesSection, selectDisplayPlans } from './PriceTablesSection';
 export { default as NationalMap } from './NationalMap';
 export { default as NetworkSection } from './NetworkSection';
 export { default as ChatInteligente } from './ChatInteligente';

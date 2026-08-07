@@ -5,7 +5,7 @@ import { ArrowLeft, MapPin, Building2 } from 'lucide-react';
 
 import { getCityBySlug } from '../data/coveredCities';
 import { getPricingByCity, getNetworkUnits } from '../lib/supabase';
-import { Navbar, PriceTablesSection, Footer, ChatInteligente } from '../components';
+import { Navbar, PriceTablesSection, Footer, ChatInteligente, selectDisplayPlans } from '../components';
 import SEO from '../components/SEO';
 import NotFound from './NotFound';
 
@@ -85,6 +85,9 @@ export default function PlanoPorCidade({ onOpenForm }) {
         title={title}
         description={description}
         localBusiness={{ city: city.name, state: city.state }}
+        products={selectDisplayPlans(pricing)}
+        productSchemaMode="aggregate"
+        productName={`Plano de Saúde Hapvida em ${city.name}`}
         breadcrumbs={[
           { name: 'Início', path: '/' },
           { name: 'Planos por Cidade', path: '/planos-hapvida-por-cidade' },

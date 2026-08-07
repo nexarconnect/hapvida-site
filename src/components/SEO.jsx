@@ -12,16 +12,6 @@ const DEFAULT_TITLE = 'Plano de Saúde Hapvida 2026 | Cotação a partir de R$ 1
 const DEFAULT_DESCRIPTION =
   'Solicite sua cotação do Plano de Saúde Hapvida 2026 com valores a partir de R$ 157,29. Atendimento rápido no WhatsApp, consultor autorizado e sem compromisso.';
 
-function normalizeDisplayPrice(price) {
-  const raw = String(price ?? '157,29').trim();
-
-  if (!raw) return '157,29';
-
-  const cleaned = raw.replace(/[^\d,.-]/g, '');
-
-  return cleaned.includes(',') ? cleaned : cleaned.replace('.', ',');
-}
-
 function normalizeSchemaPrice(price) {
   const raw = String(price ?? '157,29')
     .trim()
@@ -48,13 +38,15 @@ export default function SEO({
   path = '/',
   title,
   description,
-  price,
   faqItems = null,
-  includeProductSchema = false,
+  products = null,
+  productSchemaMode = 'perPlan',
+  productName,
   article = null,
   noindex = false,
   image = DEFAULT_OG_IMAGE,
   localBusiness = null,
+  mainBusiness = false,
   breadcrumbs = null,
 }) {
   useEffect(() => {
@@ -63,9 +55,6 @@ export default function SEO({
     // sem isso, injeta as suas ao lado, duplicando og:*/twitter:*/canonical.
     document.querySelectorAll('[data-default]').forEach((el) => el.remove());
   }, []);
-
-  const displayPrice = normalizeDisplayPrice(price);
-  const schemaPrice = normalizeSchemaPrice(price);
 
   const canonicalUrl = buildCanonicalUrl(path);
   const pageTitle = title || DEFAULT_TITLE;
@@ -86,23 +75,74 @@ export default function SEO({
       }
     : null;
 
-  const productJsonLd = includeProductSchema
+  const validProducts = Array.isArray(products)
+    ? products.filter((item) => item && item.name && Number(item.price) > 0)
+    : [];
+
+  const perPlanProductsJsonLd =
+    productSchemaMode === 'perPlan'
+      ? validProducts.map((item) => ({
+          '@context': 'https://schema.org',
+          '@type': 'Product',
+          name: `Plano Hapvida ${item.name}`,
+          brand: {
+            '@type': 'Brand',
+            name: 'Hapvida',
+          },
+          offers: {
+            '@type': 'Offer',
+            url: canonicalUrl,
+            priceCurrency: 'BRL',
+            price: normalizeSchemaPrice(item.price),
+            availability: 'https://schema.org/InStock',
+          },
+        }))
+      : [];
+
+  const aggregateProductJsonLd =
+    productSchemaMode === 'aggregate' && validProducts.length > 0
+      ? (() => {
+          const prices = validProducts.map((item) => Number(normalizeSchemaPrice(item.price)));
+          return {
+            '@context': 'https://schema.org',
+            '@type': 'Product',
+            name: productName || 'Plano de Saúde Hapvida',
+            brand: {
+              '@type': 'Brand',
+              name: 'Hapvida',
+            },
+            offers: {
+              '@type': 'AggregateOffer',
+              priceCurrency: 'BRL',
+              lowPrice: Math.min(...prices).toFixed(2),
+              highPrice: Math.max(...prices).toFixed(2),
+              offerCount: String(validProducts.length),
+              availability: 'https://schema.org/InStock',
+            },
+          };
+        })()
+      : null;
+
+  const mainBusinessJsonLd = mainBusiness
     ? {
         '@context': 'https://schema.org',
-        '@type': 'Product',
-        name: 'Plano de Saúde Hapvida 2026',
-        description: description_,
-        image,
-        brand: {
-          '@type': 'Brand',
-          name: 'Hapvida',
-        },
-        offers: {
-          '@type': 'Offer',
-          url: canonicalUrl,
-          priceCurrency: 'BRL',
-          price: schemaPrice,
-          availability: 'https://schema.org/InStock',
+        '@type': 'InsuranceAgency',
+        name: 'Nexar - Consultoria Hapvida',
+        legalName: 'NexAR Soluções em Saúde',
+        taxID: '10.157.791/0001-11',
+        telephone: `+${WHATSAPP_NUMBER}`,
+        email: 'nexarconnect@gmail.com',
+        url: `${SITE_URL}/`,
+        ...(validProducts.length > 0
+          ? {
+              priceRange: `R$${Math.floor(
+                Math.min(...validProducts.map((item) => Number(item.price)))
+              )}–R$${Math.ceil(Math.max(...validProducts.map((item) => Number(item.price))))}`,
+            }
+          : {}),
+        areaServed: {
+          '@type': 'State',
+          name: 'SP',
         },
       }
     : null;
@@ -210,8 +250,14 @@ export default function SEO({
       <meta name="twitter:description" content={description_} />
       <meta name="twitter:image" content={image} />
 
-      {productJsonLd && (
-        <script type="application/ld+json">{JSON.stringify(productJsonLd)}</script>
+      {perPlanProductsJsonLd.map((json) => (
+        <script key={json.name} type="application/ld+json">{JSON.stringify(json)}</script>
+      ))}
+      {aggregateProductJsonLd && (
+        <script type="application/ld+json">{JSON.stringify(aggregateProductJsonLd)}</script>
+      )}
+      {mainBusinessJsonLd && (
+        <script type="application/ld+json">{JSON.stringify(mainBusinessJsonLd)}</script>
       )}
       {articleJsonLd && (
         <script type="application/ld+json">{JSON.stringify(articleJsonLd)}</script>
