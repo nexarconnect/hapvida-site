@@ -217,4 +217,15 @@ export const BLOG_POSTS_META = [
     excerpt:
       'Piracicaba fecha a lista das cidades atendidas pela Nexar. Veja como funciona o preço do plano Hapvida e a rede local.',
   },
+  {
+    slug: 'tecnologia-plano-hapvida-app-teleconsulta',
+    title: 'Tecnologia do plano Hapvida: app, agendamento online e teleconsulta',
+    description:
+      'Tecnologia do plano Hapvida: app com agendamento de consultas e exames, resultados e teleconsulta. Veja como funciona e peça sua cotação.',
+    category: 'Guia',
+    publishedAt: '2026-08-07',
+    updatedAt: '2026-08-07',
+    excerpt:
+      'Marcar consulta, ver exame e falar com médico por vídeo: veja o que o app e o portal do beneficiário Hapvida resolvem sem sair de casa.',
+  },
 ];
