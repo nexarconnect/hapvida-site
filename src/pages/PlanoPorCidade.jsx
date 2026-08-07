@@ -76,7 +76,7 @@ export default function PlanoPorCidade({ onOpenForm }) {
   };
 
   const title = `Plano Hapvida em ${city.name} 2026 | Preços e Rede de Atendimento`;
-  const description = `Confira os valores do plano de saúde Hapvida em ${city.name} (${city.state}) e a rede de atendimento local. Cotação rápida pelo WhatsApp.`;
+  const description = `Tabela Hapvida 2026 em ${city.name} (${city.state}): planos e valores atualizados, rede local e cotação rápida pelo WhatsApp, sem compromisso.`;
 
   return (
     <div>
@@ -109,7 +109,7 @@ export default function PlanoPorCidade({ onOpenForm }) {
           {city.name}, {city.state}
         </div>
         <h1 className="mx-auto max-w-3xl text-3xl font-black leading-tight text-white md:text-5xl">
-          Plano de Saúde Hapvida em {city.name}
+          Tabela de Preços Hapvida em {city.name} - Planos 2026
         </h1>
         <p className="mx-auto mt-4 max-w-2xl text-blue-100">
           Valores atualizados para {city.name} e atendimento consultivo pelo WhatsApp, sem compromisso.

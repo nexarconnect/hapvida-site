@@ -63,7 +63,7 @@ export default function HomePage({ onOpenForm }) {
       <SEO
         path="/"
         title={`Plano de Saúde Hapvida 2026 | Cotação a partir de R$ ${formattedMinPrice}`}
-        description={`Solicite sua cotação do Plano de Saúde Hapvida 2026 com valores a partir de R$ ${formattedMinPrice}. Atendimento rápido no WhatsApp, consultor autorizado e sem compromisso.`}
+        description={`Cotação do Plano de Saúde Hapvida 2026 a partir de R$ ${formattedMinPrice}. Atendimento rápido no WhatsApp com consultor autorizado, sem compromisso.`}
         products={selectDisplayPlans(pricing)}
         faqItems={FAQS}
         mainBusiness
