@@ -228,4 +228,15 @@ export const BLOG_POSTS_META = [
     excerpt:
       'Marcar consulta, ver exame e falar com médico por vídeo: veja o que o app e o portal do beneficiário Hapvida resolvem sem sair de casa.',
   },
+  {
+    slug: 'coparticipacao-hapvida-modelos-parcial-total',
+    title: 'Coparticipação no plano Hapvida: modelos parcial, total e sem coparticipação',
+    description:
+      'Coparticipação no plano Hapvida: modelos parcial, total e sem coparticipação, e o que confirmar por escrito antes de assinar.',
+    category: 'Contratação',
+    publishedAt: '2026-08-07',
+    updatedAt: '2026-08-07',
+    excerpt:
+      'Parcial, total ou sem coparticipação: veja os modelos comuns do mercado e por que a condição do seu contrato precisa ser confirmada por escrito, não estimada por tabela genérica.',
+  },
 ];
