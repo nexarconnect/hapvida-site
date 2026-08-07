@@ -24,7 +24,7 @@ export default function Body() {
       <h2>Rede e carência</h2>
       <p>
         A operadora trabalha com rede própria e credenciada. O consultor valida quais unidades estão
-        disponíveis em São José dos Campos antes da assinatura — veja também a{' '}
+        disponíveis em São José dos Campos antes da assinatura. Veja também a{' '}
         <Link to="/rede-de-atendimento">rede de atendimento</Link> por cidade. Pela ANS, urgência e
         emergência entram em 24 horas e consultas e exames simples em 30 dias.
       </p>

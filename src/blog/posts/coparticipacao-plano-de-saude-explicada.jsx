@@ -6,7 +6,7 @@ export default function Body() {
     <>
       <p>
         Antes de fechar a cotação do plano de saúde, tem uma pergunta que quase todo mundo esquece de
-        fazer: o plano tem coparticipação? A resposta muda o quanto você paga todo mês — e o quanto paga
+        fazer: o plano tem coparticipação? A resposta muda o quanto você paga todo mês, e o quanto paga
         quando usa. Vamos destrinchar isso sem enrolação.
       </p>
 
@@ -18,7 +18,7 @@ export default function Body() {
         coparticipação, em que a mensalidade já cobre tudo e não há cobrança extra por uso.
       </p>
       <p>
-        Nem todos os planos têm essa opção disponível — depende da modalidade contratada e da
+        Nem todos os planos têm essa opção disponível: depende da modalidade contratada e da
         disponibilidade comercial da região. O consultor explica se ela está disponível na sua cotação e
         mostra as duas alternativas lado a lado.
       </p>
@@ -26,15 +26,15 @@ export default function Body() {
       <h2>Quando a coparticipação compensa</h2>
       <p>
         A conta muda conforme o uso. Quem usa pouco o plano tende a sair ganhando com a coparticipação,
-        porque a mensalidade é menor e o gasto por atendimento também é baixo. Já quem usa bastante —
-        consultas frequentes, exames recorrentes, acompanhamento contínuo — pode ver o valor acumulado por
+        porque a mensalidade é menor e o gasto por atendimento também é baixo. Já quem usa bastante
+        (consultas frequentes, exames recorrentes, acompanhamento contínuo) pode ver o valor acumulado por
         atendimento superar o que economizaria na mensalidade.
       </p>
       <p>
         Tem um detalhe que pouca gente considera: quem tem condição crônica ou família numerosa tende a usar
         o plano com mais frequência. Nesses casos, o modelo sem coparticipação costuma proteger melhor o
         bolso no longo prazo. Já quem contrata pensando em emergência e consulta esporádica pode se dar bem
-        com a coparticipação. Não existe uma regra única que valha para todo mundo — por isso o caminho
+        com a coparticipação. Não existe uma regra única que valha para todo mundo, por isso o caminho
         certo é comparar as duas opções com os seus dados.
       </p>
 
@@ -42,7 +42,7 @@ export default function Body() {
       <p>
         Primeiro, confirme quais procedimentos entram na coparticipação: em alguns planos, consulta e exame
         são cobrados; em outros, só internação ou procedimentos de maior custo. Segundo, pergunte se existe
-        um teto — alguns contratos limitam o quanto você paga de coparticipação por mês, o que protege
+        um teto: alguns contratos limitam o quanto você paga de coparticipação por mês, o que protege
         contra surpresa. Terceiro, peça o valor exato para o seu caso, porque ele muda conforme o plano e a
         cidade.
       </p>
@@ -65,7 +65,7 @@ export default function Body() {
       <h3>Coparticipação e franquia são a mesma coisa?</h3>
       <p>
         Não. São modelos diferentes de cobrança por uso. Cada operadora e cada plano definem as próprias
-        regras — o consultor esclarece qual se aplica à opção que você está avaliando.
+        regras; o consultor esclarece qual se aplica à opção que você está avaliando.
       </p>
 
       <h3>Plano com coparticipação é mais barato?</h3>
@@ -76,7 +76,7 @@ export default function Body() {
 
       <h3>Tem limite de quanto pago por mês?</h3>
       <p>
-        Alguns contratos preveem um teto de coparticipação mensal. Isso varia por plano — vale confirmar no
+        Alguns contratos preveem um teto de coparticipação mensal. Isso varia por plano, vale confirmar no
         momento da cotação.
       </p>
 
@@ -94,7 +94,7 @@ export default function Body() {
 
       <h2>Conclusão</h2>
       <p>
-        Coparticipação não é boa nem ruim por si só — depende de como você usa o plano. A decisão certa sai
+        Coparticipação não é boa nem ruim por si só: depende de como você usa o plano. A decisão certa sai
         da comparação entre os dois modelos com os seus dados na mesa: sua idade, sua cidade, sua frequência
         de uso. Solicite uma cotação sem compromisso e peça para ver as duas opções lado a lado, direto pelo
         WhatsApp com um consultor autorizado. Veja também o post sobre{' '}

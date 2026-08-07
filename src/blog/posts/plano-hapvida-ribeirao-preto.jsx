@@ -6,13 +6,13 @@ export default function Body() {
     <>
       <p>
         Pesquisar plano de saúde Hapvida em Ribeirão Preto costuma esbarrar em tabelas nacionais que não
-        dizem nada sobre a sua cidade. A resposta certa nunca é um número genérico — é o valor calculado
+        dizem nada sobre a sua cidade. A resposta certa nunca é um número genérico: é o valor calculado
         para a sua idade, na sua modalidade. Veja como chegar nele sem chute.
       </p>
 
       <h2>Quanto custa o plano Hapvida em Ribeirão Preto</h2>
       <p>
-        O site divulga uma referência inicial de R$ 157,29, ponto de partida da tabela — não o preço fechado
+        O site divulga uma referência inicial de R$ 157,29, ponto de partida da tabela, não o preço fechado
         para todo mundo. O valor final muda conforme a sua idade, a cidade e a modalidade contratada
         (individual, familiar ou empresarial), e dois moradores de Ribeirão Preto da mesma idade podem
         receber números diferentes se a contratação for diferente.
@@ -27,7 +27,7 @@ export default function Body() {
       <p>
         A operadora combina rede própria (estrutura administrada pela própria Hapvida) com rede credenciada,
         que completa a cobertura onde a rede própria não chega. O consultor valida quais unidades estão
-        disponíveis em Ribeirão Preto antes de qualquer decisão — confira também a nossa página de{' '}
+        disponíveis em Ribeirão Preto antes de qualquer decisão. Confira também a nossa página de{' '}
         <Link to="/rede-de-atendimento">rede de atendimento</Link> por cidade.
       </p>
       <p>
@@ -60,7 +60,7 @@ export default function Body() {
       <h3>Dá para reduzir a carência em Ribeirão Preto?</h3>
       <p>
         Sim, em alguns casos. Quem já tem plano ativo em outra operadora pode avaliar a portabilidade, que
-        aproveita carências já cumpridas — confira o post sobre{' '}
+        aproveita carências já cumpridas. Confira o post sobre{' '}
         <Link to="/blog/portabilidade-para-hapvida">portabilidade para Hapvida</Link>.
       </p>
 

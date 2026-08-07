@@ -5,7 +5,7 @@ export default function Body() {
   return (
     <>
       <p>
-        Quem contrata o plano Hapvida costuma perguntar sobre valores primeiro — mas depois da assinatura, o
+        Quem contrata o plano Hapvida costuma perguntar sobre valores primeiro. Mas depois da assinatura, o
         que define a rotina é a parte digital: marcar consulta, ver exame, falar com médico sem sair de
         casa. A boa notícia é que quase tudo isso resolve pelo celular, e é isso que você vai entender aqui
         antes de pedir a sua cotação.
@@ -16,7 +16,7 @@ export default function Body() {
         O aplicativo da operadora, disponível na App Store e no Google Play, concentra os serviços mais
         usados do plano. Segundo a própria Hapvida, dá para agendar consultas e exames, consultar resultados
         de exames, emitir a 2ª via do boleto, acessar a carteirinha digital do beneficiário e consultar a
-        rede credenciada. Boa parte do que antes exigia telefone ou deslocamento agora vira toque na tela —
+        rede credenciada. Boa parte do que antes exigia telefone ou deslocamento agora vira toque na tela;
         quem usa o plano com frequência economiza tempo toda semana.
       </p>
       <p>
@@ -28,14 +28,14 @@ export default function Body() {
       <p>
         O agendamento de consultas e exames é feito online, pelo Portal do Beneficiário ou pelo aplicativo.
         No momento de marcar, você escolhe entre consulta presencial ou teleconsulta, sem precisar passar
-        por outro canal — o caminho é único e direto.
+        por outro canal: o caminho é único e direto.
       </p>
 
       <h2>Teleconsulta: médico sem deslocamento</h2>
       <p>
         A teleconsulta é o atendimento médico por vídeo, com hora marcada. A operadora oferece
-        especialidades como clínico geral, cardiologia, dermatologia, ginecologia e geriatria, entre outras
-        — o leque varia por região e plano.
+        especialidades como clínico geral, cardiologia, dermatologia, ginecologia e geriatria, entre outras;
+        o leque varia por região e plano.
       </p>
       <p>
         A telemedicina é uma prática regulamentada no Brasil, e a operadora informa as condições de uso no
@@ -45,7 +45,7 @@ export default function Body() {
       </p>
       <p>
         Quer saber o que o plano Hapvida oferece de tecnologia para o seu perfil? Solicite uma cotação e
-        pergunte sobre app, teleconsulta e agendamento — um consultor autorizado responde as condições da
+        pergunte sobre app, teleconsulta e agendamento: um consultor autorizado responde as condições da
         sua cidade pelo WhatsApp em minutos.
       </p>
 
@@ -72,7 +72,7 @@ export default function Body() {
 
       <h3>A teleconsulta está inclusa em todos os planos?</h3>
       <p>
-        Não necessariamente. A disponibilidade varia por modalidade e região — um consultor confirma se o
+        Não necessariamente. A disponibilidade varia por modalidade e região; um consultor confirma se o
         plano que você está avaliando inclui teleconsulta.
       </p>
 
@@ -87,7 +87,7 @@ export default function Body() {
 
       <h3>Preciso do cartão físico para usar o plano?</h3>
       <p>
-        O app oferece a carteirinha digital do beneficiário. A aceitação em cada unidade pode variar — vale
+        O app oferece a carteirinha digital do beneficiário. A aceitação em cada unidade pode variar, vale
         confirmar com o consultor e com a própria rede.
       </p>
 

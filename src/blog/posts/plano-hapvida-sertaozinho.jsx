@@ -6,21 +6,21 @@ export default function Body() {
     <>
       <p>
         Cidade média, dúvida grande: quanto custa o plano de saúde Hapvida em Sertãozinho? Não existe um
-        número único que valha para todos os perfis — mas dá para entender o que muda o preço e como
+        número único que valha para todos os perfis, mas dá para entender o que muda o preço e como
         confirmar o valor certo para o seu caso.
       </p>
 
       <h2>Quanto custa o plano Hapvida em Sertãozinho</h2>
       <p>
         A referência inicial divulgada é de R$ 157,29, ponto de partida da tabela oficial. O valor final
-        varia conforme a idade, a cidade e a modalidade contratada — por isso o número exato do seu caso só
+        varia conforme a idade, a cidade e a modalidade contratada, por isso o número exato do seu caso só
         sai na cotação. Veja os planos disponíveis na{' '}
         <Link to="/plano-hapvida/sertaozinho">página do plano Hapvida em Sertãozinho</Link>.
       </p>
 
       <h2>Rede e carência</h2>
       <p>
-        Rede própria e credenciada, com validação local pelo consultor antes de qualquer contratação — a
+        Rede própria e credenciada, com validação local pelo consultor antes de qualquer contratação. A
         lista completa por cidade fica na página de{' '}
         <Link to="/rede-de-atendimento">rede de atendimento</Link>. Urgência e emergência entram em 24 horas
         e consultas e exames simples em 30 dias, conforme a{' '}
@@ -48,7 +48,7 @@ export default function Body() {
 
       <h3>Dá para reduzir a carência?</h3>
       <p>
-        Em alguns casos, sim, por portabilidade — veja o post sobre{' '}
+        Em alguns casos, sim, por portabilidade. Veja o post sobre{' '}
         <Link to="/blog/portabilidade-para-hapvida">portabilidade para Hapvida</Link>.
       </p>
 

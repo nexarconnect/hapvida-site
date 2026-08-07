@@ -20,7 +20,7 @@ export default function Body() {
 
       <h2>Rede e carência</h2>
       <p>
-        Rede própria e credenciada, com validação local pelo consultor — confira também a{' '}
+        Rede própria e credenciada, com validação local pelo consultor. Confira também a{' '}
         <Link to="/rede-de-atendimento">rede de atendimento</Link> por cidade. Pela{' '}
         <abbr title="Agência Nacional de Saúde Suplementar">ANS</abbr>, urgência e emergência em 24 horas;
         consultas e exames simples em 30 dias.
@@ -47,7 +47,7 @@ export default function Body() {
 
       <h3>Dá para reduzir a carência com portabilidade?</h3>
       <p>
-        Sim, em alguns casos — veja como funciona no post sobre{' '}
+        Sim, em alguns casos. Veja como funciona no post sobre{' '}
         <Link to="/blog/portabilidade-para-hapvida">portabilidade para Hapvida</Link>.
       </p>
 
