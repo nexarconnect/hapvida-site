@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 
+import { BLOG_AUTHOR } from '../data/author';
+
 const SITE_URL = 'https://tabelaplanosaude.com.br';
 const SITE_NAME = 'Tabela Plano Saúde';
 const DEFAULT_OG_IMAGE = `${SITE_URL}/og-hapvida-2026.jpg`;
@@ -112,8 +114,9 @@ export default function SEO({
         datePublished: article.publishedAt,
         dateModified: article.updatedAt || article.publishedAt,
         author: {
-          '@type': 'Organization',
-          name: SITE_NAME,
+          '@type': 'Person',
+          name: BLOG_AUTHOR.name,
+          jobTitle: BLOG_AUTHOR.role,
         },
         publisher: {
           '@type': 'Organization',

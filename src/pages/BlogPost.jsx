@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { ArrowLeft, CalendarDays, MessageCircle } from 'lucide-react';
 
 import { getPostBySlug } from '../data/blogPosts';
+import { BLOG_AUTHOR } from '../data/author';
 import { Navbar, Footer, ChatInteligente } from '../components';
 import SEO from '../components/SEO';
 import NotFound from './NotFound';
@@ -53,6 +54,9 @@ export default function BlogPost({ onOpenForm }) {
             </span>
           </div>
           <h1 className="text-3xl font-black leading-tight md:text-5xl">{meta.title}</h1>
+          <p className="mt-4 text-sm font-medium text-blue-200">
+            Por {BLOG_AUTHOR.name}, {BLOG_AUTHOR.role}
+          </p>
         </div>
       </header>
 
