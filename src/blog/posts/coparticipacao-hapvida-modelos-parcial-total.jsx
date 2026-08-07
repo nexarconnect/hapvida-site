@@ -5,7 +5,7 @@ export default function Body() {
   return (
     <>
       <p>
-        Antes de fechar a cotação do plano Hapvida, vale entender o que você paga quando usa o plano — não
+        Antes de fechar a cotação do plano Hapvida, vale entender o que você paga quando usa o plano, não
         só na mensalidade. A coparticipação muda esse cálculo, e existem modelos diferentes que pouca gente
         compara antes de assinar. Vamos separar os modelos mais comuns do mercado e o que decide qual
         compensa para você.
@@ -13,7 +13,7 @@ export default function Body() {
 
       <h2>O que é coparticipação, em uma frase</h2>
       <p>
-        Em troca de uma mensalidade menor, você paga uma parte do valor de cada atendimento que usa —
+        Em troca de uma mensalidade menor, você paga uma parte do valor de cada atendimento que usa:
         consulta, exame, terapia. Sem coparticipação, a mensalidade é maior, mas o uso não gera cobrança
         extra. A escolha entre os dois modelos mexe direto no custo mensal e no custo de quando você precisa
         de cuidado. Nem todos os planos têm coparticipação disponível: depende da modalidade contratada e da
@@ -28,7 +28,7 @@ export default function Body() {
       <h2>Modelos comuns no mercado: parcial, total e sem coparticipação</h2>
       <p>
         No mercado de planos de saúde, é comum encontrar três arranjos. No modelo parcial, só uma parte dos
-        atendimentos gera cobrança extra — em geral, terapias e procedimentos específicos, enquanto consultas
+        atendimentos gera cobrança extra (em geral, terapias e procedimentos específicos), enquanto consultas
         e exames simples ficam sem taxa adicional. No modelo total, consultas, exames e terapias entram na
         coparticipação, e a mensalidade tende a ser a mais baixa entre as opções. E existe o modelo sem
         coparticipação, com mensalidade maior e uso liberado sem cobrança extra na maior parte dos
@@ -36,7 +36,7 @@ export default function Body() {
       </p>
       <p>
         Qual desses arranjos está disponível, e com quais regras exatas, varia por operadora, por linha de
-        plano e por região — não é possível cravar isso sem consultar a tabela vigente do seu perfil. Um
+        plano e por região; não é possível cravar isso sem consultar a tabela vigente do seu perfil. Um
         consultor confirma quais modelos existem para a sua cidade e para a modalidade que você está
         avaliando.
       </p>
@@ -46,7 +46,7 @@ export default function Body() {
         Cada operadora define o próprio desenho de coparticipação: quais procedimentos entram, quais ficam
         isentos e qual o valor ou percentual cobrado em cada caso. Alguns contratos preveem um teto mensal
         de coparticipação, o que limita o quanto você paga por uso mesmo em um mês de utilização mais alta.
-        Esse é exatamente o tipo de condição que precisa ser confirmada por escrito antes da assinatura — não
+        Esse é exatamente o tipo de condição que precisa ser confirmada por escrito antes da assinatura: não
         vale se basear em referência genérica de mercado para o seu contrato específico.
       </p>
       <p>
@@ -59,7 +59,7 @@ export default function Body() {
       <p>
         A régua central é a frequência de uso. Quem usa pouco o plano tende a sair ganhando com um modelo de
         coparticipação, porque a mensalidade menor pesa mais do que o gasto ocasional por atendimento. Quem
-        usa muito — acompanhamento contínuo, família numerosa, condição crônica — costuma se sair melhor com
+        usa muito (acompanhamento contínuo, família numerosa, condição crônica) costuma se sair melhor com
         o modelo sem coparticipação, que protege o bolso no acumulado. O modelo parcial fica no meio: bom
         para quem consulta e faz exame com frequência, mas raramente precisa de terapia.
       </p>
@@ -86,7 +86,7 @@ export default function Body() {
 
       <h3>Internação e cirurgia entram na coparticipação?</h3>
       <p>
-        Depende do plano e da operadora — cada contrato define quais procedimentos têm coparticipação e
+        Depende do plano e da operadora: cada contrato define quais procedimentos têm coparticipação e
         quais ficam isentos. Não dá para afirmar isso de forma genérica: peça essa condição por escrito ao
         consultor antes de assinar.
       </p>
@@ -112,13 +112,13 @@ export default function Body() {
       <h3>Existe limite para o que pago por mês?</h3>
       <p>
         Alguns contratos preveem um teto mensal de coparticipação; outros não. As regras da ANS exigem que
-        essas condições estejam previstas e detalhadas no contrato — vale confirmar por escrito no momento
+        essas condições estejam previstas e detalhadas no contrato; vale confirmar por escrito no momento
         da cotação.
       </p>
 
       <h2>Conclusão</h2>
       <p>
-        Coparticipação não é boa nem ruim por si só — é uma escolha de perfil. Entender os modelos comuns do
+        Coparticipação não é boa nem ruim por si só: é uma escolha de perfil. Entender os modelos comuns do
         mercado ajuda a fazer as perguntas certas, mas a condição que vale é a do seu contrato, confirmada
         por escrito. Solicite uma cotação sem compromisso e peça a tabela de coparticipação da sua cidade
         junto com os valores, direto pelo WhatsApp com um consultor autorizado.

@@ -13,8 +13,8 @@ export default function Body() {
       <h2>Quanto custa o plano Hapvida em Franca</h2>
       <p>
         A referência inicial divulgada pela operadora é de R$ 157,29. É um ponto de partida, não o preço
-        fechado: o valor muda conforme a idade, a cidade e a modalidade — individual, familiar ou
-        empresarial seguem tabelas diferentes. O jeito certo de saber o número real é pedir a cotação com os
+        fechado: o valor muda conforme a idade, a cidade e a modalidade (individual, familiar ou
+        empresarial seguem tabelas diferentes). O jeito certo de saber o número real é pedir a cotação com os
         seus dados.
       </p>
       <p>
@@ -25,7 +25,7 @@ export default function Body() {
       <h2>Rede e carência em Franca</h2>
       <p>
         A operadora combina rede própria e credenciada, com validação das unidades disponíveis feita pelo
-        consultor antes de qualquer contratação — confira também a{' '}
+        consultor antes de qualquer contratação. Confira também a{' '}
         <Link to="/rede-de-atendimento">rede de atendimento</Link> por cidade. Pela regra da{' '}
         <abbr title="Agência Nacional de Saúde Suplementar">ANS</abbr>, urgência e emergência liberam em 24
         horas; consultas e exames simples, em 30 dias.
@@ -53,7 +53,7 @@ export default function Body() {
 
       <h3>Quem já tem plano ativo consegue reduzir a carência?</h3>
       <p>
-        Em alguns casos, sim, por meio da portabilidade — veja como funciona no post sobre{' '}
+        Em alguns casos, sim, por meio da portabilidade. Veja como funciona no post sobre{' '}
         <Link to="/blog/portabilidade-para-hapvida">portabilidade para Hapvida</Link>.
       </p>
 
