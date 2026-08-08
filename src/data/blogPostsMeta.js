@@ -239,4 +239,15 @@ export const BLOG_POSTS_META = [
     excerpt:
       'Parcial, total ou sem coparticipação: veja os modelos comuns do mercado e por que a condição do seu contrato precisa ser confirmada por escrito, não estimada por tabela genérica.',
   },
+  {
+    slug: 'plano-hapvida-familiar-dependentes',
+    title: 'Plano de saúde familiar Hapvida: preço e como incluir cônjuge e filhos',
+    description:
+      'Plano de saúde familiar Hapvida: como incluir cônjuge e filhos, o que muda no preço e na carência. Peça a cotação com o valor da sua família.',
+    category: 'Contratação',
+    publishedAt: '2026-08-08',
+    updatedAt: '2026-08-08',
+    excerpt:
+      'O preço da família não é uma mensalidade multiplicada: cada beneficiário entra pela própria faixa etária. Veja o que muda no valor, na carência de cada dependente e nos documentos.',
+  },
 ];
