@@ -18,7 +18,11 @@ const SITE_URL = 'https://tabelaplanosaude.com.br';
 const today = new Date().toISOString().slice(0, 10);
 
 const urls = PUBLIC_ROUTES.map(({ path: routePath, changefreq, priority }) => {
-  const loc = routePath === '/' ? `${SITE_URL}/` : `${SITE_URL}${routePath}`;
+  // Barra final: o prerender grava dist/<rota>/index.html, então o servidor
+  // responde 301 de /rota para /rota/. Sem a barra, todas as URLs do sitemap
+  // (menos a home) chegavam ao Google como redirect. Mesma regra de
+  // buildCanonicalUrl em src/components/SEO.jsx — as duas precisam bater.
+  const loc = routePath === '/' ? `${SITE_URL}/` : `${SITE_URL}${routePath}/`;
   return `  <url>
     <loc>${loc}</loc>
     <lastmod>${today}</lastmod>

@@ -23,10 +23,18 @@ function normalizeSchemaPrice(price) {
   return Number.isFinite(numeric) && numeric > 0 ? numeric.toFixed(2) : '157.29';
 }
 
+// Barra final obrigatória. O prerender grava dist/<rota>/index.html, ou seja,
+// cada rota pública é um diretório de verdade no servidor — e o Apache
+// (DirectorySlash, ligado por padrão) responde 301 de /rota para /rota/.
+// Sem a barra aqui, a URL declarada como canônica era justamente a que
+// redirecionava: o Google seguia o 301, indexava a versão com barra e
+// ignorava o canonical apontando para a versão sem. Declarar já o destino
+// final elimina o redirect de canonical, og:url, @id e breadcrumbs de uma vez.
 function buildCanonicalUrl(path) {
   if (!path || path === '/') return `${SITE_URL}/`;
   const normalized = path.startsWith('/') ? path : `/${path}`;
-  return `${SITE_URL}${normalized}`;
+  const withSlash = normalized.endsWith('/') ? normalized : `${normalized}/`;
+  return `${SITE_URL}${withSlash}`;
 }
 
 /**
