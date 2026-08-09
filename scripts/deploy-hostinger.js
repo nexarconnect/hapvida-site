@@ -22,14 +22,73 @@ const DOMAIN = process.env.HOSTINGER_DOMAIN || 'tabelaplanosaude.com.br';
 const DIST_DIR = path.join(__dirname, '..', 'dist');
 const BASE_URL = 'https://developers.hostinger.com';
 
-if (!API_TOKEN) {
-  console.error('[deploy] ERRO: variável HOSTINGER_API_TOKEN não definida.');
-  process.exit(1);
-}
 
 function log(msg) { console.log(`[deploy] ${msg}`); }
 function warn(msg) { console.warn(`[deploy] ⚠️  ${msg}`); }
 function ok(msg) { console.log(`[deploy] ✅ ${msg}`); }
+
+// Backoff entre tentativas. 4 esperas = 5 tentativas no total, ~30s de teto
+// por arquivo — suficiente para atravessar uma instabilidade de rede sem
+// deixar o job pendurado se a Hostinger estiver realmente fora.
+const RETRY_DELAYS_MS = [2000, 4000, 8000, 16000];
+
+// Erros de conexão que valem retentar. Não inclui 4xx: token inválido ou
+// caminho errado não melhoram com espera, e falhar rápido é melhor ali.
+const RETRYABLE_NETWORK_CODES = new Set([
+  'ETIMEDOUT',
+  'ECONNRESET',
+  'ECONNREFUSED',
+  'ECONNABORTED',
+  'ENETUNREACH',
+  'EHOSTUNREACH',
+  'EAI_AGAIN',
+  'EPIPE',
+  'ERR_NETWORK',
+]);
+
+function isRetryable(err) {
+  const status = err?.response?.status;
+
+  // Houve resposta HTTP: só 408/429 e 5xx são transitórios.
+  if (status) return status === 408 || status === 429 || status >= 500;
+
+  // Sem resposta = falha de conexão. Quando o host tem IPv6 e IPv4, o Node
+  // tenta os dois e agrega os erros em err.errors (foi o caso do ETIMEDOUT
+  // no IPv4 junto do ENETUNREACH no IPv6), então checa as duas formas.
+  const nested = Array.isArray(err?.errors) ? err.errors.map((e) => e?.code) : [];
+  return [err?.code, ...nested].some((code) => code && RETRYABLE_NETWORK_CODES.has(code));
+}
+
+function describeError(err) {
+  if (err?.response?.data) return JSON.stringify(err.response.data);
+  if (err?.response?.status) return `HTTP ${err.response.status}`;
+  return err?.message || String(err);
+}
+
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+/**
+ * Executa `fn`, retentando com backoff enquanto o erro for transitório.
+ * Erro definitivo (4xx, token inválido) sobe na primeira ocorrência.
+ */
+async function withRetry(fn, label) {
+  for (let attempt = 0; ; attempt += 1) {
+    try {
+      return await fn();
+    } catch (err) {
+      if (attempt >= RETRY_DELAYS_MS.length || !isRetryable(err)) throw err;
+
+      const delay = RETRY_DELAYS_MS[attempt];
+      warn(
+        `${label}: ${describeError(err)} — nova tentativa ` +
+        `(${attempt + 2}/${RETRY_DELAYS_MS.length + 1}) em ${delay / 1000}s`
+      );
+      await sleep(delay);
+    }
+  }
+}
 
 async function resolveUsername(domain) {
   const { data } = await axios.get(`${BASE_URL}/api/hosting/v1/websites`, {
@@ -115,16 +174,23 @@ async function uploadFile({ absolutePath, relativePath }, { uploadUrl, authRestT
 }
 
 async function main() {
+  if (!API_TOKEN) {
+    throw new Error('variável HOSTINGER_API_TOKEN não definida.');
+  }
+
   log(`Iniciando deploy de ${DIST_DIR} para ${DOMAIN}...`);
 
   if (!fs.existsSync(DIST_DIR)) {
     throw new Error(`Diretório dist/ não encontrado em ${DIST_DIR}. Rode "npm run build" antes.`);
   }
 
-  const username = await resolveUsername(DOMAIN);
+  const username = await withRetry(() => resolveUsername(DOMAIN), 'Resolver username');
   log(`Username resolvido: ${username}`);
 
-  const credentials = await fetchUploadCredentials(username, DOMAIN);
+  const credentials = await withRetry(
+    () => fetchUploadCredentials(username, DOMAIN),
+    'Obter credenciais de upload'
+  );
   log('Credenciais de upload obtidas.');
 
   const files = listFilesRecursive(DIST_DIR);
@@ -133,12 +199,13 @@ async function main() {
   let sent = 0;
   for (const file of files) {
     try {
-      await uploadFile(file, credentials);
+      await withRetry(() => uploadFile(file, credentials), `Enviar ${file.relativePath}`);
       sent += 1;
       log(`  (${sent}/${files.length}) ${file.relativePath}`);
     } catch (err) {
-      const detail = err?.response?.data ? JSON.stringify(err.response.data) : err.message;
-      warn(`Falha ao enviar ${file.relativePath}: ${detail}`);
+      warn(`Falha ao enviar ${file.relativePath}: ${describeError(err)}`);
+      // Aborta o deploy: seguir adiante publicaria dist/ pela metade, e um
+      // site com HTML novo e assets antigos é pior que um deploy que falhou.
       throw err;
     }
   }
@@ -146,7 +213,17 @@ async function main() {
   ok(`Deploy concluído: ${sent}/${files.length} arquivos enviados.`);
 }
 
-main().catch((err) => {
-  console.error('[deploy] ERRO FATAL:', err?.response?.data || err.message || err);
-  process.exit(1);
-});
+// Só executa quando chamado direto (`node scripts/deploy-hostinger.js`).
+// Sem esse guard, importar o arquivo para testar a lógica de retry dispararia
+// um deploy de verdade.
+const isDirectRun =
+  process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
+
+if (isDirectRun) {
+  main().catch((err) => {
+    console.error('[deploy] ERRO FATAL:', err?.response?.data || err.message || err);
+    process.exit(1);
+  });
+}
+
+export { withRetry, isRetryable, describeError, RETRY_DELAYS_MS };
