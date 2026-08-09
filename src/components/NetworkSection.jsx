@@ -52,6 +52,10 @@ export default function NetworkSection({ sharedCity }) {
   }, [activeCity]);
 
   const featured = useMemo(() => units[0] || null, [units]);
+  // Só existe registro em `network_units` pra cidade que teve unidade própria
+  // confirmada (ver getNetworkUnits) — sem isso, nem o rótulo "Rede Própria"
+  // nem o selo "Rede Exclusiva" podem ser afirmados pra essa cidade.
+  const hasConfirmedUnit = !loading && !!featured;
 
   return (
     <section id="network" className="py-16 md:py-20 bg-white">
@@ -61,10 +65,13 @@ export default function NetworkSection({ sharedCity }) {
         <header className="mb-12 flex flex-col lg:flex-row lg:items-end justify-between gap-6 text-center lg:text-left">
           <div className="max-w-xl">
             <h2 className="text-3xl md:text-4xl font-black text-[#002b5c]">
-              Rede Própria em <span className="text-[#ff8200]">{activeCity}</span>
+              {hasConfirmedUnit ? 'Rede Própria em' : 'Rede de Atendimento em'}{' '}
+              <span className="text-[#ff8200]">{activeCity}</span>
             </h2>
             <p className="mt-4 text-slate-500 leading-relaxed">
-              Acesso direto às melhores unidades hospitalares da rede Hapvida NDI com tecnologia de ponta e atendimento especializado.
+              Rede própria e credenciada Hapvida NDI, com tecnologia de ponta e atendimento
+              especializado. O tipo de rede disponível varia por cidade; um consultor confirma as
+              unidades antes da contratação.
             </p>
           </div>
 
@@ -106,12 +113,16 @@ export default function NetworkSection({ sharedCity }) {
                 ) : (
                   <div className="flex h-full flex-col items-center justify-center text-slate-300">
                     <Building2 size={64} strokeWidth={1} />
-                    <span className="mt-2 text-[10px] font-black uppercase tracking-widest opacity-60">Unidade Hapvida NDI</span>
+                    <span className="mt-2 text-[10px] font-black uppercase tracking-widest opacity-60">
+                      {hasConfirmedUnit ? 'Unidade Hapvida NDI' : 'Consulte disponibilidade'}
+                    </span>
                   </div>
                 )}
-                <div className="absolute top-4 left-4 rounded-full bg-[#002b5c] px-3 py-1 text-[10px] font-black uppercase text-white">
-                  Rede Exclusiva
-                </div>
+                {hasConfirmedUnit && (
+                  <div className="absolute top-4 left-4 rounded-full bg-[#002b5c] px-3 py-1 text-[10px] font-black uppercase text-white">
+                    Rede Exclusiva
+                  </div>
+                )}
               </div>
 
               {/* Info da Unidade */}
