@@ -38,6 +38,11 @@ export default function NetworkSection({ sharedCity }) {
   useEffect(() => {
     let mounted = true;
     setLoading(true);
+    // Limpa a unidade da cidade anterior de imediato — sem isso, `featured`
+    // fica com o dado antigo até a busca da cidade nova terminar, e o selo
+    // "Rede Exclusiva"/nome da unidade errada pode aparecer colado na cidade
+    // nova por um instante.
+    setUnits([]);
 
     getNetworkUnits(activeCity).then((data) => {
       if (mounted) {
@@ -98,7 +103,10 @@ export default function NetworkSection({ sharedCity }) {
         </header>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
-          <AnimatePresence mode="wait">
+          {/* Sem mode="wait": o card novo monta na hora, com o dado já
+              correto pra cidade atual, em vez de esperar a saída do card
+              antigo terminar pra só então atualizar. */}
+          <AnimatePresence>
             <motion.div
               key={activeCity}
               initial={{ opacity: 0, x: -20 }}
