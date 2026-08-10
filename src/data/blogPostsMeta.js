@@ -250,4 +250,15 @@ export const BLOG_POSTS_META = [
     excerpt:
       'O preço da família não é uma mensalidade multiplicada: cada beneficiário entra pela própria faixa etária. Veja o que muda no valor, na carência de cada dependente e nos documentos.',
   },
+  {
+    slug: 'reajuste-plano-hapvida-como-funciona',
+    title: 'Reajuste do Plano Hapvida: como funciona no individual e no empresarial',
+    description:
+      'Reajuste do plano Hapvida: entenda o teto da ANS no individual e a sinistralidade no empresarial. Peça a cotação e compare antes de renovar.',
+    category: 'Preços',
+    publishedAt: '2026-08-10',
+    updatedAt: '2026-08-10',
+    excerpt:
+      'O boleto veio mais caro? O reajuste do plano Hapvida segue regras diferentes no individual e no empresarial. Entenda cada uma antes de decidir o próximo passo.',
+  },
 ];
