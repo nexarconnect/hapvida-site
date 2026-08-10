@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import logoWhite from '../assets/logo-hapvida-branco.png';
-import logoColored from '../assets/logo-hapvida-branco-colorido.png';
+import logoWhite from '../assets/logo-hapvida-nexar-branco.png';
+import logoColored from '../assets/logo-hapvida-nexar-colorido.png';
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -69,7 +69,7 @@ export default function Navbar() {
   return (
     <header
       className={`fixed inset-x-0 top-0 z-[1000] flex h-16 items-center transition-all duration-500 md:h-20 ${
-        isScrolled
+        isScrolled || isMobileMenuOpen
           ? 'border-b border-slate-200/50 bg-white/90 shadow-sm backdrop-blur-md'
           : 'border-b border-transparent bg-transparent'
       }`}
@@ -78,8 +78,8 @@ export default function Navbar() {
         <Link to="/" onClick={closeAllMenus} className="flex items-center gap-3">
           <img
             src={isScrolled || isMobileMenuOpen ? logoColored : logoWhite}
-            className="h-10 w-auto transition-all duration-300 md:h-10"
-            alt="Logo Hapvida"
+            className="h-10 w-auto transition-all duration-300 md:h-14"
+            alt="Hapvida - Nexar, representante de vendas autorizado da Hapvida"
           />
         </Link>
 
