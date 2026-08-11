@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { supabase } from '../lib/supabase';
 import Sidebar from '../components/Sidebar';
 import CityLogsTable from '../components/admin/CityLogsTable';
-import { Search, Download, MessageCircle, RefreshCw } from 'lucide-react';
+import { Search, Download, MessageCircle, RefreshCw, MapPin, X } from 'lucide-react';
 
 function formatDate(value) {
   if (!value) return '-';
@@ -60,6 +60,7 @@ export default function DashboardLeads() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [refreshing, setRefreshing] = useState(false);
+  const [cityFilter, setCityFilter] = useState(null);
 
   const fetchLeads = async (quiet = false) => {
     if (!quiet) setLoading(true);
@@ -76,13 +77,29 @@ export default function DashboardLeads() {
   useEffect(() => { fetchLeads(); }, []);
 
   const filtered = useMemo(() => {
+    let list = leads;
+    if (cityFilter) {
+      list = list.filter((l) => String(l.cidade || '').trim() === cityFilter);
+    }
     const q = search.trim().toLowerCase();
-    if (!q) return leads;
-    return leads.filter((l) =>
+    if (!q) return list;
+    return list.filter((l) =>
       [l.nome, l.whatsapp, l.email, l.cidade, l.plano, l.preferencia]
         .some((v) => String(v || '').toLowerCase().includes(q))
     );
-  }, [leads, search]);
+  }, [leads, search, cityFilter]);
+
+  const cityStats = useMemo(() => {
+    const map = new Map();
+    leads.forEach((l) => {
+      const city = String(l.cidade || '').trim() || 'Não informado';
+      map.set(city, (map.get(city) || 0) + 1);
+    });
+    const maxCount = Math.max(1, ...map.values());
+    return Array.from(map.entries())
+      .map(([city, count]) => ({ city, count, pct: Math.round((count / maxCount) * 100) }))
+      .sort((a, b) => b.count - a.count);
+  }, [leads]);
 
   const summary = useMemo(() => {
     const total = leads.length;
@@ -132,7 +149,57 @@ export default function DashboardLeads() {
           </div>
 
           <section className="space-y-4">
+            <div>
+              <h2 className="text-xl font-bold text-slate-800">Leads por localização</h2>
+              <p className="text-sm text-slate-500">Clique em uma cidade para filtrar a tabela abaixo.</p>
+            </div>
+            {cityStats.length === 0 ? (
+              <div className="rounded-2xl border border-slate-200 bg-white p-6 text-center text-sm text-slate-400 shadow-sm">
+                Nenhuma localização registrada ainda.
+              </div>
+            ) : (
+              <div className="grid gap-2 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm md:grid-cols-2">
+                {cityStats.map(({ city, count, pct }) => (
+                  <button
+                    key={city}
+                    type="button"
+                    onClick={() => setCityFilter(cityFilter === city ? null : city)}
+                    className={`flex items-center gap-3 rounded-xl border p-3 text-left transition ${
+                      cityFilter === city
+                        ? 'border-[#002b5c] bg-blue-50'
+                        : 'border-slate-100 hover:border-slate-200 hover:bg-slate-50'
+                    }`}
+                  >
+                    <MapPin size={16} className="shrink-0 text-[#002b5c]" />
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="truncate text-sm font-semibold text-slate-700">{city}</span>
+                        <span className="shrink-0 text-sm font-bold text-slate-800">{count}</span>
+                      </div>
+                      <div className="mt-1.5 h-1.5 w-full rounded-full bg-slate-100">
+                        <div
+                          className="h-1.5 rounded-full bg-[#ff8200]"
+                          style={{ width: `${pct}%` }}
+                        />
+                      </div>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            )}
+          </section>
+
+          <section className="space-y-4">
             <div className="flex items-center gap-4">
+              {cityFilter && (
+                <span className="flex items-center gap-2 rounded-full bg-[#002b5c] px-3 py-1.5 text-xs font-semibold text-white">
+                  <MapPin size={12} />
+                  {cityFilter}
+                  <button type="button" onClick={() => setCityFilter(null)} aria-label="Remover filtro de cidade">
+                    <X size={12} />
+                  </button>
+                </span>
+              )}
               <div className="relative flex-1 max-w-sm">
                 <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
                 <input
@@ -143,7 +210,7 @@ export default function DashboardLeads() {
                   className="w-full rounded-xl border border-slate-200 bg-white py-2 pl-9 pr-4 text-sm text-slate-700 outline-none focus:border-[#002b5c] focus:ring-2 focus:ring-[#002b5c]/10"
                 />
               </div>
-              {search && (
+              {(search || cityFilter) && (
                 <span className="text-sm text-slate-500">
                   {filtered.length} de {leads.length} leads
                 </span>
