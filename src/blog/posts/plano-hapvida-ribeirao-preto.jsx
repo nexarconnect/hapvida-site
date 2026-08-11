@@ -74,7 +74,8 @@ export default function Body() {
       <p>
         Em Ribeirão Preto, o número que vale é o da sua idade, não a média divulgada no site. Solicite uma
         cotação sem compromisso e receba valores e rede da sua cidade pelo WhatsApp, com um consultor
-        autorizado.
+        autorizado. Veja também o guia sobre{' '}
+        <Link to="/blog/hapvida-vale-a-pena-interior-sp">se o plano Hapvida vale a pena no interior de SP</Link>.
       </p>
     </>
   );

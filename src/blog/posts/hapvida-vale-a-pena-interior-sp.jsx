@@ -123,13 +123,6 @@ export default function Body() {
         regra comercial própria conforme a região.
       </p>
 
-      <h3>Este site é o site oficial da Hapvida?</h3>
-      <p>
-        Não. A Nexar é uma consultoria independente e autorizada a comercializar planos Hapvida: um canal
-        de venda e suporte, não a operadora. Os detalhes estão no nosso{' '}
-        <Link to="/aviso-legal">aviso legal</Link>.
-      </p>
-
       <h2>Conclusão</h2>
       <p>
         Vale a pena quando o preço cabe no orçamento <em>e</em> a rede resolve a sua rotina. Os dois lados
@@ -141,7 +134,11 @@ export default function Body() {
         começar pelo mapa, veja a página de{' '}
         <Link to="/plano-hapvida/marilia">Marília</Link>,{' '}
         <Link to="/plano-hapvida/piracicaba">Piracicaba</Link> ou{' '}
-        <Link to="/plano-hapvida/sao-carlos">São Carlos</Link>.
+        <Link to="/plano-hapvida/sao-carlos">São Carlos</Link>. Depois de contratar, veja também o que o{' '}
+        <Link to="/blog/tecnologia-plano-hapvida-app-teleconsulta">
+          app e a teleconsulta do plano Hapvida
+        </Link>{' '}
+        resolvem no dia a dia.
       </p>
     </>
   );

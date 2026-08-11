@@ -36,7 +36,9 @@ export default function Body() {
       <p>
         Quer saber se compensa no seu caso? Veja também como funciona a{' '}
         <Link to="/blog/carencia-plano-hapvida">carência do plano Hapvida</Link> ou solicite uma cotação
-        para comparar as duas modalidades na sua cidade.
+        para comparar as duas modalidades na sua cidade. Se a ideia é incluir cônjuge e filhos em vez de
+        CNPJ, veja como funciona o{' '}
+        <Link to="/blog/plano-hapvida-familiar-dependentes">plano de saúde familiar Hapvida</Link>.
       </p>
     </>
   );

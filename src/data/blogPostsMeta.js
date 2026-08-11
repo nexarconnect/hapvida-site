@@ -10,7 +10,7 @@
 export const BLOG_POSTS_META = [
   {
     slug: 'hapvida-vale-a-pena-interior-sp',
-    title: 'Plano Hapvida vale a pena no interior de SP? Preço e cobertura',
+    title: 'Plano Hapvida vale a pena no interior de SP?',
     description:
       'Plano Hapvida vale a pena no interior de SP? Veja o que pesa no preço, na rede e na carência, e peça a cotação da sua cidade.',
     category: 'Guia',
@@ -54,7 +54,7 @@ export const BLOG_POSTS_META = [
   },
   {
     slug: 'rede-de-atendimento-hapvida-como-funciona',
-    title: 'Rede de Atendimento Hapvida: como funciona e o que existe na sua cidade',
+    title: 'Rede de Atendimento Hapvida: como funciona',
     description:
       'Rede de atendimento Hapvida: rede própria x credenciada, urgência 24h e cotação para confirmar o que existe na sua cidade.',
     category: 'Rede',
@@ -65,18 +65,18 @@ export const BLOG_POSTS_META = [
   },
   {
     slug: 'coparticipacao-plano-de-saude-explicada',
-    title: 'Coparticipação no Plano de Saúde: como funciona e quando compensa',
+    title: 'Coparticipação no plano de saúde: como funciona',
     description:
       'Coparticipação no plano de saúde: o que é, quando compensa e cotação para comparar com o plano sem coparticipação.',
     category: 'Contratação',
     publishedAt: '2026-08-07',
     updatedAt: '2026-08-07',
     excerpt:
-      'Coparticipação não é boa nem ruim por si só — depende de como você usa o plano. Entenda o modelo e quando ele compensa antes de contratar.',
+      'Coparticipação não é boa nem ruim por si só: depende de como você usa o plano. Entenda o modelo e quando ele compensa antes de contratar.',
   },
   {
     slug: 'plano-hapvida-bauru',
-    title: 'Plano Hapvida em Bauru: preço, rede e como contratar',
+    title: 'Plano Hapvida em Bauru: preço e rede',
     description:
       'Plano Hapvida em Bauru: como funciona o preço, a rede de atendimento e a carência. Peça a cotação com os valores da sua idade.',
     category: 'Cidades',
@@ -87,7 +87,7 @@ export const BLOG_POSTS_META = [
   },
   {
     slug: 'plano-hapvida-ribeirao-preto',
-    title: 'Plano Hapvida em Ribeirão Preto: preço, rede e como contratar',
+    title: 'Plano Hapvida em Ribeirão Preto: preço e rede',
     description:
       'Plano Hapvida em Ribeirão Preto: preço, rede de atendimento e carência. Cotação com os valores confirmados para a sua idade.',
     category: 'Cidades',
@@ -98,7 +98,7 @@ export const BLOG_POSTS_META = [
   },
   {
     slug: 'plano-hapvida-franca',
-    title: 'Plano Hapvida em Franca: preço, rede e como contratar',
+    title: 'Plano Hapvida em Franca: preço e rede',
     description:
       'Plano Hapvida em Franca: entenda o preço, a rede de atendimento e a carência. Peça a cotação para confirmar o valor da sua idade.',
     category: 'Cidades',
@@ -109,7 +109,7 @@ export const BLOG_POSTS_META = [
   },
   {
     slug: 'plano-hapvida-sao-jose-dos-campos',
-    title: 'Plano Hapvida em São José dos Campos: preço, rede e como contratar',
+    title: 'Plano Hapvida em São José dos Campos: preço e rede',
     description:
       'Plano Hapvida em São José dos Campos: preço, rede de atendimento e carência. Cotação com o valor confirmado para o seu perfil.',
     category: 'Cidades',
@@ -120,7 +120,7 @@ export const BLOG_POSTS_META = [
   },
   {
     slug: 'plano-hapvida-sertaozinho',
-    title: 'Plano Hapvida em Sertãozinho: preço, rede e como contratar',
+    title: 'Plano Hapvida em Sertãozinho: preço e rede',
     description:
       'Plano Hapvida em Sertãozinho: preço, rede de atendimento e carência. Peça a cotação e confirme o valor da sua idade.',
     category: 'Cidades',
@@ -131,7 +131,7 @@ export const BLOG_POSTS_META = [
   },
   {
     slug: 'plano-hapvida-lins',
-    title: 'Plano Hapvida em Lins: preço, rede e como contratar',
+    title: 'Plano Hapvida em Lins: preço e rede',
     description:
       'Plano Hapvida em Lins: como funciona o preço, a rede de atendimento local e a carência. Cotação com valor confirmado.',
     category: 'Cidades',
@@ -142,7 +142,7 @@ export const BLOG_POSTS_META = [
   },
   {
     slug: 'plano-hapvida-araraquara',
-    title: 'Plano Hapvida em Araraquara: preço, rede e como contratar',
+    title: 'Plano Hapvida em Araraquara: preço e rede',
     description:
       'Plano Hapvida em Araraquara: preço, rede de atendimento e carência. Peça a cotação para confirmar o valor da sua idade.',
     category: 'Cidades',
@@ -153,7 +153,7 @@ export const BLOG_POSTS_META = [
   },
   {
     slug: 'plano-hapvida-limeira',
-    title: 'Plano Hapvida em Limeira: preço, rede e como contratar',
+    title: 'Plano Hapvida em Limeira: preço e rede',
     description:
       'Plano Hapvida em Limeira: preço, rede de atendimento e carência. Cotação com o valor confirmado para o seu perfil.',
     category: 'Cidades',
@@ -164,7 +164,7 @@ export const BLOG_POSTS_META = [
   },
   {
     slug: 'plano-hapvida-barretos',
-    title: 'Plano Hapvida em Barretos: preço, rede e como contratar',
+    title: 'Plano Hapvida em Barretos: preço e rede',
     description:
       'Plano Hapvida em Barretos: preço, rede de atendimento local e carência. Peça a cotação e confirme o valor exato.',
     category: 'Cidades',
@@ -175,7 +175,7 @@ export const BLOG_POSTS_META = [
   },
   {
     slug: 'plano-hapvida-pirassununga',
-    title: 'Plano Hapvida em Pirassununga: preço, rede e como contratar',
+    title: 'Plano Hapvida em Pirassununga: preço e rede',
     description:
       'Plano Hapvida em Pirassununga: preço, rede de atendimento e carência. Cotação com o valor confirmado para a sua idade.',
     category: 'Cidades',
@@ -186,7 +186,7 @@ export const BLOG_POSTS_META = [
   },
   {
     slug: 'plano-hapvida-marilia',
-    title: 'Plano Hapvida em Marília: preço, rede e como contratar',
+    title: 'Plano Hapvida em Marília: preço e rede',
     description:
       'Plano Hapvida em Marília: preço, rede de atendimento e carência. Peça a cotação para confirmar o valor do seu perfil.',
     category: 'Cidades',
@@ -197,7 +197,7 @@ export const BLOG_POSTS_META = [
   },
   {
     slug: 'plano-hapvida-sao-carlos',
-    title: 'Plano Hapvida em São Carlos: preço, rede e como contratar',
+    title: 'Plano Hapvida em São Carlos: preço e rede',
     description:
       'Plano Hapvida em São Carlos: preço, rede de atendimento e carência. Cotação com o valor confirmado para a sua idade.',
     category: 'Cidades',
@@ -208,7 +208,7 @@ export const BLOG_POSTS_META = [
   },
   {
     slug: 'plano-hapvida-piracicaba',
-    title: 'Plano Hapvida em Piracicaba: preço, rede e como contratar',
+    title: 'Plano Hapvida em Piracicaba: preço e rede',
     description:
       'Plano Hapvida em Piracicaba: preço, rede de atendimento e carência. Peça a cotação e confirme o valor do seu perfil.',
     category: 'Cidades',
@@ -219,7 +219,7 @@ export const BLOG_POSTS_META = [
   },
   {
     slug: 'tecnologia-plano-hapvida-app-teleconsulta',
-    title: 'Tecnologia do plano Hapvida: app, agendamento online e teleconsulta',
+    title: 'Tecnologia do plano Hapvida: app e teleconsulta',
     description:
       'Tecnologia do plano Hapvida: app com agendamento de consultas e exames, resultados e teleconsulta. Veja como funciona e peça sua cotação.',
     category: 'Guia',
@@ -230,7 +230,7 @@ export const BLOG_POSTS_META = [
   },
   {
     slug: 'coparticipacao-hapvida-modelos-parcial-total',
-    title: 'Coparticipação no plano Hapvida: modelos parcial, total e sem coparticipação',
+    title: 'Coparticipação no plano Hapvida: parcial, total ou sem',
     description:
       'Coparticipação no plano Hapvida: modelos parcial, total e sem coparticipação, e o que confirmar por escrito antes de assinar.',
     category: 'Contratação',
@@ -241,7 +241,7 @@ export const BLOG_POSTS_META = [
   },
   {
     slug: 'plano-hapvida-familiar-dependentes',
-    title: 'Plano de saúde familiar Hapvida: preço e como incluir cônjuge e filhos',
+    title: 'Plano de saúde familiar Hapvida: preço e dependentes',
     description:
       'Plano de saúde familiar Hapvida: como incluir cônjuge e filhos, o que muda no preço e na carência. Peça a cotação com o valor da sua família.',
     category: 'Contratação',

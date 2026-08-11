@@ -13,8 +13,8 @@ export default function Body() {
       <h2>Quanto custa o plano Hapvida em Lins</h2>
       <p>
         Os valores variam por idade, cidade e modalidade de contratação: individual, familiar ou
-        empresarial. A referência inicial divulgada pela operadora é de R$ 157,29, mas não existe um número
-        único que valha para todos os perfis em Lins. Para saber o que se aplica ao seu caso, veja a{' '}
+        empresarial. R$ 157,29 é o valor nacional mais baixo divulgado, mas não é o que se paga em Lins: aqui
+        a tabela costuma começar acima disso. Para saber o que se aplica ao seu caso, veja a{' '}
         <Link to="/plano-hapvida/lins">página do plano Hapvida em Lins</Link> e peça a cotação.
       </p>
 
@@ -61,7 +61,8 @@ export default function Body() {
       <h2>Conclusão</h2>
       <p>
         Para saber o preço do Hapvida em Lins, o caminho é a cotação com os seus dados. Solicite uma
-        cotação sem compromisso pelo WhatsApp e receba valor e rede da sua cidade.
+        cotação sem compromisso pelo WhatsApp e receba valor e rede da sua cidade. Veja também o guia sobre{' '}
+        <Link to="/blog/hapvida-vale-a-pena-interior-sp">se o plano Hapvida vale a pena no interior de SP</Link>.
       </p>
     </>
   );

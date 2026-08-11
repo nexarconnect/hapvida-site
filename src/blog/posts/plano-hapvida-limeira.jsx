@@ -12,9 +12,9 @@ export default function Body() {
 
       <h2>Quanto custa o plano Hapvida em Limeira</h2>
       <p>
-        A referência inicial divulgada pela operadora é de R$ 157,29, ponto de partida da tabela oficial. O
-        valor final varia por idade, cidade e modalidade de contratação; o número exato do seu caso sai na
-        cotação, disponível na{' '}
+        A referência de R$ 157,29 é o valor nacional mais baixo divulgado, não o preço em Limeira: aqui a
+        tabela costuma começar acima da referência nacional. O valor final varia por idade, cidade e
+        modalidade de contratação; o número exato do seu caso sai na cotação, disponível na{' '}
         <Link to="/plano-hapvida/limeira">página do plano Hapvida em Limeira</Link>.
       </p>
 
@@ -30,8 +30,8 @@ export default function Body() {
 
       <h3>Qual o valor do plano Hapvida em Limeira?</h3>
       <p>
-        A referência inicial é R$ 157,29, mas o valor final varia por idade e modalidade. Um consultor
-        confirma o número exato na cotação para Limeira.
+        R$ 157,29 é o valor nacional mais baixo divulgado, mas o plano em Limeira costuma começar acima
+        disso. Um consultor confirma o número exato na cotação para Limeira.
       </p>
 
       <h3>A rede atende em Limeira?</h3>
@@ -60,7 +60,8 @@ export default function Body() {
       <h2>Conclusão</h2>
       <p>
         O preço em Limeira depende do seu perfil, e só a cotação revela o valor real. Solicite uma cotação
-        sem compromisso pelo WhatsApp.
+        sem compromisso pelo WhatsApp. Veja também o guia sobre{' '}
+        <Link to="/blog/hapvida-vale-a-pena-interior-sp">se o plano Hapvida vale a pena no interior de SP</Link>.
       </p>
     </>
   );

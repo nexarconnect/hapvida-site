@@ -12,9 +12,9 @@ export default function Body() {
 
       <h2>Quanto custa o plano Hapvida em Sertãozinho</h2>
       <p>
-        A referência inicial divulgada é de R$ 157,29, ponto de partida da tabela oficial. O valor final
-        varia conforme a idade, a cidade e a modalidade contratada, por isso o número exato do seu caso só
-        sai na cotação. Veja os planos disponíveis na{' '}
+        R$ 157,29 é o valor nacional mais baixo divulgado, não necessariamente o preço em Sertãozinho: o
+        valor final varia conforme a idade, a cidade e a modalidade contratada, por isso o número exato do
+        seu caso só sai na cotação. Veja os planos disponíveis na{' '}
         <Link to="/plano-hapvida/sertaozinho">página do plano Hapvida em Sertãozinho</Link>.
       </p>
 
@@ -31,8 +31,8 @@ export default function Body() {
 
       <h3>Qual o valor do plano Hapvida em Sertãozinho?</h3>
       <p>
-        A referência inicial é R$ 157,29, mas o valor final varia por idade e modalidade. Um consultor
-        confirma o número exato na cotação.
+        R$ 157,29 é o valor nacional mais baixo divulgado, mas o plano em Sertãozinho costuma começar acima
+        disso. Um consultor confirma o número exato na cotação.
       </p>
 
       <h3>A rede atende em Sertãozinho?</h3>
@@ -61,7 +61,8 @@ export default function Body() {
       <h2>Conclusão</h2>
       <p>
         Em Sertãozinho, o valor real depende do seu perfil. Peça uma cotação sem compromisso e confirme
-        valor e rede da sua cidade direto pelo WhatsApp.
+        valor e rede da sua cidade direto pelo WhatsApp. Veja também o guia sobre{' '}
+        <Link to="/blog/hapvida-vale-a-pena-interior-sp">se o plano Hapvida vale a pena no interior de SP</Link>.
       </p>
     </>
   );

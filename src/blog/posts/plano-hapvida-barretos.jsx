@@ -12,9 +12,9 @@ export default function Body() {
 
       <h2>Quanto custa o plano Hapvida em Barretos</h2>
       <p>
-        O valor varia por idade, cidade e modalidade (individual, familiar ou empresarial). A referência
-        inicial divulgada pela operadora é de R$ 157,29, mas não há um número único que valha para todos os
-        perfis em Barretos. Veja os planos disponíveis na{' '}
+        O valor varia por idade, cidade e modalidade (individual, familiar ou empresarial). R$ 157,29 é o
+        valor nacional mais baixo divulgado pela operadora, mas Barretos nem sempre segue essa mesma tabela
+        de entrada: os planos disponíveis por aqui podem ser outros. Veja os planos disponíveis na{' '}
         <Link to="/plano-hapvida/barretos">página do plano Hapvida em Barretos</Link> e peça a cotação.
       </p>
 
@@ -61,7 +61,8 @@ export default function Body() {
       <h2>Conclusão</h2>
       <p>
         Para saber o preço do Hapvida em Barretos, a cotação com os seus dados é o caminho. Solicite uma
-        cotação sem compromisso pelo WhatsApp.
+        cotação sem compromisso pelo WhatsApp. Veja também o guia sobre{' '}
+        <Link to="/blog/hapvida-vale-a-pena-interior-sp">se o plano Hapvida vale a pena no interior de SP</Link>.
       </p>
     </>
   );

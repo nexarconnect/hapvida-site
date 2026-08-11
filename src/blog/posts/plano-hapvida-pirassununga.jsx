@@ -12,9 +12,10 @@ export default function Body() {
 
       <h2>Quanto custa o plano Hapvida em Pirassununga</h2>
       <p>
-        A referência inicial divulgada pela operadora é de R$ 157,29. O valor final varia conforme a idade,
-        a modalidade contratada e a disponibilidade comercial da região; os demais planos e o número exato
-        para o seu caso são confirmados por um consultor. Veja as opções na{' '}
+        R$ 157,29 é o valor nacional mais baixo divulgado pela operadora, mas Pirassununga nem sempre segue
+        essa mesma tabela de entrada: os planos disponíveis por aqui podem ser outros. O valor final varia
+        conforme a idade, a modalidade contratada e a disponibilidade comercial da região; o número exato
+        para o seu caso é confirmado por um consultor. Veja as opções na{' '}
         <Link to="/plano-hapvida/pirassununga">página do plano Hapvida em Pirassununga</Link>.
       </p>
 
@@ -30,8 +31,8 @@ export default function Body() {
 
       <h3>Qual o valor do plano Hapvida em Pirassununga?</h3>
       <p>
-        A referência inicial é R$ 157,29, mas o valor final varia por idade e modalidade. Um consultor
-        confirma o número exato na cotação.
+        R$ 157,29 é o valor nacional mais baixo divulgado, mas o plano disponível em Pirassununga costuma
+        ser outro, com valor de entrada diferente. Um consultor confirma o número exato na cotação.
       </p>
 
       <h3>A rede atende em Pirassununga?</h3>
@@ -60,7 +61,8 @@ export default function Body() {
       <h2>Conclusão</h2>
       <p>
         Em Pirassununga, o valor real depende do seu perfil. Solicite uma cotação sem compromisso e confirme
-        o valor e a rede da sua cidade.
+        o valor e a rede da sua cidade. Veja também o guia sobre{' '}
+        <Link to="/blog/hapvida-vale-a-pena-interior-sp">se o plano Hapvida vale a pena no interior de SP</Link>.
       </p>
     </>
   );

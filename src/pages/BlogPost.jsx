@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ArrowLeft, CalendarDays, MessageCircle } from 'lucide-react';
 
@@ -16,6 +16,28 @@ function formatDate(isoDate) {
 export default function BlogPost({ onOpenForm }) {
   const { slug } = useParams();
   const post = getPostBySlug(slug);
+  const articleRef = useRef(null);
+  const [faqItems, setFaqItems] = useState(null);
+
+  // Extrai o FAQPage schema direto do DOM renderizado (h3 = pergunta, o <p>
+  // seguinte = resposta), em vez de duplicar o texto do FAQ em outro lugar.
+  // Todo <h3> do corpo de um post é uma pergunta de FAQ, sempre seguido de
+  // exatamente um <p> (verificado nos 22 posts) — então isso nunca fica
+  // dessincronizado do que está visível na página.
+  useEffect(() => {
+    if (!articleRef.current) return;
+    const questions = Array.from(articleRef.current.querySelectorAll('h3'));
+    const items = questions
+      .map((h3) => {
+        const answerEl = h3.nextElementSibling;
+        if (!answerEl || answerEl.tagName !== 'P') return null;
+        const question = h3.textContent.trim();
+        const answer = answerEl.textContent.trim();
+        return question && answer ? { question, answer } : null;
+      })
+      .filter(Boolean);
+    setFaqItems(items.length > 0 ? items : null);
+  }, [slug]);
 
   if (!post) {
     return <NotFound />;
@@ -34,6 +56,7 @@ export default function BlogPost({ onOpenForm }) {
         title={`${meta.title} | Blog`}
         description={meta.description}
         article={{ publishedAt: meta.publishedAt, updatedAt: meta.updatedAt }}
+        faqItems={faqItems}
       />
       <Navbar />
 
@@ -62,7 +85,10 @@ export default function BlogPost({ onOpenForm }) {
 
       <article className="bg-white py-16 md:py-20">
         <div className="container mx-auto max-w-3xl px-6">
-          <div className="prose prose-slate max-w-none prose-headings:font-black prose-headings:text-[#002b5c] prose-a:text-[#ff8200] prose-a:font-bold">
+          <div
+            ref={articleRef}
+            className="prose prose-slate max-w-none prose-headings:font-black prose-headings:text-[#002b5c] prose-a:text-[#ff8200] prose-a:font-bold"
+          >
             <Body />
           </div>
 

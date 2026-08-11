@@ -12,10 +12,9 @@ export default function Body() {
 
       <h2>Quanto custa o plano Hapvida em Franca</h2>
       <p>
-        A referência inicial divulgada pela operadora é de R$ 157,29. É um ponto de partida, não o preço
-        fechado: o valor muda conforme a idade, a cidade e a modalidade (individual, familiar ou
-        empresarial seguem tabelas diferentes). O jeito certo de saber o número real é pedir a cotação com os
-        seus dados.
+        A referência de R$ 157,29 é o valor nacional mais baixo divulgado, não necessariamente o preço em
+        Franca: o valor muda conforme a idade, a cidade e a modalidade (individual, familiar ou empresarial
+        seguem tabelas diferentes). O jeito certo de saber o número real é pedir a cotação com os seus dados.
       </p>
       <p>
         Veja os planos disponíveis e peça o valor atualizado na{' '}
@@ -35,8 +34,8 @@ export default function Body() {
 
       <h3>Qual o valor do plano Hapvida em Franca?</h3>
       <p>
-        A referência inicial é de R$ 157,29, mas o valor final depende da sua idade e modalidade. Um
-        consultor confirma o número exato na cotação para Franca.
+        R$ 157,29 é o valor nacional mais baixo divulgado, mas o plano em Franca costuma começar acima disso.
+        Um consultor confirma o número exato na cotação para Franca.
       </p>
 
       <h3>A rede atende em Franca?</h3>
@@ -66,7 +65,9 @@ export default function Body() {
       <h2>Conclusão</h2>
       <p>
         O valor que importa em Franca é o do seu perfil, não a média nacional. Peça uma cotação sem
-        compromisso e confirme preço e rede pelo WhatsApp com um consultor autorizado.
+        compromisso e confirme preço e rede pelo WhatsApp com um consultor autorizado. Veja também o guia
+        sobre{' '}
+        <Link to="/blog/hapvida-vale-a-pena-interior-sp">se o plano Hapvida vale a pena no interior de SP</Link>.
       </p>
     </>
   );

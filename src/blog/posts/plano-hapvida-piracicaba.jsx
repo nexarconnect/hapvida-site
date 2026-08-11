@@ -11,9 +11,10 @@ export default function Body() {
 
       <h2>Quanto custa o plano Hapvida em Piracicaba</h2>
       <p>
-        A referência inicial divulgada pela operadora é de R$ 157,29. O valor final varia por idade,
-        modalidade contratada e disponibilidade comercial da região; os demais planos e o valor exato para o
-        seu perfil são confirmados por um consultor. Veja as opções na{' '}
+        R$ 157,29 é o valor nacional mais baixo divulgado pela operadora, mas Piracicaba nem sempre segue
+        essa mesma tabela de entrada: os planos disponíveis por aqui podem ser outros. O valor final varia
+        por idade, modalidade contratada e disponibilidade comercial da região; o valor exato para o seu
+        perfil é confirmado por um consultor. Veja as opções na{' '}
         <Link to="/plano-hapvida/piracicaba">página do plano Hapvida em Piracicaba</Link>.
       </p>
 
@@ -29,8 +30,8 @@ export default function Body() {
 
       <h3>Qual o valor do plano Hapvida em Piracicaba?</h3>
       <p>
-        A referência inicial é R$ 157,29, mas o valor final varia por idade e modalidade. Um consultor
-        confirma o número exato na cotação.
+        R$ 157,29 é o valor nacional mais baixo divulgado, mas o plano disponível em Piracicaba costuma ser
+        outro, com valor de entrada diferente. Um consultor confirma o número exato na cotação.
       </p>
 
       <h3>A rede atende em Piracicaba?</h3>
@@ -59,7 +60,8 @@ export default function Body() {
       <h2>Conclusão</h2>
       <p>
         Em Piracicaba, o valor real depende do seu perfil. Peça uma cotação sem compromisso e compare as
-        opções.
+        opções. Veja também o guia sobre{' '}
+        <Link to="/blog/hapvida-vale-a-pena-interior-sp">se o plano Hapvida vale a pena no interior de SP</Link>.
       </p>
     </>
   );

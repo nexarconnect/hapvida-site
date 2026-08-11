@@ -12,9 +12,10 @@ export default function Body() {
 
       <h2>Quanto custa o plano Hapvida em São José dos Campos</h2>
       <p>
-        A referência inicial divulgada pela operadora é de R$ 157,29. É apenas um ponto de partida: o valor
-        final varia por idade, cidade e modalidade de contratação. Duas pessoas da mesma idade podem receber
-        propostas diferentes dependendo de contratarem individual, familiar ou empresarial.
+        A referência de R$ 157,29 é o valor nacional mais baixo divulgado, não necessariamente o preço em
+        São José dos Campos: o valor final varia por idade, cidade e modalidade de contratação. Duas pessoas
+        da mesma idade podem receber propostas diferentes dependendo de contratarem individual, familiar ou
+        empresarial.
       </p>
       <p>
         Confira os planos disponíveis e peça o valor atualizado na{' '}
@@ -33,8 +34,8 @@ export default function Body() {
 
       <h3>Qual o valor do plano Hapvida em São José dos Campos?</h3>
       <p>
-        A referência inicial é de R$ 157,29, mas o valor final varia por idade, cidade e modalidade. Um
-        consultor confirma o número exato na cotação.
+        R$ 157,29 é o valor nacional mais baixo divulgado, mas o plano em São José dos Campos costuma
+        começar acima disso. Um consultor confirma o número exato na cotação.
       </p>
 
       <h3>A rede atende em São José dos Campos?</h3>
@@ -65,7 +66,8 @@ export default function Body() {
       <p>
         Em São José dos Campos, o número que vale é o da sua idade e modalidade, não a média nacional.
         Solicite uma cotação sem compromisso pelo WhatsApp e confirme valor e rede com um consultor
-        autorizado.
+        autorizado. Veja também o guia sobre{' '}
+        <Link to="/blog/hapvida-vale-a-pena-interior-sp">se o plano Hapvida vale a pena no interior de SP</Link>.
       </p>
     </>
   );

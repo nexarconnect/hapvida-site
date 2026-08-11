@@ -98,8 +98,12 @@ export default function Body() {
         da comparação entre os dois modelos com os seus dados na mesa: sua idade, sua cidade, sua frequência
         de uso. Solicite uma cotação sem compromisso e peça para ver as duas opções lado a lado, direto pelo
         WhatsApp com um consultor autorizado. Veja também o post sobre{' '}
-        <Link to="/blog/rede-de-atendimento-hapvida-como-funciona">rede de atendimento Hapvida</Link> e sobre{' '}
-        <Link to="/blog/carencia-plano-hapvida">carência no plano Hapvida</Link>.
+        <Link to="/blog/rede-de-atendimento-hapvida-como-funciona">rede de atendimento Hapvida</Link>, sobre{' '}
+        <Link to="/blog/carencia-plano-hapvida">carência no plano Hapvida</Link> e sobre os{' '}
+        <Link to="/blog/coparticipacao-hapvida-modelos-parcial-total">
+          modelos de coparticipação parcial, total e sem coparticipação
+        </Link>{' '}
+        no plano Hapvida.
       </p>
     </>
   );

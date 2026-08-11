@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { ArrowLeft, MapPin, Building2 } from 'lucide-react';
 
 import { getCityBySlug } from '../data/coveredCities';
+import { getPostBySlug } from '../data/blogPosts';
 import { getPricingByCity, getNetworkUnits } from '../lib/supabase';
 import { Navbar, PriceTablesSection, Footer, ChatInteligente, selectDisplayPlans } from '../components';
 import SEO from '../components/SEO';
@@ -71,6 +72,8 @@ export default function PlanoPorCidade({ onOpenForm }) {
     return <NotFound />;
   }
 
+  const cityBlogPost = getPostBySlug(`plano-hapvida-${slug}`);
+
   const handleOpenForm = (planName) => {
     onOpenForm?.(planName);
   };
@@ -133,6 +136,23 @@ export default function PlanoPorCidade({ onOpenForm }) {
                 <NetworkUnitCard key={unit.id} unit={unit} />
               ))}
             </div>
+          </div>
+        </section>
+      )}
+
+      {cityBlogPost && (
+        <section className="bg-white py-12 text-center">
+          <div className="container mx-auto max-w-2xl px-6">
+            <p className="text-slate-600">
+              Quer entender preço, rede e carência com mais detalhe antes da cotação? Veja o guia sobre o{' '}
+              <Link
+                to={`/blog/${cityBlogPost.meta.slug}`}
+                className="font-bold text-[#002b5c] underline"
+              >
+                plano Hapvida em {city.name}
+              </Link>
+              .
+            </p>
           </div>
         </section>
       )}

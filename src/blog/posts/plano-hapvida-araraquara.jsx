@@ -12,9 +12,9 @@ export default function Body() {
 
       <h2>Quanto custa o plano Hapvida em Araraquara</h2>
       <p>
-        A referência inicial divulgada pela operadora é de R$ 157,29, um ponto de partida, não o preço
-        fechado. O valor muda com idade, cidade e modalidade contratada, então a cotação com os seus dados é
-        o que define o número real. Veja os planos disponíveis na{' '}
+        A referência de R$ 157,29 é o valor nacional mais baixo divulgado pela operadora, não necessariamente
+        o preço em Araraquara. O valor muda com idade, cidade e modalidade contratada, então a cotação com os
+        seus dados é o que define o número real. Veja os planos disponíveis na{' '}
         <Link to="/plano-hapvida/araraquara">página do plano Hapvida em Araraquara</Link>.
       </p>
 
@@ -30,8 +30,8 @@ export default function Body() {
 
       <h3>Qual o valor do plano Hapvida em Araraquara?</h3>
       <p>
-        A referência inicial é R$ 157,29, mas o valor final depende da sua idade e modalidade. Um consultor
-        confirma o número exato na cotação.
+        R$ 157,29 é o valor nacional mais baixo divulgado, mas o plano em Araraquara costuma começar acima
+        disso. Um consultor confirma o número exato na cotação.
       </p>
 
       <h3>A rede atende em Araraquara?</h3>
@@ -60,7 +60,8 @@ export default function Body() {
       <h2>Conclusão</h2>
       <p>
         Em Araraquara, o valor que importa é o da sua idade. Solicite uma cotação sem compromisso e receba
-        os valores confirmados pelo WhatsApp.
+        os valores confirmados pelo WhatsApp. Veja também o guia sobre{' '}
+        <Link to="/blog/hapvida-vale-a-pena-interior-sp">se o plano Hapvida vale a pena no interior de SP</Link>.
       </p>
     </>
   );

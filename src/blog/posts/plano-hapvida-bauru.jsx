@@ -13,11 +13,11 @@ export default function Body() {
 
       <h2>Quanto custa o plano Hapvida em Bauru</h2>
       <p>
-        A referência inicial divulgada pela operadora é de R$ 157,29, e esse número costuma aparecer em
-        quase toda busca por preço. Só que ele é um ponto de partida, não uma etiqueta fixa: a tabela muda
-        conforme a cidade, a faixa etária e a modalidade contratada: individual, familiar ou empresarial.
-        Duas pessoas da mesma idade em Bauru podem receber valores diferentes dependendo da modalidade
-        escolhida.
+        A referência de R$ 157,29 é o valor nacional mais baixo divulgado pela operadora, e esse número
+        costuma aparecer em quase toda busca por preço. Mas em Bauru a tabela de entrada costuma começar bem
+        acima disso: o valor muda conforme a cidade, a faixa etária e a modalidade contratada (individual,
+        familiar ou empresarial), e duas pessoas da mesma idade em Bauru podem receber valores diferentes
+        dependendo da modalidade escolhida.
       </p>
       <p>
         Por isso, o número exato do seu perfil só sai na cotação. Confira os planos disponíveis e solicite o
@@ -50,8 +50,8 @@ export default function Body() {
 
       <h3>Qual o valor do plano Hapvida em Bauru?</h3>
       <p>
-        A referência inicial é de R$ 157,29, mas o valor final varia por idade, modalidade e perfil. Um
-        consultor confirma o número exato para o seu caso na cotação para Bauru.
+        R$ 157,29 é o valor nacional mais baixo divulgado, mas o plano em Bauru costuma começar bem acima
+        disso. Um consultor confirma o número exato para o seu caso na cotação para Bauru.
       </p>
 
       <h3>Qual plano é mais barato em Bauru?</h3>
@@ -84,7 +84,8 @@ export default function Body() {
         Em Bauru, o número que importa é o da sua idade, não a média divulgada. Solicite uma cotação sem
         compromisso e receba os valores e a lista de unidades da cidade direto pelo WhatsApp, com um
         consultor autorizado. Veja também as{' '}
-        <Link to="/perguntas-frequentes">perguntas frequentes</Link> sobre o plano.
+        <Link to="/perguntas-frequentes">perguntas frequentes</Link> sobre o plano e o guia sobre{' '}
+        <Link to="/blog/hapvida-vale-a-pena-interior-sp">se o plano Hapvida vale a pena no interior de SP</Link>.
       </p>
     </>
   );

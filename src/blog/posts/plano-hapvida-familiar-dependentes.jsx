@@ -24,7 +24,7 @@ export default function Body() {
       </p>
       <p>
         <strong>Quer o valor da sua família?</strong> Peça a cotação com a idade de cada pessoa que vai
-        entrar no plano. O retorno vem pelo WhatsApp com os valores disponíveis para a sua cidade — veja a
+        entrar no plano. O retorno vem pelo WhatsApp com os valores disponíveis para a sua cidade: veja a
         página de <Link to="/plano-hapvida/bauru">Bauru</Link>,{' '}
         <Link to="/plano-hapvida/ribeirao-preto">Ribeirão Preto</Link>,{' '}
         <Link to="/plano-hapvida/marilia">Marília</Link> ou{' '}
@@ -38,7 +38,7 @@ export default function Body() {
       <p>
         <strong>Faixa etária.</strong> O plano individual usa faixas etárias definidas pela{' '}
         <abbr title="Agência Nacional de Saúde Suplementar">ANS</abbr>, e quanto mais nova a faixa, menor
-        tende a ser o valor — está explicado nas perguntas da{' '}
+        tende a ser o valor, como está explicado nas perguntas da{' '}
         <Link to="/plano-individual-hapvida">página do plano individual</Link>. Na prática, um casal de 30
         anos com dois filhos pequenos monta uma conta bem diferente de um casal de 55 com um filho
         adolescente, mesmo sendo quatro e três pessoas.
@@ -66,7 +66,7 @@ export default function Body() {
       <h2>A carência conta separado para cada dependente</h2>
       <p>
         Aqui tem um detalhe que passa despercebido e gera frustração depois. Cada dependente incluído tem
-        sua própria contagem de carência, contada a partir da data em que entrou no contrato — é o que
+        sua própria contagem de carência, contada a partir da data em que entrou no contrato. É o que
         respondemos nas <Link to="/perguntas-frequentes">perguntas frequentes</Link>. Incluir um filho seis
         meses depois da assinatura significa recomeçar a contagem para ele, não herdar a do titular.
       </p>
@@ -79,7 +79,7 @@ export default function Body() {
       <p>
         Se alguém da família já tem plano ativo em outra operadora e cumpriu as carências lá, a
         portabilidade prevista pela ANS pode reduzir ou eliminar essa espera. Vale avaliar pessoa por
-        pessoa — nem sempre a situação de todos é igual. Veja como funciona no post sobre{' '}
+        pessoa: nem sempre a situação de todos é igual. Veja como funciona no post sobre{' '}
         <Link to="/blog/portabilidade-para-hapvida">portabilidade para Hapvida</Link>.
       </p>
       <p>
@@ -91,7 +91,7 @@ export default function Body() {
       <h2>Documentos para incluir a família</h2>
       <p>
         Para a contratação individual, o que se pede é CPF e os documentos pessoais dos dependentes, quando
-        houver — a lista está nas nossas{' '}
+        houver. A lista está nas nossas{' '}
         <Link to="/perguntas-frequentes">perguntas frequentes</Link> e na comparação de{' '}
         <Link to="/tipos-de-planos">tipos de plano</Link>. O consultor confirma a relação exata para o seu
         caso antes de montar a proposta, porque ela varia conforme quem entra no contrato.
@@ -101,7 +101,7 @@ export default function Body() {
       <p>
         Tem famílias em que alguém já tem CNPJ ativo, incluindo MEI, e nem cogita usar isso no plano.
         Poderia. Planos empresariais costumam ter melhor custo-benefício para quem tem empresa ativa,
-        conforme a regra comercial disponível para a região — a comparação entre as duas modalidades está
+        conforme a regra comercial disponível para a região. A comparação entre as duas modalidades está
         no post sobre{' '}
         <Link to="/blog/plano-hapvida-empresarial-mei">plano Hapvida empresarial e MEI</Link>.
       </p>
@@ -160,17 +160,10 @@ export default function Body() {
         região. O consultor mostra as alternativas no momento da cotação.
       </p>
 
-      <h3>Este site é o site oficial da Hapvida?</h3>
-      <p>
-        Não. A Nexar é uma consultoria independente e autorizada a comercializar planos Hapvida: um canal
-        de venda e suporte, não a operadora. Os detalhes estão no nosso{' '}
-        <Link to="/aviso-legal">aviso legal</Link>.
-      </p>
-
       <h2>Conclusão</h2>
       <p>
         Plano familiar é soma de faixas etárias, não um pacote de preço fechado. Quem monta a conta com o
-        número que viu na propaganda quase sempre erra para menos — e quem inclui um dependente meses
+        número que viu na propaganda quase sempre erra para menos, e quem inclui um dependente meses
         depois costuma esquecer que a carência dele recomeça do zero.
       </p>
       <p>
