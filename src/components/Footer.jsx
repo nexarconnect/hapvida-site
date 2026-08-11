@@ -41,7 +41,7 @@ export default function Footer({ onOpenForm }) {
 
             <div className="flex gap-3">
               {[
-                { Icon: Instagram, href: '#' },
+                { Icon: Instagram, href: 'https://www.instagram.com/corretorautorizadohapvida/' },
                 { Icon: Facebook, href: 'https://www.facebook.com/profile.php?id=61588052201763&sk=grid' },
                 { Icon: Linkedin, href: 'https://www.linkedin.com/company/nexarconnect/' },
               ].map(({ Icon, href }, i) => (
