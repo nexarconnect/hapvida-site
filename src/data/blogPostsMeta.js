@@ -250,4 +250,15 @@ export const BLOG_POSTS_META = [
     excerpt:
       'O preço da família não é uma mensalidade multiplicada: cada beneficiário entra pela própria faixa etária. Veja o que muda no valor, na carência de cada dependente e nos documentos.',
   },
+  {
+    slug: 'reajuste-plano-hapvida-como-funciona',
+    title: 'Reajuste do Plano Hapvida: como funciona em cada modalidade',
+    description:
+      'Reajuste do plano Hapvida: como funciona em cada modalidade e como confirmar o valor atualizado na sua cotação.',
+    category: 'Contratação',
+    publishedAt: '2026-08-11',
+    updatedAt: '2026-08-11',
+    excerpt:
+      'O plano de saúde reajusta todo ano, mas o motivo e o percentual mudam conforme a modalidade contratada. Veja como funciona o reajuste no individual, empresarial e adesão, e o que fazer se ele pesar no orçamento.',
+  },
 ];
