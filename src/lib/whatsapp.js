@@ -1,4 +1,4 @@
-import { WHATSAPP_NUMBER } from './constants';
+import { getSiteConfig } from './siteConfig';
 
 export function buildWhatsAppMessage(data = {}) {
   const { nome, whatsapp, cidade, perfil, numPessoas, preferencia, idades, email } = data;
@@ -23,7 +23,7 @@ export function buildWhatsAppMessage(data = {}) {
 }
 
 export function openWhatsAppLead(data = {}) {
-  const phone = WHATSAPP_NUMBER;
+  const phone = getSiteConfig().whatsapp_number;
   const message = buildWhatsAppMessage(data);
   const url = `https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(message)}`;
   window.open(url, '_blank', 'noopener,noreferrer');

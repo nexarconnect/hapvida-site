@@ -5,11 +5,22 @@ import { ArrowLeft, MapPin, ArrowRight } from 'lucide-react';
 import { COVERED_CITIES, slugifyCity } from '../data/coveredCities';
 import { Navbar, Footer, ChatInteligente } from '../components';
 import SEO from '../components/SEO';
+import { useSiteConfig } from '../lib/siteConfig';
 
 export default function PlanosPorCidade({ onOpenForm }) {
   const title = 'Plano Hapvida por Cidade 2026 | Interior de SP';
   const description =
     'Veja o plano de saúde Hapvida disponível na sua cidade no interior de SP: preços, rede de atendimento local e cotação pelo WhatsApp.';
+
+  // city_filter (config de /admin/config): vazio mostra todas as cidades
+  // atendidas (comportamento atual). Preenchido, mostra só as que batem
+  // (case-insensitive, por substring do nome).
+  const { city_filter } = useSiteConfig();
+  const filteredCities = city_filter
+    ? COVERED_CITIES.filter((city) =>
+        city.name.toLowerCase().includes(city_filter.trim().toLowerCase())
+      )
+    : COVERED_CITIES;
 
   return (
     <div>
@@ -33,14 +44,14 @@ export default function PlanosPorCidade({ onOpenForm }) {
         </h1>
         <p className="mx-auto mt-4 max-w-2xl text-blue-100">
           A Nexar atende em todo o Brasil, onde a Hapvida está presente. Temos página com preços e
-          rede detalhados para estas {COVERED_CITIES.length} cidades do interior de São Paulo.
+          rede detalhados para estas {filteredCities.length} cidades do interior de São Paulo.
         </p>
       </header>
 
       <section className="bg-slate-50 py-16 md:py-20">
         <div className="container mx-auto max-w-5xl px-6">
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {COVERED_CITIES.map((city) => (
+            {filteredCities.map((city) => (
               <Link
                 key={city.name}
                 to={`/plano-hapvida/${slugifyCity(city.name)}`}

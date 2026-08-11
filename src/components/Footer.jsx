@@ -10,10 +10,11 @@ import {
   ShieldCheck
 } from 'lucide-react';
 import { trackCTA } from '../lib/tracking'; // Corrigido: removido trackContact
-import { WHATSAPP_NUMBER } from '../lib/constants';
+import { useSiteConfig } from '../lib/siteConfig';
 
 export default function Footer({ onOpenForm }) {
   const currentYear = new Date().getFullYear();
+  const { whatsapp_number: WHATSAPP_NUMBER } = useSiteConfig();
 
   const handleWhatsAppClick = () => {
     // Corrigido: alterado para trackCTA

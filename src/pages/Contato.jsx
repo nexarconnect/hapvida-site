@@ -5,9 +5,10 @@ import { Navbar, Footer, ChatInteligente } from '../components';
 import SEO from '../components/SEO';
 import { trackCTA } from '../lib/tracking';
 import { openWhatsApp } from '../lib/whatsapp';
-import { WHATSAPP_NUMBER } from '../lib/constants';
+import { useSiteConfig } from '../lib/siteConfig';
 
 export default function Contato({ onOpenForm }) {
+  const { whatsapp_number: WHATSAPP_NUMBER } = useSiteConfig();
   const handleFormClick = () => {
     trackCTA('solicitar_cotacao', 'contato_hero');
     onOpenForm();

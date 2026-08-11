@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 
 import { BLOG_AUTHOR } from '../data/author';
-import { WHATSAPP_NUMBER } from '../lib/constants';
+import { useSiteConfig } from '../lib/siteConfig';
 
 const SITE_URL = 'https://tabelaplanosaude.com.br';
 const SITE_NAME = 'Tabela Plano Saúde';
@@ -12,15 +12,15 @@ const DEFAULT_TITLE = 'Plano de Saúde Hapvida 2026 | Cotação a partir de R$ 1
 const DEFAULT_DESCRIPTION =
   'Cotação do Plano de Saúde Hapvida 2026 a partir de R$ 157,29. Atendimento rápido no WhatsApp com consultor autorizado, sem compromisso.';
 
-function normalizeSchemaPrice(price) {
-  const raw = String(price ?? '157,29')
+function normalizeSchemaPrice(price, fallback = '157.29') {
+  const raw = String(price ?? fallback)
     .trim()
     .replace(/[^\d,.-]/g, '')
     .replace(',', '.');
 
   const numeric = Number(raw);
 
-  return Number.isFinite(numeric) && numeric > 0 ? numeric.toFixed(2) : '157.29';
+  return Number.isFinite(numeric) && numeric > 0 ? numeric.toFixed(2) : fallback;
 }
 
 // Barra final obrigatória. O prerender grava dist/<rota>/index.html, ou seja,
@@ -64,9 +64,15 @@ export default function SEO({
     document.querySelectorAll('[data-default]').forEach((el) => el.remove());
   }, []);
 
+  const { whatsapp_number: WHATSAPP_NUMBER, site_title, min_price } = useSiteConfig();
+
   const canonicalUrl = buildCanonicalUrl(path);
-  const pageTitle = title || DEFAULT_TITLE;
+  // site_title (config de /admin/config) só entra quando a página não passa
+  // title próprio E o admin de fato preencheu o campo — senão mantém o
+  // DEFAULT_TITLE atual (já otimizado com preço no texto).
+  const pageTitle = title || site_title || DEFAULT_TITLE;
   const description_ = description || DEFAULT_DESCRIPTION;
+  const schemaPriceFallback = min_price || undefined;
 
   const faqJsonLd = faqItems && faqItems.length > 0
     ? {
@@ -101,7 +107,7 @@ export default function SEO({
             '@type': 'Offer',
             url: canonicalUrl,
             priceCurrency: 'BRL',
-            price: normalizeSchemaPrice(item.price),
+            price: normalizeSchemaPrice(item.price, schemaPriceFallback),
             availability: 'https://schema.org/InStock',
           },
         }))
@@ -110,7 +116,7 @@ export default function SEO({
   const aggregateProductJsonLd =
     productSchemaMode === 'aggregate' && validProducts.length > 0
       ? (() => {
-          const prices = validProducts.map((item) => Number(normalizeSchemaPrice(item.price)));
+          const prices = validProducts.map((item) => Number(normalizeSchemaPrice(item.price, schemaPriceFallback)));
           return {
             '@context': 'https://schema.org',
             '@type': 'Product',

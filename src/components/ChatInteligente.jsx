@@ -5,7 +5,7 @@ import { MessageCircle, X, Send, RotateCcw, Check, Zap } from 'lucide-react';
 import { useChatFlow } from '../hooks/useChatFlow';
 import { saveLead } from '../lib/supabase';
 import { trackLead } from '../lib/tracking';
-import { WHATSAPP_NUMBER } from '../lib/constants';
+import { useSiteConfig } from '../lib/siteConfig';
 
 const INITIAL_GREETING =
   'Oi! 😊 Sou o Rafael. Vi que está interessado em simular seu plano Hapvida. Só preciso de algumas informações, é rapidinho!';
@@ -69,6 +69,7 @@ export default function ChatInteligente() {
     openChat, closeChat, setStep, setTyping, setInput, addMessage, setLead, resetChat,
   } = useChatFlow(INITIAL_GREETING, PREF_OPTIONS);
 
+  const { whatsapp_number: WHATSAPP_NUMBER } = useSiteConfig();
   const navigate = useNavigate();
   const [lastActionTs, setLastActionTs] = useState(0);
   const [isSending,    setIsSending]    = useState(false);

@@ -1,6 +1,7 @@
 import React, { useEffect, useState, lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { supabase } from './lib/supabase';
+import { loadSiteConfig } from './lib/siteConfig';
 
 import HomePage from './pages/HomePage';
 import ThankYou from './pages/ThankYou';
@@ -44,6 +45,10 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState(null);
+
+  useEffect(() => {
+    loadSiteConfig();
+  }, []);
 
   useEffect(() => {
     let mounted = true;

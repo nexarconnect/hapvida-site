@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { X, MessageCircle } from 'lucide-react';
-import { WHATSAPP_NUMBER } from '../lib/constants';
+import { getSiteConfig } from '../lib/siteConfig';
 
 type LeadData = {
   nome?: string;
@@ -30,7 +30,7 @@ function formatIdades(idades?: string[] | number[] | string): string {
 }
 
 function buildWhatsAppUrl(leadData: LeadData | null): string {
-  const phone = WHATSAPP_NUMBER;
+  const phone = getSiteConfig().whatsapp_number;
 
   const nome = String(leadData?.nome || '').trim();
   const cidade = String(leadData?.cidade || '').trim();
