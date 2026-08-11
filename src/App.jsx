@@ -8,6 +8,7 @@ import ThankYou from './pages/ThankYou';
 import Login from './pages/Login';
 import DashboardLeads from './pages/DashboardLeads';
 import SobreNos from './pages/SobreNos';
+import SobreOGrupoHapvida from './pages/SobreOGrupoHapvida';
 import Contato from './pages/Contato';
 import AvisoLegal from './pages/AvisoLegal';
 import PoliticasPrivacidade from './pages/PoliticasPrivacidade';
@@ -121,6 +122,10 @@ function App() {
         />
         <Route path="/obrigado" element={<ThankYou />} />
         <Route path="/sobre-nos" element={<SobreNos onOpenForm={handleOpenForm} />} />
+        <Route
+          path="/sobre-o-grupo-hapvida"
+          element={<SobreOGrupoHapvida onOpenForm={handleOpenForm} />}
+        />
         <Route path="/contato" element={<Contato onOpenForm={handleOpenForm} />} />
         <Route path="/aviso-legal" element={<AvisoLegal />} />
         <Route path="/politicas-privacidade" element={<PoliticasPrivacidade />} />

@@ -7,6 +7,7 @@ import { BLOG_POSTS_META } from './blogPostsMeta.js';
 export const PUBLIC_ROUTES = [
   { path: '/', changefreq: 'weekly', priority: 1.0 },
   { path: '/sobre-nos', changefreq: 'monthly', priority: 0.8 },
+  { path: '/sobre-o-grupo-hapvida', changefreq: 'monthly', priority: 0.7 },
   { path: '/contato', changefreq: 'monthly', priority: 0.7 },
   { path: '/perguntas-frequentes', changefreq: 'monthly', priority: 0.8 },
   { path: '/rede-de-atendimento', changefreq: 'monthly', priority: 0.8 },
