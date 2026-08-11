@@ -42,7 +42,7 @@ export default function Footer({ onOpenForm }) {
               {[
                 { Icon: Instagram, href: '#' },
                 { Icon: Facebook, href: 'https://www.facebook.com/profile.php?id=61588052201763&sk=grid' },
-                { Icon: Linkedin, href: '#' },
+                { Icon: Linkedin, href: 'https://www.linkedin.com/company/nexarconnect/' },
               ].map(({ Icon, href }, i) => (
                 <a
                   key={i}
