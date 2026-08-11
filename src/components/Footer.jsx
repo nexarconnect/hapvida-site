@@ -40,10 +40,16 @@ export default function Footer({ onOpenForm }) {
             </div>
 
             <div className="flex gap-3">
-              {[Instagram, Facebook, Linkedin].map((Icon, i) => (
+              {[
+                { Icon: Instagram, href: '#' },
+                { Icon: Facebook, href: 'https://www.facebook.com/profile.php?id=61588052201763&sk=grid' },
+                { Icon: Linkedin, href: 'https://www.linkedin.com/company/nexarconnect/' },
+              ].map(({ Icon, href }, i) => (
                 <a
                   key={i}
-                  href="#"
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="group rounded-xl border border-white/10 bg-white/5 p-2.5 transition-all hover:bg-[#ff8200]"
                 >
                   <Icon className="h-5 w-5 text-blue-100 group-hover:text-white" />
