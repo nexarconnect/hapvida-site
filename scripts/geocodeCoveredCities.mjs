@@ -1,4 +1,26 @@
-// ... imports e configs iniciais mantidos
+/**
+ * geocodeCoveredCities.mjs
+ * Preenche lat/lon das cidades atendidas (public.covered_cities) usando o
+ * Nominatim (OpenStreetMap). Roda manualmente, server-side, com service_role
+ * (mesmo padrão de scripts/sync-prices.js) — não depende de policy pública
+ * de UPDATE na tabela.
+ *
+ * Uso:
+ *   node scripts/geocodeCoveredCities.mjs
+ */
+
+import { createClient } from '@supabase/supabase-js';
+
+const SUPABASE_URL = process.env.VITE_SUPABASE_URL;
+const SUPABASE_KEY = process.env.SUPABASE_service_role;
+
+if (!SUPABASE_URL || !SUPABASE_KEY) {
+  throw new Error('As variáveis VITE_SUPABASE_URL e SUPABASE_service_role são obrigatórias (defina-as no ambiente antes de rodar o script).');
+}
+
+const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const geocodeCity = async (city, uf) => {
   try {
@@ -7,7 +29,7 @@ const geocodeCity = async (city, uf) => {
 
     // CRÍTICO: Nominatim EXIGE um User-Agent identificável para evitar bloqueio 403
     const response = await fetch(url, {
-      headers: { 'User-Agent': 'HapvidaGeocodeApp/1.0 (contato@suaagencia.com.br)' }
+      headers: { 'User-Agent': 'HapvidaGeocodeApp/1.0 (nexarconnect@gmail.com)' },
     });
 
     if (!response.ok) throw new Error(`Erro API: ${response.status}`);
@@ -18,6 +40,15 @@ const geocodeCity = async (city, uf) => {
     console.error(`❌ Falha em ${city}:`, error.message);
     return null;
   }
+};
+
+const updateCityCoordinates = async (id, lat, lon) => {
+  const { error } = await supabase
+    .from('covered_cities')
+    .update({ lat, lon })
+    .eq('id', id);
+
+  if (error) console.error(`❌ Erro ao gravar cidade id=${id}:`, error.message);
 };
 
 const main = async () => {
@@ -37,7 +68,6 @@ const main = async () => {
 
     for (let i = 0; i < cities.length; i++) {
       const { id, city, uf } = cities[i];
-      // Log de progresso para controle de volume
       console.log(`[${i + 1}/${cities.length}] Processando: ${city}-${uf}`);
 
       const coords = await geocodeCity(city, uf);
