@@ -1,8 +1,18 @@
 import { useEffect, useMemo, useState } from 'react';
+import {
+  ResponsiveContainer, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip,
+  BarChart, Bar, PieChart, Pie, Cell,
+} from 'recharts';
 import { supabase } from '../lib/supabase';
 import Sidebar from '../components/Sidebar';
 import CityLogsTable from '../components/admin/CityLogsTable';
-import { Search, Download, MessageCircle, RefreshCw, MapPin, X } from 'lucide-react';
+import { Search, Download, MessageCircle, RefreshCw, MapPin, X, Radio } from 'lucide-react';
+
+const CHART_COLORS = ['#002b5c', '#ff8200', '#0ea5e9', '#22c55e', '#a855f7', '#ef4444', '#eab308', '#14b8a6'];
+
+function formatDayLabel(date) {
+  return new Intl.DateTimeFormat('pt-BR', { day: '2-digit', month: '2-digit' }).format(date);
+}
 
 function formatDate(value) {
   if (!value) return '-';
@@ -61,20 +71,47 @@ export default function DashboardLeads() {
   const [search, setSearch] = useState('');
   const [refreshing, setRefreshing] = useState(false);
   const [cityFilter, setCityFilter] = useState(null);
+  const [lastUpdated, setLastUpdated] = useState(null);
+  const [live, setLive] = useState(false);
 
   const fetchLeads = async (quiet = false) => {
+    if (!supabase) { setLoading(false); return; }
     if (!quiet) setLoading(true);
     else setRefreshing(true);
     const { data, error } = await supabase
       .from('leads')
       .select('*')
       .order('created_at', { ascending: false });
-    if (!error) setLeads(data || []);
+    if (!error) {
+      setLeads(data || []);
+      setLastUpdated(new Date());
+    }
     setLoading(false);
     setRefreshing(false);
   };
 
   useEffect(() => { fetchLeads(); }, []);
+
+  // Mantém os gráficos e a tabela atualizados automaticamente: assina mudanças
+  // em tempo real na tabela `leads` e, como rede de segurança (ex: WebSocket
+  // caindo), também faz polling a cada 30s.
+  useEffect(() => {
+    if (!supabase) return undefined;
+
+    const channel = supabase
+      .channel('leads-dashboard')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'leads' }, () => {
+        fetchLeads(true);
+      })
+      .subscribe((status) => setLive(status === 'SUBSCRIBED'));
+
+    const interval = setInterval(() => fetchLeads(true), 30000);
+
+    return () => {
+      supabase.removeChannel(channel);
+      clearInterval(interval);
+    };
+  }, []);
 
   const filtered = useMemo(() => {
     let list = leads;
@@ -101,6 +138,46 @@ export default function DashboardLeads() {
       .sort((a, b) => b.count - a.count);
   }, [leads]);
 
+  const timelineData = useMemo(() => {
+    const days = 14;
+    const counts = new Map();
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    for (let i = days - 1; i >= 0; i -= 1) {
+      const d = new Date(today);
+      d.setDate(d.getDate() - i);
+      counts.set(d.toDateString(), { date: d, total: 0 });
+    }
+
+    leads.forEach((l) => {
+      if (!l.created_at) return;
+      const d = new Date(l.created_at);
+      d.setHours(0, 0, 0, 0);
+      const key = d.toDateString();
+      if (counts.has(key)) counts.get(key).total += 1;
+    });
+
+    return Array.from(counts.values()).map(({ date, total }) => ({
+      label: formatDayLabel(date),
+      total,
+    }));
+  }, [leads]);
+
+  const topCitiesChart = useMemo(
+    () => cityStats.slice(0, 8).map(({ city, count }) => ({ city, count })),
+    [cityStats]
+  );
+
+  const preferenceChart = useMemo(() => {
+    const map = new Map();
+    leads.forEach((l) => {
+      const pref = String(l.preferencia || '').trim() || 'Não informado';
+      map.set(pref, (map.get(pref) || 0) + 1);
+    });
+    return Array.from(map.entries()).map(([name, value]) => ({ name, value }));
+  }, [leads]);
+
   const summary = useMemo(() => {
     const total = leads.length;
     const today = new Date().toLocaleDateString('pt-BR');
@@ -121,6 +198,11 @@ export default function DashboardLeads() {
             <div>
               <h1 className="mb-1 text-2xl font-bold text-slate-800">Gestão de Leads</h1>
               <p className="text-sm text-slate-500">Leads capturados pelo formulário e pelo chat.</p>
+              <p className="mt-1 flex items-center gap-1.5 text-xs text-slate-400">
+                <Radio size={11} className={live ? 'text-green-500' : 'text-slate-300'} />
+                {live ? 'Atualização em tempo real ativa' : 'Atualizando automaticamente a cada 30s'}
+                {lastUpdated && ` · última atualização às ${lastUpdated.toLocaleTimeString('pt-BR')}`}
+              </p>
             </div>
             <div className="flex gap-3">
               <button
@@ -147,6 +229,85 @@ export default function DashboardLeads() {
             <StatCard label="Leads hoje" value={summary.todayCount} color="text-green-600" />
             <StatCard label="Com e-mail" value={summary.withEmail} color="text-blue-600" />
           </div>
+
+          <section className="grid gap-4 lg:grid-cols-3">
+            <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm lg:col-span-2">
+              <h3 className="mb-4 text-sm font-semibold text-slate-700">Leads nos últimos 14 dias</h3>
+              {leads.length === 0 ? (
+                <EmptyChart />
+              ) : (
+                <ResponsiveContainer width="100%" height={220}>
+                  <AreaChart data={timelineData}>
+                    <defs>
+                      <linearGradient id="leadsGradient" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor="#002b5c" stopOpacity={0.25} />
+                        <stop offset="100%" stopColor="#002b5c" stopOpacity={0} />
+                      </linearGradient>
+                    </defs>
+                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
+                    <XAxis dataKey="label" tick={{ fontSize: 11, fill: '#64748b' }} axisLine={false} tickLine={false} />
+                    <YAxis allowDecimals={false} tick={{ fontSize: 11, fill: '#64748b' }} axisLine={false} tickLine={false} width={28} />
+                    <Tooltip contentStyle={{ borderRadius: 12, border: '1px solid #e2e8f0', fontSize: 12 }} />
+                    <Area type="monotone" dataKey="total" name="Leads" stroke="#002b5c" strokeWidth={2} fill="url(#leadsGradient)" />
+                  </AreaChart>
+                </ResponsiveContainer>
+              )}
+            </div>
+
+            <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+              <h3 className="mb-4 text-sm font-semibold text-slate-700">Preferência dos leads</h3>
+              {preferenceChart.length === 0 ? (
+                <EmptyChart />
+              ) : (
+                <ResponsiveContainer width="100%" height={220}>
+                  <PieChart>
+                    <Pie
+                      data={preferenceChart}
+                      dataKey="value"
+                      nameKey="name"
+                      innerRadius={45}
+                      outerRadius={80}
+                      paddingAngle={2}
+                    >
+                      {preferenceChart.map((_, index) => (
+                        <Cell key={index} fill={CHART_COLORS[index % CHART_COLORS.length]} />
+                      ))}
+                    </Pie>
+                    <Tooltip contentStyle={{ borderRadius: 12, border: '1px solid #e2e8f0', fontSize: 12 }} />
+                  </PieChart>
+                </ResponsiveContainer>
+              )}
+              <ul className="mt-2 space-y-1">
+                {preferenceChart.map((item, index) => (
+                  <li key={item.name} className="flex items-center gap-2 text-xs text-slate-600">
+                    <span
+                      className="h-2.5 w-2.5 shrink-0 rounded-full"
+                      style={{ backgroundColor: CHART_COLORS[index % CHART_COLORS.length] }}
+                    />
+                    <span className="truncate">{item.name}</span>
+                    <span className="ml-auto font-semibold text-slate-800">{item.value}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm lg:col-span-3">
+              <h3 className="mb-4 text-sm font-semibold text-slate-700">Top cidades por volume de leads</h3>
+              {topCitiesChart.length === 0 ? (
+                <EmptyChart />
+              ) : (
+                <ResponsiveContainer width="100%" height={220}>
+                  <BarChart data={topCitiesChart}>
+                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
+                    <XAxis dataKey="city" tick={{ fontSize: 11, fill: '#64748b' }} axisLine={false} tickLine={false} />
+                    <YAxis allowDecimals={false} tick={{ fontSize: 11, fill: '#64748b' }} axisLine={false} tickLine={false} width={28} />
+                    <Tooltip contentStyle={{ borderRadius: 12, border: '1px solid #e2e8f0', fontSize: 12 }} />
+                    <Bar dataKey="count" name="Leads" fill="#ff8200" radius={[6, 6, 0, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
+              )}
+            </div>
+          </section>
 
           <section className="space-y-4">
             <div>
@@ -295,6 +456,14 @@ export default function DashboardLeads() {
           </section>
         </div>
       </main>
+    </div>
+  );
+}
+
+function EmptyChart() {
+  return (
+    <div className="flex h-[220px] items-center justify-center text-sm text-slate-400">
+      Sem dados suficientes ainda.
     </div>
   );
 }
