@@ -9,3 +9,4 @@ export { default as Footer } from './Footer';
 export { default as ScrollToTop } from './ScrollToTop';
 export { default as NetworkUnitsTest } from './NetworkUnitsTest';
 export { default as FormModal } from './FormModal';
+export { default as ShareButtons } from './ShareButtons';
