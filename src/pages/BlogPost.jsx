@@ -4,7 +4,7 @@ import { ArrowLeft, CalendarDays, MessageCircle } from 'lucide-react';
 
 import { getPostBySlug } from '../data/blogPosts';
 import { BLOG_AUTHOR } from '../data/author';
-import { Navbar, Footer, ChatInteligente } from '../components';
+import { Navbar, Footer, ChatInteligente, ShareButtons } from '../components';
 import SEO from '../components/SEO';
 import NotFound from './NotFound';
 
@@ -83,6 +83,12 @@ export default function BlogPost({ onOpenForm }) {
         </div>
       </header>
 
+      <div className="border-b border-slate-100 bg-white py-6">
+        <div className="container mx-auto max-w-3xl px-6">
+          <ShareButtons path={`/blog/${meta.slug}`} title={meta.title} />
+        </div>
+      </div>
+
       <article className="bg-white py-16 md:py-20">
         <div className="container mx-auto max-w-3xl px-6">
           <div
@@ -90,6 +96,10 @@ export default function BlogPost({ onOpenForm }) {
             className="prose prose-slate max-w-none prose-headings:font-black prose-headings:text-[#002b5c] prose-a:text-[#ff8200] prose-a:font-bold"
           >
             <Body />
+          </div>
+
+          <div className="mt-10 border-t border-slate-100 pt-8">
+            <ShareButtons path={`/blog/${meta.slug}`} title={meta.title} />
           </div>
 
           <div className="mt-14 rounded-[2rem] bg-slate-50 p-8 text-center md:p-10">
