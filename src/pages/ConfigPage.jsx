@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 import Sidebar from '../components/Sidebar';
-import { Save, Loader2, CheckCircle2 } from 'lucide-react';
+import { Save, Loader2, CheckCircle2, KeyRound } from 'lucide-react';
 
 const DEFAULT_CONFIG = {
   whatsapp_number: '',
@@ -15,6 +15,12 @@ export default function ConfigPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
+
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [passwordSaving, setPasswordSaving] = useState(false);
+  const [passwordSaved, setPasswordSaved] = useState(false);
+  const [passwordError, setPasswordError] = useState('');
 
   useEffect(() => {
     async function loadConfig() {
@@ -46,6 +52,39 @@ export default function ConfigPage() {
   };
 
   const update = (key, value) => setConfig((prev) => ({ ...prev, [key]: value }));
+
+  const handleChangePassword = async () => {
+    if (!supabase || passwordSaving) return;
+    setPasswordError('');
+    setPasswordSaved(false);
+
+    if (newPassword.length < 6) {
+      setPasswordError('A senha precisa ter no mínimo 6 caracteres.');
+      return;
+    }
+    if (newPassword !== confirmPassword) {
+      setPasswordError('As senhas não coincidem.');
+      return;
+    }
+
+    setPasswordSaving(true);
+    try {
+      const { error } = await supabase.auth.updateUser({ password: newPassword });
+      if (error) {
+        setPasswordError(error.message);
+      } else {
+        setPasswordSaved(true);
+        setNewPassword('');
+        setConfirmPassword('');
+        setTimeout(() => setPasswordSaved(false), 3000);
+      }
+    } catch (err) {
+      setPasswordError('Não foi possível alterar a senha. Tente novamente.');
+      console.error('Erro ao alterar senha:', err);
+    } finally {
+      setPasswordSaving(false);
+    }
+  };
 
   if (loading) {
     return (
@@ -107,19 +146,57 @@ export default function ConfigPage() {
               <><Save size={18} /> Salvar configurações</>
             )}
           </button>
+
+          <div>
+            <h2 className="mb-2 text-xl font-bold text-slate-800">Alterar senha</h2>
+            <p className="text-sm text-slate-500">Defina uma nova senha para acessar o painel administrativo.</p>
+          </div>
+
+          <div className="space-y-5 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+            <Field
+              label="Nova senha"
+              description="Mínimo de 6 caracteres"
+              value={newPassword}
+              onChange={setNewPassword}
+              type="password"
+            />
+            <Field
+              label="Confirmar nova senha"
+              value={confirmPassword}
+              onChange={setConfirmPassword}
+              type="password"
+            />
+            {passwordError && (
+              <p className="text-sm font-medium text-red-600">{passwordError}</p>
+            )}
+          </div>
+
+          <button
+            onClick={handleChangePassword}
+            disabled={passwordSaving || !newPassword || !confirmPassword}
+            className="flex items-center gap-2 rounded-2xl bg-[#002b5c] px-8 py-4 font-bold text-white transition-all hover:bg-[#003b7d] disabled:opacity-60"
+          >
+            {passwordSaving ? (
+              <><Loader2 size={18} className="animate-spin" /> Alterando...</>
+            ) : passwordSaved ? (
+              <><CheckCircle2 size={18} className="text-green-400" /> Senha alterada!</>
+            ) : (
+              <><KeyRound size={18} /> Alterar senha</>
+            )}
+          </button>
         </div>
       </main>
     </div>
   );
 }
 
-function Field({ label, description, value, onChange }) {
+function Field({ label, description, value, onChange, type = 'text' }) {
   return (
     <div>
       <label className="mb-1 block text-sm font-semibold text-slate-700">{label}</label>
       {description && <p className="mb-2 text-xs text-slate-400">{description}</p>}
       <input
-        type="text"
+        type={type}
         value={value}
         onChange={(e) => onChange(e.target.value)}
         className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-800 outline-none focus:border-[#002b5c] focus:ring-2 focus:ring-[#002b5c]/10"
