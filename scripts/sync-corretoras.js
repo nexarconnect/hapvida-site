@@ -12,7 +12,12 @@
  *
  * Formato esperado do JSON (array de objetos, um por corretora):
  *   [{ "corretora": "webplan", "preco": "...", "anuncios": "...",
- *      "imas": "...", "reputacao": "...", "novidades": "..." }, ...]
+ *      "imas": "...", "reputacao": "...", "novidades": "...",
+ *      "responsaveis": "..." }, ...]
+ *
+ * O campo "responsaveis" exige a coluna `responsaveis` na tabela
+ * `corretoras_monitoramento` — rode scripts/sql/add-responsaveis-column.sql
+ * no Supabase antes de sincronizar, se ainda não tiver rodado.
  */
 
 import { createClient } from '@supabase/supabase-js';
@@ -44,6 +49,7 @@ const payload = rows.map((r) => ({
   imas: r.imas ?? null,
   reputacao: r.reputacao ?? null,
   novidades: r.novidades ?? null,
+  responsaveis: r.responsaveis ?? null,
   updated_at: new Date().toISOString(),
 })).filter((r) => r.corretora);
 
