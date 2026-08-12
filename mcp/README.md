@@ -22,6 +22,24 @@ pip install "mcp[cli]" duckduckgo-search
 mcp run monitor_corretoras.py
 ```
 
+## Teste local (fora de um cliente MCP)
+
+Para validar rapidamente se a busca real está funcionando na sua rede, sem
+precisar configurar um cliente MCP:
+
+```bash
+cd mcp
+pip install "mcp[cli]" duckduckgo-search
+python testar_local.py
+```
+
+O script `testar_local.py` chama algumas ferramentas diretamente (incluindo
+`preco_leads`, `anuncios` e `reputacao`, que usam a rede) e imprime o
+resultado no terminal. Se elas retornarem `sem dados` em vez de resultados
+reais, verifique sua conexão com a internet — o DuckDuckGo pode também
+aplicar rate limiting em caso de muitas buscas seguidas; nesse caso, espere
+alguns minutos e tente de novo.
+
 ## Configuração em um cliente MCP (Claude Desktop, etc.)
 
 Adicione ao arquivo de configuração do cliente (ajuste o caminho absoluto
