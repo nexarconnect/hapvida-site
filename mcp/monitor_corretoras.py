@@ -35,9 +35,10 @@ CORRETORAS = [
 def _buscar(consulta: str, max: int = 5) -> list:
     try:
         with DDGS() as ddgs:
-            return [f"{r['title']} | {r.get('href', '')}" for r in ddgs.text(consulta, max_results=max)]
+            resultados = [f"{r['title']} | {r.get('href', '')}" for r in ddgs.text(consulta, max_results=max)]
     except Exception:
         return ["sem dados"]
+    return resultados if resultados else ["sem dados"]
 
 def _linha_csv(corretora: str, dimensao: str, resultados: list) -> str:
     itens = "||".join(resultados[:3]) if resultados else "sem dados"
