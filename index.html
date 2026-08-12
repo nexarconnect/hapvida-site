@@ -77,6 +77,37 @@
         send_page_view: true
       });
     </script>
+
+    <!-- Google AI Snippet Tracking Code -->
+    <script>
+      (function () {
+        var a = 'ai_traffic_detected',
+          b = 'G-XQ7QZX7BHT',
+          c = window.location.href,
+          d = document.referrer,
+          e = '';
+        if (window.performance && window.performance.getEntriesByType) {
+          var f = window.performance.getEntriesByType('navigation');
+          if (f && f.length > 0) e = f[0].name;
+        }
+        if (d && d.indexOf('google.') !== -1 && e && e.indexOf(':~:text=') !== -1) {
+          var g = e.indexOf(':~:text=') + 8,
+            h = e.indexOf('#', g);
+          if (h === -1) h = e.length;
+          var i = e.substring(g, h),
+            j = decodeURIComponent(i);
+          window.dataLayer = window.dataLayer || [];
+          gtag('event', a, {
+            send_to: b,
+            g_ai_traffic: true,
+            g_ai_text: j,
+            page_location: c,
+            page_referrer: d,
+          });
+        }
+      })();
+    </script>
+    <!-- End Google AI Snippet Tracking Code -->
   </head>
 
   <body>
