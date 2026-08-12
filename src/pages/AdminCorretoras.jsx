@@ -9,6 +9,7 @@ const SECTIONS = [
   { key: 'imas', label: 'Ímãs de leads' },
   { key: 'reputacao', label: 'Reputação' },
   { key: 'novidades', label: 'Novidades' },
+  { key: 'responsaveis', label: 'Responsáveis (agência, designer, etc.)' },
 ];
 
 function formatDate(value) {
@@ -98,7 +99,7 @@ export default function AdminCorretoras() {
             <div>
               <h1 className="text-2xl font-bold text-slate-800">Corretoras monitoradas</h1>
               <p className="text-sm text-slate-500">
-                Preço de leads, anúncios, ímãs de leads, reputação e novidades das corretoras concorrentes.
+                Preço de leads, anúncios, ímãs de leads, reputação, novidades e responsáveis (agência de tráfego, designer etc.) das corretoras concorrentes.
               </p>
             </div>
             <button
