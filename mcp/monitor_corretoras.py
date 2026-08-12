@@ -32,10 +32,10 @@ CORRETORAS = [
 # HELPER: busca e formata saída estruturada
 # ============================================================
 
-def _buscar(consulta: str, max: int = 5) -> list:
+def _buscar(consulta: str, max_results: int = 5) -> list:
     try:
         with DDGS() as ddgs:
-            resultados = [f"{r['title']} | {r.get('href', '')}" for r in ddgs.text(consulta, max_results=max)]
+            resultados = [f"{r['title']} | {r.get('href', '')}" for r in ddgs.text(consulta, max_results=max_results)]
     except Exception:
         return ["sem dados"]
     return resultados if resultados else ["sem dados"]
@@ -128,7 +128,7 @@ def relatorio_estruturado(corretora: str = "") -> str:
     }
     valores = []
     for campo, consulta in campos.items():
-        res = _buscar(consulta, max=3)
+        res = _buscar(consulta, max_results=3)
         valores.append("||".join(res[:2]) if res else "sem dados")
     return f"corretora;preco;anuncios;imas;reputacao;novidades\n{alvo};" + ";".join(valores)
 
