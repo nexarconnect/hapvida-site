@@ -636,6 +636,42 @@ function DetalheModal({ row, onClose }) {
             <div className="rounded-xl bg-slate-50 p-3"><p className="text-xs text-slate-400">Preço de leads</p><p className="font-medium">{hasValue(row.preco) ? row.preco : '—'}</p></div>
           </div>
 
+          {(row.natureza || row.cnpj || row.endereco || row.site || row.telefone || row.instagram || row.anuncios_ativos_estimado != null || row.google_ads_transparency_link || row.observacoes) && (
+            <div className="rounded-xl border border-slate-100 bg-slate-50/60 p-4">
+              <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-400">Dados cadastrais</p>
+              <div className="grid gap-x-4 gap-y-2 text-sm sm:grid-cols-2">
+                {row.natureza && <div><span className="text-xs text-slate-400">Natureza: </span>{row.natureza}</div>}
+                {row.cnpj && <div><span className="text-xs text-slate-400">CNPJ: </span>{row.cnpj}</div>}
+                {row.telefone && <div><span className="text-xs text-slate-400">Telefone: </span>{row.telefone}</div>}
+                {row.anuncios_ativos_estimado != null && <div><span className="text-xs text-slate-400">Anúncios ativos (estimado): </span>{row.anuncios_ativos_estimado}</div>}
+                {row.endereco && <div className="sm:col-span-2"><span className="text-xs text-slate-400">Endereço: </span>{row.endereco}</div>}
+                {row.site && (
+                  <div>
+                    <span className="text-xs text-slate-400">Site: </span>
+                    <a href={row.site.startsWith('http') ? row.site : `https://${row.site}`} target="_blank" rel="noopener noreferrer" className="text-blue-700 hover:underline">{row.site}</a>
+                  </div>
+                )}
+                {row.instagram && (
+                  <div>
+                    <span className="text-xs text-slate-400">Instagram/Redes: </span>
+                    {row.instagram.startsWith('http') ? (
+                      <a href={row.instagram} target="_blank" rel="noopener noreferrer" className="text-blue-700 hover:underline">Ver perfil</a>
+                    ) : row.instagram}
+                  </div>
+                )}
+                {row.google_ads_transparency_link && (
+                  <div className="sm:col-span-2">
+                    <a href={row.google_ads_transparency_link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-blue-700 hover:underline">
+                      Ver no Google Ads Transparency Center
+                      <ExternalLink size={12} />
+                    </a>
+                  </div>
+                )}
+                {row.observacoes && <div className="sm:col-span-2 text-slate-600">{row.observacoes}</div>}
+              </div>
+            </div>
+          )}
+
           <div className="grid gap-4 md:grid-cols-2">
             {SECTIONS.map((section) => {
               const items = parseField(row[section.key]);
