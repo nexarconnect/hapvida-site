@@ -1,34 +1,48 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { MapPin, ArrowLeft, ChevronDown, Building2 } from 'lucide-react';
 import SEO from '../components/SEO';
 import { getNetworkStateBySlug, slugifyCity } from '../data/coveredCities';
 import { getNetworkUnits } from '../lib/supabase';
 
-function CityUnits({ city }) {
-  const [isOpen, setIsOpen] = useState(false);
+function CityUnits({ city, defaultOpen = false }) {
+  const [isOpen, setIsOpen] = useState(defaultOpen);
   const [units, setUnits] = useState(null);
   const [loading, setLoading] = useState(false);
   const panelId = `rede-estado-${slugifyCity(city.name)}`;
+
+  const loadUnits = async () => {
+    setLoading(true);
+    const data = await getNetworkUnits(city.name);
+    // Mesma dedupe defensiva usada em RedeAtendimento.jsx — a tabela
+    // network_units pode ter linha duplicada (mesmo nome + endereço).
+    const seen = new Set();
+    const deduped = (data || []).filter((unit) => {
+      const key = `${unit.name}|${unit.address}`;
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+    setUnits(deduped);
+    setLoading(false);
+  };
+
+  // A primeira cidade de cada estado abre já expandida (defaultOpen) — sem
+  // isso, o prerender (Puppeteer) captura a página com todo acordeão
+  // fechado, e o HTML estático que o Google indexa não tem nenhum nome de
+  // unidade, só os nomes das cidades. Com uma cidade sempre aberta, ao menos
+  // essa unidade entra no HTML pré-renderizado de cada página de estado.
+  useEffect(() => {
+    if (defaultOpen) loadUnits();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [city.name]);
 
   const handleToggle = async () => {
     const next = !isOpen;
     setIsOpen(next);
 
     if (next && units === null) {
-      setLoading(true);
-      const data = await getNetworkUnits(city.name);
-      // Mesma dedupe defensiva usada em RedeAtendimento.jsx — a tabela
-      // network_units pode ter linha duplicada (mesmo nome + endereço).
-      const seen = new Set();
-      const deduped = (data || []).filter((unit) => {
-        const key = `${unit.name}|${unit.address}`;
-        if (seen.has(key)) return false;
-        seen.add(key);
-        return true;
-      });
-      setUnits(deduped);
-      setLoading(false);
+      loadUnits();
     }
   };
 
@@ -96,8 +110,15 @@ export default function RedeEstado() {
     <main className="min-h-screen bg-slate-50">
       <SEO
         path={`/rede-nacional/${group.slug}`}
-        title={`Rede Hapvida em ${group.stateName} | Nexar`}
-        description={`Consulte hospitais, clínicas e prontos-atendimentos da rede própria Hapvida nas cidades atendidas em ${group.stateName}.`}
+        title={`Rede Hapvida em ${group.stateName} | Hospitais e Unidades Credenciadas`}
+        description={`Consulte hospitais, clínicas e prontos-atendimentos da rede própria Hapvida em ${group.stateName}: veja as cidades atendidas e fale com um consultor Nexar para confirmar disponibilidade.`}
+        localBusiness={{ city: group.stateName, areaType: 'State' }}
+        breadcrumbs={[
+          { name: 'Início', path: '/' },
+          { name: 'Rede de Atendimento', path: '/rede-de-atendimento' },
+          { name: 'Rede por Estado', path: '/rede-nacional' },
+          { name: group.stateName, path: `/rede-nacional/${group.slug}` },
+        ]}
       />
 
       <div className="container mx-auto max-w-4xl px-4 pt-12">
@@ -121,8 +142,8 @@ export default function RedeEstado() {
         </p>
 
         <div className="space-y-3 pb-16">
-          {group.cities.map((city) => (
-            <CityUnits key={city.name} city={city} />
+          {group.cities.map((city, index) => (
+            <CityUnits key={city.name} city={city} defaultOpen={index === 0} />
           ))}
         </div>
       </div>

@@ -9,8 +9,13 @@ export default function RedeNacional() {
     <main className="min-h-screen bg-slate-50">
       <SEO
         path="/rede-nacional"
-        title="Rede Hapvida por Estado | Nexar"
-        description="Consulte hospitais, clínicas e prontos-atendimentos da rede própria Hapvida por estado, fora do interior de SP."
+        title="Rede Hapvida por Estado 2026 | Hospitais e Unidades Fora de SP"
+        description="Consulte hospitais, clínicas e prontos-atendimentos da rede própria Hapvida nos estados fora do interior de São Paulo. Veja as cidades atendidas em cada estado e fale com um consultor Nexar."
+        breadcrumbs={[
+          { name: 'Início', path: '/' },
+          { name: 'Rede de Atendimento', path: '/rede-de-atendimento' },
+          { name: 'Rede por Estado', path: '/rede-nacional' },
+        ]}
       />
 
       <div className="container mx-auto max-w-4xl px-4 pt-12">

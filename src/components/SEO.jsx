@@ -190,6 +190,10 @@ export default function SEO({
       }
     : null;
 
+  // areaType 'State': página cobre o estado inteiro (ex. RedeEstado.jsx), não
+  // uma cidade específica — nesse caso `localBusiness.city` já traz o nome do
+  // estado e não há `containedInPlace` (o estado não está contido em nada
+  // aqui dentro do schema).
   const localBusinessJsonLd = localBusiness
     ? {
         '@context': 'https://schema.org',
@@ -198,14 +202,20 @@ export default function SEO({
         description: description_,
         url: canonicalUrl,
         telephone: `+${WHATSAPP_NUMBER}`,
-        areaServed: {
-          '@type': 'City',
-          name: localBusiness.city,
-          containedInPlace: {
-            '@type': 'State',
-            name: localBusiness.state,
-          },
-        },
+        areaServed:
+          localBusiness.areaType === 'State'
+            ? {
+                '@type': 'State',
+                name: localBusiness.city,
+              }
+            : {
+                '@type': 'City',
+                name: localBusiness.city,
+                containedInPlace: {
+                  '@type': 'State',
+                  name: localBusiness.state,
+                },
+              },
         parentOrganization: {
           '@type': 'Organization',
           name: SITE_NAME,
