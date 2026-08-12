@@ -283,4 +283,15 @@ export const BLOG_POSTS_META = [
     excerpt:
       'Plano bom no abstrato não existe: existe plano que resolve o seu caso. Veja os quatro critérios que decidem isso — e em quais situações o Hapvida não é a melhor escolha.',
   },
+  {
+    slug: 'tabela-precos-hapvida-2026',
+    title: 'Tabela de Preços Hapvida 2026: como funciona e o que muda o valor',
+    description:
+      'Tabela de preços Hapvida 2026: veja como o valor é montado — idade, cidade e modalidade — e peça a cotação atualizada para o seu perfil.',
+    category: 'Preços',
+    publishedAt: '2026-08-09',
+    updatedAt: '2026-08-09',
+    excerpt:
+      'Tabela de preços Hapvida não é um documento fechado: o valor se monta a partir da sua idade, da sua cidade e do plano escolhido. Veja como funciona antes de comparar números soltos.',
+  },
 ];
