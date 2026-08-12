@@ -1,8 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { MapPin, ArrowLeft, ArrowRight } from 'lucide-react';
+import { MapPin, ArrowLeft, ArrowRight, Siren, Baby, Stethoscope } from 'lucide-react';
 import SEO from '../components/SEO';
 import { NETWORK_CITIES_BY_STATE } from '../data/coveredCities';
+
+const CATEGORY_LINKS = [
+  { to: '/rede-nacional/urgencia-e-emergencia', label: 'Urgência e Emergência', Icon: Siren },
+  { to: '/rede-nacional/rede-pediatrica', label: 'Rede Pediátrica', Icon: Baby },
+  { to: '/rede-nacional/clinicas-por-capital', label: 'Clínicas por Capital', Icon: Stethoscope },
+];
 
 export default function RedeNacional() {
   return (
@@ -37,6 +43,22 @@ export default function RedeNacional() {
           confirmados direto com um consultor.
         </p>
 
+        <div className="mb-10 grid gap-4 sm:grid-cols-3">
+          {CATEGORY_LINKS.map(({ to, label, Icon }) => (
+            <Link
+              key={to}
+              to={to}
+              className="group flex items-center gap-3 rounded-3xl border border-slate-100 bg-white p-5 shadow-sm transition-all hover:border-[#ff8200]/40 hover:shadow-md"
+            >
+              <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-2xl bg-blue-50 text-[#002b5c] group-hover:bg-[#ff8200]/10 group-hover:text-[#ff8200]">
+                <Icon size={20} />
+              </div>
+              <span className="font-black text-sm text-slate-900">{label}</span>
+            </Link>
+          ))}
+        </div>
+
+        <h2 className="mb-4 text-lg font-black text-[#002b5c]">Ou veja por estado</h2>
         <div className="grid gap-4 pb-16 sm:grid-cols-2">
           {NETWORK_CITIES_BY_STATE.map((group) => (
             <Link

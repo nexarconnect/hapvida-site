@@ -82,6 +82,30 @@ export async function getNetworkUnits(city) {
 }
 
 /**
+ * Busca todas as unidades de uma lista de cidades de uma vez (ver
+ * RedeUrgenciaEmergencia.jsx, RedePediatrica.jsx, RedeClinicas.jsx — filtram
+ * o resultado no cliente por `specialties`, então não vale a pena uma query
+ * por cidade).
+ */
+export async function getNetworkUnitsByCities(cities) {
+  if (!supabase || !cities || cities.length === 0) return [];
+
+  const { data, error } = await supabase
+    .from('network_units')
+    .select('*')
+    .in('city', cities)
+    .order('city', { ascending: true })
+    .order('name', { ascending: true });
+
+  if (error) {
+    console.error('Erro ao buscar unidades da rede por cidades:', error);
+    return [];
+  }
+
+  return data || [];
+}
+
+/**
  * Salva um novo lead no banco de dados
  * Compatível com o FormModal atual e com a tabela leads
  */

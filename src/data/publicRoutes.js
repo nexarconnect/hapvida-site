@@ -12,6 +12,9 @@ export const PUBLIC_ROUTES = [
   { path: '/perguntas-frequentes', changefreq: 'monthly', priority: 0.8 },
   { path: '/rede-de-atendimento', changefreq: 'monthly', priority: 0.8 },
   { path: '/rede-nacional', changefreq: 'monthly', priority: 0.6 },
+  { path: '/rede-nacional/urgencia-e-emergencia', changefreq: 'monthly', priority: 0.6 },
+  { path: '/rede-nacional/rede-pediatrica', changefreq: 'monthly', priority: 0.6 },
+  { path: '/rede-nacional/clinicas-por-capital', changefreq: 'monthly', priority: 0.6 },
   ...NETWORK_CITIES_BY_STATE.map((group) => ({
     path: `/rede-nacional/${group.slug}`,
     changefreq: 'monthly',
