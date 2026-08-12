@@ -13,7 +13,8 @@
     "sync-network": "node sync-network.js",
     "sync-prices": "node scripts/sync-prices.js",
     "sync-prices:dry": "node scripts/sync-prices.js --dry",
-    "sync-prices:force": "node scripts/sync-prices.js --force"
+    "sync-prices:force": "node scripts/sync-prices.js --force",
+    "sync-corretoras": "node scripts/sync-corretoras.js"
   },
   "dependencies": {
     "@radix-ui/react-alert-dialog": "^1.1.4",

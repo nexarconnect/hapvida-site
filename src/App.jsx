@@ -35,6 +35,7 @@ import FormModal from './components/FormModal';
 import ChatInteligente from './components/ChatInteligente';
 
 const ConfigPage = lazy(() => import('./pages/ConfigPage'));
+const AdminCorretoras = lazy(() => import('./pages/AdminCorretoras'));
 
 function ProtectedRoute({ session, children }) {
   if (!session) return <Navigate to="/login" replace />;
@@ -208,6 +209,17 @@ function App() {
           element={
             <ProtectedRoute session={session}>
               <NetworkUnitsTest />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/admin/corretoras"
+          element={
+            <ProtectedRoute session={session}>
+              <Suspense fallback={<div className="flex min-h-screen items-center justify-center"><div className="h-8 w-8 animate-spin rounded-full border-4 border-blue-200 border-t-blue-900" /></div>}>
+                <AdminCorretoras />
+              </Suspense>
             </ProtectedRoute>
           }
         />

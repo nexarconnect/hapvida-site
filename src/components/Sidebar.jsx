@@ -15,6 +15,7 @@ export default function Sidebar() {
       <nav className="flex-1 space-y-2">
         <Link to="/admin" className="block p-3 hover:bg-slate-800 rounded-lg transition">📊 Leads</Link>
         <Link to="/admin/rede" className="block p-3 hover:bg-slate-800 rounded-lg transition">🏢 Rede Hapvida</Link>
+        <Link to="/admin/corretoras" className="block p-3 hover:bg-slate-800 rounded-lg transition">🔎 Corretoras</Link>
         <Link to="/admin/config" className="block p-3 hover:bg-slate-800 rounded-lg transition">⚙️ Configurações</Link>
       </nav>
       <button onClick={handleLogout} className="mt-auto p-3 bg-red-900/30 hover:bg-red-900/50 text-red-400 rounded-lg transition">
