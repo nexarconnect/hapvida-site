@@ -261,4 +261,15 @@ export const BLOG_POSTS_META = [
     excerpt:
       'O plano de saúde reajusta todo ano, mas o motivo e o percentual mudam conforme a modalidade contratada. Veja como funciona o reajuste no individual, empresarial e adesão, e o que fazer se ele pesar no orçamento.',
   },
+  {
+    slug: 'cancelamento-plano-hapvida-como-funciona',
+    title: 'Cancelamento do Plano Hapvida: como fazer sem perder cobertura',
+    description:
+      'Cancelamento do plano Hapvida: como funciona, como não ficar sem cobertura na troca e quando vale pedir uma nova cotação antes de decidir.',
+    category: 'Contratação',
+    publishedAt: '2026-08-12',
+    updatedAt: '2026-08-12',
+    excerpt:
+      'Cancelar sem planejamento é o jeito mais fácil de ficar descoberto por alguns dias ou perder carência já cumprida à toa. Veja a ordem certa dos passos antes de formalizar o pedido junto à operadora.',
+  },
 ];
