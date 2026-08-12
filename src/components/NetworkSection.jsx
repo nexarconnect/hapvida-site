@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MapPin, ExternalLink, Building2, ShieldCheck, CheckCircle2, ChevronDown } from 'lucide-react';
-import { COVERED_CITIES } from '../data/coveredCities';
+import { COVERED_CITIES, NETWORK_ONLY_CITIES } from '../data/coveredCities';
 import { getNetworkUnits } from '../lib/supabase';
 import { detectCityIfAlreadyGranted } from '../hooks/useCityDetection';
 
@@ -86,14 +86,24 @@ export default function NetworkSection({ sharedCity }) {
               onChange={(e) => setActiveCity(e.target.value)}
               className="w-full appearance-none rounded-2xl border border-slate-100 bg-slate-50 px-5 py-3 text-sm font-bold text-[#002b5c] outline-none transition-colors hover:bg-slate-100 focus:border-[#002b5c]/30"
             >
-              {!COVERED_CITIES.some((city) => city.name === activeCity) && (
-                <option value={activeCity}>{activeCity}</option>
-              )}
-              {COVERED_CITIES.map((city) => (
-                <option key={city.name} value={city.name}>
-                  {city.name}
-                </option>
-              ))}
+              {!COVERED_CITIES.some((city) => city.name === activeCity) &&
+                !NETWORK_ONLY_CITIES.some((city) => city.name === activeCity) && (
+                  <option value={activeCity}>{activeCity}</option>
+                )}
+              <optgroup label="Interior de São Paulo">
+                {COVERED_CITIES.map((city) => (
+                  <option key={city.name} value={city.name}>
+                    {city.name}
+                  </option>
+                ))}
+              </optgroup>
+              <optgroup label="Rede Hapvida em outras regiões">
+                {NETWORK_ONLY_CITIES.map((city) => (
+                  <option key={city.name} value={city.name}>
+                    {city.name}
+                  </option>
+                ))}
+              </optgroup>
             </select>
             <ChevronDown
               size={18}

@@ -23,6 +23,63 @@ export const COVERED_CITIES = [
   { name: 'Piracicaba', state: 'SP', lat: -22.7253, lng: -47.6492 },
 ];
 
+// Cidades onde a Hapvida tem unidade própria e a Nexar quer exibir a rede,
+// mas AINDA sem preço/cotação cadastrados (ver network_units no Supabase).
+// Diferente de COVERED_CITIES: não gera página /plano-hapvida, não entra no
+// sitemap, não afeta pricing_table. Só alimenta o seletor de cidade da seção
+// "Rede de Atendimento" (NetworkSection.jsx). Mover uma cidade daqui para
+// COVERED_CITIES só depois de ter o preço real Mix/Nosso Plano/Pleno dela.
+//
+// "São Gonçalo do Amarante" existe em dois estados diferentes (CE e RN) com
+// unidades Hapvida distintas — por isso o nome leva o estado, tanto aqui
+// quanto na coluna `city` de network_units, pra não misturar as duas.
+export const NETWORK_ONLY_CITIES = [
+  { name: 'Fortaleza', state: 'CE' },
+  { name: 'Maracanaú', state: 'CE' },
+  { name: 'Juazeiro do Norte', state: 'CE' },
+  { name: 'São Gonçalo do Amarante - CE', state: 'CE' },
+  { name: 'Pacajus', state: 'CE' },
+  { name: 'Manaus', state: 'AM' },
+  { name: 'Salvador', state: 'BA' },
+  { name: 'Camaçari', state: 'BA' },
+  { name: 'Feira de Santana', state: 'BA' },
+  { name: 'Lauro de Freitas', state: 'BA' },
+  { name: 'Alagoinhas', state: 'BA' },
+  { name: 'Belém', state: 'PA' },
+  { name: 'Parauapebas', state: 'PA' },
+  { name: 'Ananindeua', state: 'PA' },
+  { name: 'São Gonçalo do Amarante - RN', state: 'RN' },
+  { name: 'Mossoró', state: 'RN' },
+  { name: 'Natal', state: 'RN' },
+];
+
+// Nome completo de cada estado presente em NETWORK_ONLY_CITIES — usado só
+// pra rotular a seção de cada estado na página de rede nacional. São Paulo
+// fica de fora de propósito: a cobertura de SP já tem sua própria seção
+// (COVERED_CITIES).
+const STATE_NAMES = {
+  CE: 'Ceará',
+  AM: 'Amazonas',
+  BA: 'Bahia',
+  PA: 'Pará',
+  RN: 'Rio Grande do Norte',
+};
+
+// NETWORK_ONLY_CITIES agrupada por estado, uma página por estado (ver
+// RedeEstado.jsx, rota /rede-nacional/:slug). Cada grupo tem o nome do
+// estado, o slug da URL e TODAS as cidades atendidas ali (capital incluída,
+// sem distinção — a rede é a mesma seja a cidade capital ou não).
+export const NETWORK_CITIES_BY_STATE = Object.entries(STATE_NAMES).map(([state, stateName]) => ({
+  state,
+  stateName,
+  slug: slugifyCity(stateName),
+  cities: NETWORK_ONLY_CITIES.filter((city) => city.state === state),
+}));
+
+export function getNetworkStateBySlug(slug) {
+  return NETWORK_CITIES_BY_STATE.find((group) => group.slug === slug) || null;
+}
+
 // "São José dos Campos" -> "sao-jose-dos-campos" — usado na URL
 // /plano-hapvida/[slug] das páginas por cidade (ver PlanoPorCidade.jsx).
 export function slugifyCity(name) {

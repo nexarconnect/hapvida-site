@@ -1,4 +1,4 @@
-import { COVERED_CITIES, slugifyCity } from './coveredCities.js';
+import { COVERED_CITIES, NETWORK_CITIES_BY_STATE, slugifyCity } from './coveredCities.js';
 import { BLOG_POSTS_META } from './blogPostsMeta.js';
 
 // Registro central das rotas públicas indexáveis do site.
@@ -11,6 +11,12 @@ export const PUBLIC_ROUTES = [
   { path: '/contato', changefreq: 'monthly', priority: 0.7 },
   { path: '/perguntas-frequentes', changefreq: 'monthly', priority: 0.8 },
   { path: '/rede-de-atendimento', changefreq: 'monthly', priority: 0.8 },
+  { path: '/rede-nacional', changefreq: 'monthly', priority: 0.6 },
+  ...NETWORK_CITIES_BY_STATE.map((group) => ({
+    path: `/rede-nacional/${group.slug}`,
+    changefreq: 'monthly',
+    priority: 0.5,
+  })),
   { path: '/planos-hapvida-por-cidade', changefreq: 'monthly', priority: 0.8 },
   { path: '/plano-individual-hapvida', changefreq: 'monthly', priority: 0.9 },
   { path: '/plano-empresarial-hapvida', changefreq: 'monthly', priority: 0.9 },

@@ -130,6 +130,15 @@ export default function RedeAtendimento() {
               <CityAccordionItem key={city.name} city={city} />
             ))}
           </div>
+
+          <div className="mt-10 text-center">
+            <Link
+              to="/rede-nacional"
+              className="text-sm font-black uppercase tracking-widest text-[#ff8200] hover:underline"
+            >
+              Ver rede em outros estados do Brasil
+            </Link>
+          </div>
         </div>
       </section>
     </main>

@@ -15,6 +15,8 @@ import PoliticasPrivacidade from './pages/PoliticasPrivacidade';
 import TermosDeUso from './pages/TermosDeUso';
 import PerguntasFrequentes from './pages/PerguntasFrequentes';
 import RedeAtendimento from './pages/RedeAtendimento';
+import RedeNacional from './pages/RedeNacional';
+import RedeEstado from './pages/RedeEstado';
 import PlanoPorCidade from './pages/PlanoPorCidade';
 import PlanosPorCidade from './pages/PlanosPorCidade';
 import PlanoIndividual from './pages/PlanoIndividual';
@@ -132,6 +134,8 @@ function App() {
         <Route path="/termos-de-uso" element={<TermosDeUso />} />
         <Route path="/perguntas-frequentes" element={<PerguntasFrequentes />} />
         <Route path="/rede-de-atendimento" element={<RedeAtendimento />} />
+        <Route path="/rede-nacional" element={<RedeNacional />} />
+        <Route path="/rede-nacional/:slug" element={<RedeEstado />} />
         <Route
           path="/planos-hapvida-por-cidade"
           element={<PlanosPorCidade onOpenForm={handleOpenForm} />}
