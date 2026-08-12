@@ -5,19 +5,21 @@ corretoras de planos de saúde: preço de leads, anúncios, materiais de
 captação, reputação, novidades e descoberta de novos concorrentes.
 
 Os dados são obtidos por busca pública via DuckDuckGo (`duckduckgo-search`),
-sem necessidade de API key.
+sem necessidade de API key. Todas as ferramentas retornam CSV (separador
+`;`, com cabeçalho na primeira linha) prontas para colar em planilha; falhas
+de busca retornam `sem dados` em vez de quebrar a execução.
 
 ## Instalação
 
 ```bash
 cd mcp
-pip install -r requirements.txt
+pip install "mcp[cli]" duckduckgo-search
 ```
 
-## Execução manual
+## Execução
 
 ```bash
-python monitor_corretoras.py
+mcp run monitor_corretoras.py
 ```
 
 ## Configuração em um cliente MCP (Claude Desktop, etc.)
