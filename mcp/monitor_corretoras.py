@@ -17,15 +17,42 @@ from duckduckgo_search import DDGS
 mcp = MCPServer("Monitor de Corretoras de Saúde")
 
 # Lista de corretoras — edite aqui
+# Atualizada em 2026-08-12 a partir de corretoras_planos_saude.csv (pesquisa de
+# transparência de anúncios Google). Excluídas do CSV: agências de mídia (V4
+# Company, P9 Digital), plataforma de leads (Leads2B), operadoras que não são
+# corretoras (Ampla, e a própria Hapvida Assistência Médica S.A.), e corretor
+# MEI pessoa física sem nome fantasia útil pra busca.
 CORRETORAS = [
     # Concorrentes diretos (interior de SP)
-    "lancers planos", "jc luz", "webplan",
+    "lancers", "jc luz", "webplan",
     "arpe corretora", "fortplanos", "alc saude rp",
     "masterseg", "ccs corretor",
-    # Concorrentes nacionais / outros nichos
+    # Concorrentes nacionais / outros nichos (lista original)
     "jocross", "drv", "salut corretora",
     "sg corretora", "ssc corretora", "joov",
     "costa brasil saude", "qualicorp",
+    # Foco/parceiras Hapvida (novo, do CSV)
+    "a2m corretora", "asf saude", "happlan",
+    "hapvendas conceito",
+    # ATENÇÃO: domínio quase idêntico ao nosso (tabelaplanosaude.com.br) —
+    # risco de confusão de marca/tráfego
+    "tabelaplanodesaude.com.br",
+    # Corretoras de planos de saúde (novo, do CSV)
+    "linda siria", "salud planos de saude", "proasa saude",
+    "zelaris", "blue light corretora", "planos de saude senior",
+    "sa beneficios saude", "dna care", "global corretora de saude",
+    "top1000 corretora", "concept seg corretora", "cm corretora",
+    "lion corretora",
+    # Corretoras de seguros/benefícios corporativos (novo, do CSV)
+    "royal saude e beneficios", "prosper saude e beneficios",
+    "a gergen corretora", "pilon vida e saude", "new plus corretora",
+    "brascare saude", "integra vita", "stark sieg", "nudge corretora",
+    "allbenefits", "interweg corretora", "pillastri corretora",
+    "fluyra", "ousi corretora", "heaolu corretora", "stimus corretora",
+    "volponi corretora", "aguiar corretora de seguros",
+    # Descoberta via descobrir_concorrentes em 2026-08-12, confirmada com
+    # relatorio_estruturado (site ativo, anúncios e novidades reais)
+    "ramed corretora de seguros",
 ]
 
 # ============================================================
