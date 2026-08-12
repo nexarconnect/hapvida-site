@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "monitor-corretoras": {
+      "command": "python",
+      "args": ["mcp/monitor_corretoras.py"]
+    }
+  }
+}
