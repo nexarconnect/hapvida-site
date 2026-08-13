@@ -12,6 +12,7 @@
 // scripts/generate-sitemap.js) — escalonada por relevância comercial da
 // cidade, não um valor fixo para todas.
 export const COVERED_CITIES = [
+  { name: 'Campinas', state: 'SP', lat: -22.9099, lng: -47.0626, sitemapPriority: 1.0 },
   { name: 'Ribeirão Preto', state: 'SP', lat: -21.1775, lng: -47.8208, sitemapPriority: 1.0 },
   { name: 'São José dos Campos', state: 'SP', lat: -23.1791, lng: -45.8872, sitemapPriority: 1.0 },
   { name: 'Jaboticabal', state: 'SP', lat: -21.2558, lng: -48.3225, sitemapPriority: 0.9 },
