@@ -38,7 +38,7 @@ export default function Footer({ onOpenForm }) {
   return (
     <footer className="relative z-10 bg-[#002b5c] pb-12 pt-16 text-white">
       <div className="container mx-auto px-4">
-        <div className="mb-12 grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4">
+        <div className="mb-12 grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-5">
           <div className="space-y-6">
             <div>
               <h3 className="text-2xl font-black tracking-tight text-white uppercase">Nexar</h3>
@@ -146,6 +146,23 @@ export default function Footer({ onOpenForm }) {
           </div>
 
           <div>
+            <h4 className="mb-6 text-lg font-bold text-white">Planos por Cidade</h4>
+            <ul className="space-y-4 text-sm text-blue-100/70">
+              {COVERED_CITIES.map((city) => (
+                <li key={city.name}>
+                  <Link
+                    to={`/plano-hapvida/${slugifyCity(city.name)}`}
+                    onClick={() => handleCityLinkClick(city.name)}
+                    className="hover:text-white transition-colors"
+                  >
+                    {city.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
             <h4 className="mb-6 text-lg font-bold text-white">Atendimento</h4>
             <ul className="space-y-4 text-sm text-blue-100/70">
               <li className="flex items-center gap-3">
@@ -172,22 +189,6 @@ export default function Footer({ onOpenForm }) {
               </li>
             </ul>
           </div>
-        </div>
-
-        <div className="mb-12 border-t border-white/10 pt-10">
-          <h4 className="mb-6 text-lg font-bold text-white">Planos por Cidade</h4>
-          <nav aria-label="Planos Hapvida por cidade" className="flex flex-wrap gap-x-6 gap-y-3 text-sm text-blue-100/70">
-            {COVERED_CITIES.map((city) => (
-              <Link
-                key={city.name}
-                to={`/plano-hapvida/${slugifyCity(city.name)}`}
-                onClick={() => handleCityLinkClick(city.name)}
-                className="transition-colors hover:text-white"
-              >
-                {city.name}
-              </Link>
-            ))}
-          </nav>
         </div>
 
         <div className="flex flex-col items-center justify-between gap-6 border-t border-white/10 pt-8 text-center md:flex-row md:text-left">
