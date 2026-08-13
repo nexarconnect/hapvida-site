@@ -82,6 +82,12 @@ export default function AvisoLegal() {
               saúde envolve regras de carência e elegibilidade que devem ser
               validadas individualmente com o consultor.
             </p>
+            <p className="mt-3">
+              A responsabilidade técnica, civil e operacional pela prestação
+              dos serviços médico-hospitalares e execução do plano de saúde é
+              integral e exclusiva da operadora <strong>Hapvida</strong>,
+              conforme normas da ANS.
+            </p>
           </div>
 
           <div>
@@ -97,8 +103,8 @@ export default function AvisoLegal() {
 
           <div className="rounded-xl border border-slate-100 bg-slate-50 p-4 text-sm">
             <p className="mb-1 font-bold text-slate-900">Nexar Connect</p>
+            <p>Razão Social: AR Soluções em Saúde e Promoção de Vendas LTDA</p>
             <p>CNPJ: 10.157.791/0001-11</p>
-            <p>Razão Social: AR Soluções em Saúde</p>
           </div>
 
           <div className="pt-4 text-center">

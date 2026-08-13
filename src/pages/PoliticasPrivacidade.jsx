@@ -106,7 +106,7 @@ export default function PoliticasPrivacidade() {
               Você tem total controle sobre seus dados. A qualquer momento, pode
               solicitar a correção ou exclusão definitiva das suas informações
               enviando um e-mail para{" "}
-              <strong>nexarconnect@gmail.com</strong>.
+              <strong>contato@nexarconnect.com.br</strong>.
             </p>
           </div>
 

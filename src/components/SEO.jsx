@@ -143,10 +143,10 @@ export default function SEO({
         '@context': 'https://schema.org',
         '@type': 'InsuranceAgency',
         name: 'Nexar - Consultoria Hapvida',
-        legalName: 'NexAR Soluções em Saúde',
+        legalName: 'AR Soluções em Saúde e Promoção de Vendas LTDA',
         taxID: '10.157.791/0001-11',
         telephone: `+${WHATSAPP_NUMBER}`,
-        email: 'nexarconnect@gmail.com',
+        email: 'contato@nexarconnect.com.br',
         url: `${SITE_URL}/`,
         ...(businessPriceRange
           ? {

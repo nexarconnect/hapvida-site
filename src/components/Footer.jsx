@@ -179,8 +179,8 @@ export default function Footer({ onOpenForm }) {
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="h-4 w-4 text-[#ff8200]" />
-                <a href="mailto:nexarconnect@gmail.com" className="hover:text-white transition-colors">
-                  nexarconnect@gmail.com
+                <a href="mailto:contato@nexarconnect.com.br" className="hover:text-white transition-colors">
+                  contato@nexarconnect.com.br
                 </a>
               </li>
               <li className="flex items-start gap-3">
@@ -191,11 +191,26 @@ export default function Footer({ onOpenForm }) {
           </div>
         </div>
 
-        <div className="flex flex-col items-center justify-between gap-6 border-t border-white/10 pt-8 text-center md:flex-row md:text-left">
-          <div className="space-y-1 text-[11px] text-blue-100/40">
-            <p>© {currentYear} NexAR Soluções em Saúde</p>
-            <p>CNPJ: 10.157.791/0001-11 • Todos os direitos reservados.</p>
+        <div className="border-t border-white/10 pt-8">
+          <div className="mx-auto max-w-3xl space-y-3 text-center text-[11px] leading-relaxed text-blue-100/40">
+            <p className="font-bold text-blue-100/60">
+              AR SOLUÇÕES EM SAÚDE E PROMOÇÃO DE VENDAS LTDA, CNPJ: 10.157.791/0001-11
+            </p>
+            <p>
+              Nexar Connect é uma consultoria de vendas autorizada e braço de promoção de vendas
+              (CNAE 73.19-0-03) especializado em planos de saúde. Atuamos na intermediação
+              comercial e consultoria técnica para a operadora Hapvida Assistência Médica.
+            </p>
+            <p>
+              A responsabilidade técnica, civil e operacional pela prestação dos serviços
+              médico-hospitalares e execução do plano de saúde é integral e exclusiva da
+              operadora Hapvida, conforme normas da ANS.
+            </p>
           </div>
+        </div>
+
+        <div className="mt-8 flex flex-col items-center justify-between gap-6 border-t border-white/10 pt-8 text-center md:flex-row md:text-left">
+          <p className="text-[11px] text-blue-100/40">© {currentYear} Todos os direitos reservados.</p>
 
           <div className="flex items-center gap-2 rounded-full border border-white/5 bg-white/5 px-4 py-2 text-[11px] text-blue-100/60">
             <ShieldCheck className="h-4 w-4 text-green-400" />

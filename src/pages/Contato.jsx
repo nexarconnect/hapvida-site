@@ -96,7 +96,7 @@ export default function Contato({ onOpenForm }) {
             </button>
 
             <a
-              href="mailto:nexarconnect@gmail.com"
+              href="mailto:contato@nexarconnect.com.br"
               className="flex items-start gap-4 rounded-3xl border border-slate-100 bg-slate-50 p-6 text-left transition hover:bg-slate-100"
             >
               <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl bg-white text-[#ff8200] shadow-sm">
@@ -104,7 +104,7 @@ export default function Contato({ onOpenForm }) {
               </div>
               <div>
                 <h3 className="font-black text-slate-900">E-mail</h3>
-                <p className="mt-1 text-sm text-slate-500">nexarconnect@gmail.com</p>
+                <p className="mt-1 text-sm text-slate-500">contato@nexarconnect.com.br</p>
                 <p className="mt-2 text-xs font-bold uppercase tracking-widest text-slate-400">
                   Ideal para anexar documentos
                 </p>
@@ -140,7 +140,7 @@ export default function Contato({ onOpenForm }) {
             <div className="flex items-start gap-3">
               <Building2 className="mt-1 h-5 w-5 flex-shrink-0 text-[#ff8200]" />
               <div>
-                <p className="font-black text-slate-900">NexAR Soluções em Saúde</p>
+                <p className="font-black text-slate-900">AR Soluções em Saúde e Promoção de Vendas LTDA</p>
                 <p className="text-sm text-slate-500">CNPJ: 10.157.791/0001-11</p>
               </div>
             </div>

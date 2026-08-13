@@ -109,7 +109,7 @@ export default function TermosDeUso() {
             <p className="text-sm">
               WhatsApp: <strong>(14) 99123-5094</strong>
               <br />
-              E-mail: <strong>nexarconnect@gmail.com</strong>
+              E-mail: <strong>contato@nexarconnect.com.br</strong>
             </p>
           </div>
 

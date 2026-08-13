@@ -289,7 +289,7 @@ export default function SobreNos({ onOpenForm }) {
             <div className="flex items-start gap-3">
               <Building2 className="mt-1 h-5 w-5 flex-shrink-0 text-[#ff8200]" />
               <div>
-                <p className="font-black text-slate-900">NexAR Soluções em Saúde</p>
+                <p className="font-black text-slate-900">AR Soluções em Saúde e Promoção de Vendas LTDA</p>
                 <p className="text-sm text-slate-500">CNPJ: 10.157.791/0001-11</p>
               </div>
             </div>
@@ -314,10 +314,10 @@ export default function SobreNos({ onOpenForm }) {
             <div className="flex items-start gap-3">
               <Mail className="mt-1 h-5 w-5 flex-shrink-0 text-[#ff8200]" />
               <a
-                href="mailto:nexarconnect@gmail.com"
+                href="mailto:contato@nexarconnect.com.br"
                 className="text-sm font-bold text-slate-700 hover:text-[#002b5c]"
               >
-                nexarconnect@gmail.com
+                contato@nexarconnect.com.br
               </a>
             </div>
           </div>

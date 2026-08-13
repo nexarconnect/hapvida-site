@@ -29,7 +29,7 @@ const geocodeCity = async (city, uf) => {
 
     // CRÍTICO: Nominatim EXIGE um User-Agent identificável para evitar bloqueio 403
     const response = await fetch(url, {
-      headers: { 'User-Agent': 'HapvidaGeocodeApp/1.0 (nexarconnect@gmail.com)' },
+      headers: { 'User-Agent': 'HapvidaGeocodeApp/1.0 (contato@nexarconnect.com.br)' },
     });
 
     if (!response.ok) throw new Error(`Erro API: ${response.status}`);
