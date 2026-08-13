@@ -294,4 +294,15 @@ export const BLOG_POSTS_META = [
     excerpt:
       'Tabela de preços Hapvida não é um documento fechado: o valor se monta a partir da sua idade, da sua cidade e do plano escolhido. Veja como funciona antes de comparar números soltos.',
   },
+  {
+    slug: 'plano-hapvida-adesao-como-funciona',
+    title: 'Plano Hapvida por Adesão: como funciona',
+    description:
+      'Plano Hapvida por adesão: quem pode contratar, documentos necessários e como pedir a cotação para comparar com o individual e o empresarial.',
+    category: 'Adesão',
+    publishedAt: '2026-08-13',
+    updatedAt: '2026-08-13',
+    excerpt:
+      'Quem tem vínculo com sindicato, conselho profissional ou associação de classe pode ter uma via de contratação que nem sempre é considerada. Veja como funciona o plano Hapvida por adesão.',
+  },
 ];
