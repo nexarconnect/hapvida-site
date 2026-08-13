@@ -55,6 +55,7 @@ export default function SEO({
   image = DEFAULT_OG_IMAGE,
   localBusiness = null,
   mainBusiness = false,
+  businessPriceRange = null,
   breadcrumbs = null,
 }) {
   useEffect(() => {
@@ -147,7 +148,11 @@ export default function SEO({
         telephone: `+${WHATSAPP_NUMBER}`,
         email: 'nexarconnect@gmail.com',
         url: `${SITE_URL}/`,
-        ...(validProducts.length > 0
+        ...(businessPriceRange
+          ? {
+              priceRange: `R$${Math.floor(businessPriceRange.min)}–R$${Math.ceil(businessPriceRange.max)}`,
+            }
+          : validProducts.length > 0
           ? {
               priceRange: `R$${Math.floor(
                 Math.min(...validProducts.map((item) => Number(item.price)))

@@ -63,6 +63,29 @@ export async function getPricingByCity(city) {
 }
 
 /**
+ * Busca o piso e o teto reais de preço entre TODAS as linhas de
+ * pricing_table (globais e por cidade), para o `priceRange` do schema
+ * InsuranceAgency na home. Ao contrário de getPricingData(), aqui não filtra
+ * `city IS NULL` de propósito — o schema precisa refletir o preço mais caro
+ * cobrado em qualquer cidade, não só os 3 planos nacionais.
+ */
+export async function getPriceRange() {
+  if (!supabase) return null;
+  const { data, error } = await supabase
+    .from('pricing_table')
+    .select('price');
+  if (error) {
+    console.error('Erro ao buscar faixa de preços:', error);
+    return null;
+  }
+  const prices = (data || [])
+    .map((item) => Number(item.price))
+    .filter((price) => Number.isFinite(price) && price > 0);
+  if (prices.length === 0) return null;
+  return { min: Math.min(...prices), max: Math.max(...prices) };
+}
+
+/**
  * Busca unidades da rede própria filtradas por cidade
  */
 export async function getNetworkUnits(city) {

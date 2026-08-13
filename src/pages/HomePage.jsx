@@ -1,7 +1,7 @@
 import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 
-import { getPricingData } from "../lib/supabase";
+import { getPricingData, getPriceRange } from "../lib/supabase";
 import { trackCTA } from "../lib/tracking";
 
 import { Navbar, HeroSection, HapvidaNetworkStats, PriceTablesSection, NationalMap, NetworkSection, ChatInteligente, Footer, selectDisplayPlans } from '../components';
@@ -16,6 +16,7 @@ export default function HomePage({ onOpenForm }) {
   const [pricing, setPricing] = useState([]);
   const [minPrice, setMinPrice] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [businessPriceRange, setBusinessPriceRange] = useState(null);
 
   const routerLocation = useLocation();
   const queryCity = useCityFromQuery();
@@ -36,6 +37,9 @@ export default function HomePage({ onOpenForm }) {
       }
     }
     loadPricingData();
+    getPriceRange().then(setBusinessPriceRange).catch((error) => {
+      console.error('Error loading price range:', error);
+    });
   }, []);
 
   const handleOpenForm = (planName) => {
@@ -67,6 +71,7 @@ export default function HomePage({ onOpenForm }) {
         products={selectDisplayPlans(pricing)}
         faqItems={FAQS}
         mainBusiness
+        businessPriceRange={businessPriceRange}
       />
       <Navbar />
       <section id="hero">
