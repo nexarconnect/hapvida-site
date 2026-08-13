@@ -10,7 +10,7 @@ export default function RedeUrgenciaEmergencia() {
       <SEO
         path="/rede-nacional/urgencia-e-emergencia"
         title="Urgência e Emergência Hapvida 24h | Nexar"
-        description="Hospitais e prontos-atendimentos da rede própria Hapvida com urgência e emergência 24h, nos estados atendidos pela Nexar fora do interior de SP."
+        description="Hospitais e prontos-atendimentos da rede própria e credenciada Hapvida com urgência e emergência 24h, nos estados atendidos pela Nexar fora do interior de SP."
         breadcrumbs={[
           { name: 'Início', path: '/' },
           { name: 'Rede de Atendimento', path: '/rede-de-atendimento' },
@@ -33,8 +33,9 @@ export default function RedeUrgenciaEmergencia() {
           <h1 className="text-3xl font-bold text-slate-900">Urgência e Emergência Hapvida 24h</h1>
         </div>
         <p className="mb-10 text-sm text-slate-500">
-          Hospitais e prontos-atendimentos da rede própria Hapvida com urgência e emergência 24h.
-          Confirme a disponibilidade com um consultor antes de precisar do atendimento.
+          Hospitais e prontos-atendimentos da rede própria e credenciada Hapvida com urgência e
+          emergência 24h. Confirme a disponibilidade com um consultor antes de precisar do
+          atendimento.
         </p>
 
         <div className="pb-16">

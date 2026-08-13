@@ -16,7 +16,7 @@ export default function RedeNacional() {
       <SEO
         path="/rede-nacional"
         title="Rede Hapvida por Estado 2026 | Hospitais e Unidades Fora de SP"
-        description="Consulte hospitais, clínicas e prontos-atendimentos da rede própria Hapvida nos estados fora do interior de São Paulo. Veja as cidades atendidas em cada estado e fale com um consultor Nexar."
+        description="Consulte hospitais, clínicas e prontos-atendimentos da rede própria e credenciada Hapvida nos estados fora do interior de São Paulo. Veja as cidades atendidas em cada estado e fale com um consultor Nexar."
         breadcrumbs={[
           { name: 'Início', path: '/' },
           { name: 'Rede de Atendimento', path: '/rede-de-atendimento' },
@@ -38,9 +38,9 @@ export default function RedeNacional() {
           <h1 className="text-3xl font-bold text-slate-900">Rede Hapvida por estado</h1>
         </div>
         <p className="mb-10 text-sm text-slate-500">
-          Rede própria Hapvida nos estados fora de São Paulo. Escolha um estado para ver todas as
-          cidades atendidas e as unidades de cada uma. Preço e cotação para essas regiões ainda são
-          confirmados direto com um consultor.
+          Rede própria e credenciada Hapvida nos estados fora de São Paulo. Escolha um estado para
+          ver todas as cidades atendidas e as unidades de cada uma. Preço e cotação para essas
+          regiões ainda são confirmados direto com um consultor.
         </p>
 
         <div className="mb-10 grid gap-4 sm:grid-cols-3">

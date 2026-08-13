@@ -141,8 +141,8 @@ export default function RedeEstado() {
           </h1>
         </div>
         <p className="mb-10 text-sm text-slate-500">
-          Todas as cidades atendidas pela rede própria Hapvida em {group.stateName}. Preço e
-          cotação ainda são confirmados direto com um consultor.
+          Todas as cidades atendidas pela rede própria e credenciada Hapvida em {group.stateName}.
+          Preço e cotação ainda são confirmados direto com um consultor.
         </p>
 
         <div className="space-y-3 pb-16">

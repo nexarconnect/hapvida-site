@@ -21,19 +21,25 @@ export const PUBLIC_ROUTES = [
     priority: 0.5,
   })),
   { path: '/planos-hapvida-por-cidade', changefreq: 'monthly', priority: 0.8 },
+  { path: '/tabela-de-preco-hapvida', changefreq: 'weekly', priority: 1.0 },
+  { path: '/plano-odontologico-hapvida', changefreq: 'monthly', priority: 0.9 },
   { path: '/plano-individual-hapvida', changefreq: 'monthly', priority: 0.9 },
   { path: '/plano-empresarial-hapvida', changefreq: 'monthly', priority: 0.9 },
   { path: '/tipos-de-planos', changefreq: 'monthly', priority: 0.8 },
-  { path: '/politicas-privacidade', changefreq: 'monthly', priority: 0.6 },
-  { path: '/termos-de-uso', changefreq: 'monthly', priority: 0.5 },
-  { path: '/aviso-legal', changefreq: 'monthly', priority: 0.5 },
+  // noindex: página não entra no sitemap.xml (ver generate-sitemap.js) e a
+  // própria página deve renderizar <SEO noindex /> — só estas 3, as demais
+  // institucionais (sobre-nos, sobre-o-grupo, contato) continuam indexadas.
+  { path: '/politicas-privacidade', changefreq: 'monthly', priority: 0.6, noindex: true },
+  { path: '/termos-de-uso', changefreq: 'monthly', priority: 0.5, noindex: true },
+  { path: '/aviso-legal', changefreq: 'monthly', priority: 0.5, noindex: true },
   // Uma rota por cidade atendida — gerada a partir de COVERED_CITIES, então
   // adicionar uma cidade lá já propaga para sitemap, prerender e App.jsx
-  // (a rota em si é dinâmica: /plano-hapvida-:slug).
+  // (a rota em si é dinâmica: /plano-hapvida-:slug). Prioridade vem de
+  // city.sitemapPriority, escalonada por relevância comercial da cidade.
   ...COVERED_CITIES.map((city) => ({
     path: `/plano-hapvida/${slugifyCity(city.name)}`,
     changefreq: 'weekly',
-    priority: 0.9,
+    priority: city.sitemapPriority,
   })),
   { path: '/blog', changefreq: 'weekly', priority: 0.7 },
   ...BLOG_POSTS_META.map((post) => ({

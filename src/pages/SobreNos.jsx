@@ -33,7 +33,7 @@ const FAQ_ITEMS = [
   {
     question: 'Qual a diferença entre os planos Mix, Nosso Plano e Pleno?',
     answer:
-      'O Mix é a opção com menor mensalidade, pela rede própria Hapvida. O Nosso Plano tem o melhor custo-benefício do portfólio, também com rede própria. O Pleno oferece a cobertura mais completa e mais conforto no uso. Os três estão disponíveis nas modalidades individual, familiar, MEI e empresarial.',
+      'O Mix é a opção com menor mensalidade, pela rede própria e credenciada Hapvida. O Nosso Plano tem o melhor custo-benefício do portfólio, também com rede própria e credenciada. O Pleno oferece a cobertura mais completa e mais conforto no uso. Os três estão disponíveis nas modalidades individual, familiar, MEI e empresarial.',
   },
   {
     question: 'Posso contratar o plano Hapvida sendo MEI?',
@@ -203,6 +203,21 @@ export default function SobreNos({ onOpenForm }) {
             atendimento médico são de responsabilidade exclusiva da Hapvida Assistência Médica
             S.A.
           </p>
+
+          {/* PLACEHOLDER — substituir pelos dados reais do responsável antes de publicar
+              (nome completo, cargo, tempo de atuação e uma foto real, não stock). */}
+          <div className="mt-8 flex items-start gap-4 rounded-3xl border border-dashed border-slate-300 bg-white p-6">
+            <div className="h-16 w-16 shrink-0 rounded-full bg-slate-100" aria-hidden="true" />
+            <p className="text-sm text-slate-500">
+              Conteúdo revisado por <strong className="text-slate-700">[NOME COMPLETO]</strong>,{' '}
+              <strong className="text-slate-700">[CARGO]</strong> da NexAR, com{' '}
+              <strong className="text-slate-700">[X anos]</strong> de atuação exclusiva com a
+              operadora Hapvida.{' '}
+              <span className="italic">
+                (placeholder — trocar por nome, cargo, tempo de atuação e foto reais)
+              </span>
+            </p>
+          </div>
         </div>
       </section>
 

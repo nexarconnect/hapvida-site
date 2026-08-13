@@ -10,7 +10,7 @@ export default function RedeClinicas() {
       <SEO
         path="/rede-nacional/clinicas-por-capital"
         title="Clínicas Hapvida por Capital | Nexar"
-        description="Hapclínicas, centros clínicos, laboratórios e diagnóstico da rede própria Hapvida nas capitais atendidas pela Nexar fora do interior de SP."
+        description="Hapclínicas, centros clínicos, laboratórios e diagnóstico da rede própria e credenciada Hapvida nas capitais atendidas pela Nexar fora do interior de SP."
         breadcrumbs={[
           { name: 'Início', path: '/' },
           { name: 'Rede de Atendimento', path: '/rede-de-atendimento' },
@@ -33,8 +33,8 @@ export default function RedeClinicas() {
           <h1 className="text-3xl font-bold text-slate-900">Clínicas Hapvida por Capital</h1>
         </div>
         <p className="mb-10 text-sm text-slate-500">
-          Hapclínicas, centros clínicos, laboratórios e unidades de diagnóstico da rede própria
-          Hapvida nas capitais atendidas. Confirme a disponibilidade com um consultor.
+          Hapclínicas, centros clínicos, laboratórios e unidades de diagnóstico da rede própria e
+          credenciada Hapvida nas capitais atendidas. Confirme a disponibilidade com um consultor.
         </p>
 
         <div className="pb-16">

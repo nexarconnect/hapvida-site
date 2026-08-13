@@ -11,7 +11,7 @@ export default function NationalMap() {
           {/* Texto */}
           <div className="w-full lg:w-1/2 text-center lg:text-left">
             <h3 className="text-3xl md:text-4xl font-black text-[#002b5c] mb-6 leading-tight">
-              Rede própria em <br />
+              Rede própria e credenciada em <br />
               <span className="text-[#ff8200]">mais de 20 estados</span>
             </h3>
           </div>

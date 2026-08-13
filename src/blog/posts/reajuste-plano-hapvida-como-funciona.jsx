@@ -7,7 +7,7 @@ export default function Body() {
       <p>
         O reajuste do plano Hapvida acontece todo ano, mas a lógica por trás dele muda conforme a
         modalidade contratada: individual, empresarial ou adesão. Entender qual regra vale para o seu
-        contrato ajuda a não levar susto na hora de renovar — e a saber quando vale pedir uma nova{' '}
+        contrato ajuda a não levar susto na hora de renovar, e a saber quando vale pedir uma nova{' '}
         <Link to="/tipos-de-planos">cotação para comparar as modalidades</Link>.
       </p>
 
@@ -16,7 +16,7 @@ export default function Body() {
         O reajuste existe porque o custo da operadora muda: procedimentos ficam mais caros, a rede é
         atualizada, o uso do plano pelos beneficiários varia. Segundo a ANS, os planos individuais e
         familiares têm um teto de reajuste definido anualmente pela própria agência, que a operadora não
-        pode ultrapassar. Já nos planos coletivos — empresarial e adesão — não existe esse teto: o
+        pode ultrapassar. Já nos planos coletivos (empresarial e adesão) não existe esse teto: o
         percentual é negociado diretamente entre a operadora e a empresa ou entidade contratante.
       </p>
 
@@ -29,7 +29,7 @@ export default function Body() {
       <ul>
         <li>
           <strong>Individual/familiar:</strong> segue o teto de reajuste anual definido pela ANS, aplicado
-          no mês de aniversário do contrato. É a modalidade contratada por CPF, sem precisar de CNPJ — veja
+          no mês de aniversário do contrato. É a modalidade contratada por CPF, sem precisar de CNPJ. Veja
           mais em <Link to="/plano-individual-hapvida">plano individual Hapvida</Link>.
         </li>
         <li>
@@ -51,7 +51,7 @@ export default function Body() {
       <h2>Reajuste por faixa etária é outra coisa</h2>
       <p>
         Tem um ponto que costuma gerar confusão: o reajuste anual não é a mesma coisa que a mudança de
-        valor por mudança de faixa etária. A tabela de preços do plano já é organizada por faixa etária —
+        valor por mudança de faixa etária. A tabela de preços do plano já é organizada por faixa etária:
         quando você completa idade suficiente para mudar de faixa, o valor da mensalidade sobe por esse
         motivo, independente do reajuste anual do contrato. As duas coisas podem acontecer no mesmo ano, e
         um consultor confirma o valor exato para a sua idade e modalidade antes de você renovar ou
@@ -103,8 +103,8 @@ export default function Body() {
       <h3>Como sei quando o reajuste será aplicado no meu contrato?</h3>
       <p>
         No individual/familiar, a aplicação costuma acontecer no mês de aniversário do contrato. Nos
-        planos coletivos, o momento depende do que foi acordado entre a empresa ou entidade e a operadora —
-        vale confirmar com quem administra o contrato.
+        planos coletivos, o momento depende do que foi acordado entre a empresa ou entidade e a operadora.
+        Vale confirmar com quem administra o contrato.
       </p>
 
       <h3>Posso pedir uma nova cotação antes de renovar?</h3>

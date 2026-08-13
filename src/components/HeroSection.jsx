@@ -90,6 +90,9 @@ export default function HeroSection({
                 {formattedPrice}
               </span>
               </div>
+              <p className="mt-2 text-xs font-medium text-blue-100/60">
+                Tabela atualizada e revisada em 13/08/2026
+              </p>
             </div>
 
             <div className="mb-10 flex flex-col items-start gap-2.5">

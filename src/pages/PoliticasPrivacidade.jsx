@@ -10,6 +10,7 @@ export default function PoliticasPrivacidade() {
         path="/politicas-privacidade"
         title="Política de Privacidade | Tabela Plano Saúde"
         description="Como a Nexar coleta, usa e protege seus dados pessoais ao solicitar uma cotação do plano de saúde Hapvida, conforme a LGPD."
+        noindex
         breadcrumbs={[
           { name: 'Início', path: '/' },
           { name: 'Política de Privacidade', path: '/politicas-privacidade' },

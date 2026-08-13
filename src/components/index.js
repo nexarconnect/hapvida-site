@@ -10,3 +10,5 @@ export { default as ScrollToTop } from './ScrollToTop';
 export { default as NetworkUnitsTest } from './NetworkUnitsTest';
 export { default as FormModal } from './FormModal';
 export { default as ShareButtons } from './ShareButtons';
+export { default as CTAGroup } from './CTAGroup';
+export { default as FinalCTA } from './FinalCTA';

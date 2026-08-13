@@ -1,14 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useInView } from 'framer-motion';
 
 export default function CountUpNumber({ value = 0, duration = 1400 }) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.35 });
   const [displayValue, setDisplayValue] = useState(0);
 
   useEffect(() => {
-    if (!isInView) return;
-
     let frame;
     const start = performance.now();
     
@@ -36,11 +32,17 @@ export default function CountUpNumber({ value = 0, duration = 1400 }) {
     };
 
     frame = requestAnimationFrame(update);
-    
+
+    // rAF pauses on backgrounded/hidden tabs (and some prerender/crawler
+    // contexts never advance frames at all), which left this stuck mid-count.
+    // Force the final value once duration has elapsed regardless of frames.
+    const fallback = setTimeout(() => setDisplayValue(value), duration + 100);
+
     return () => {
       if (frame) cancelAnimationFrame(frame);
+      clearTimeout(fallback);
     };
-  }, [isInView, value, duration]);
+  }, [value, duration]);
 
   return <span ref={ref}>{displayValue}</span>;
 }

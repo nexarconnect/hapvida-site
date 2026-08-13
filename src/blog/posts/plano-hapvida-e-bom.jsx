@@ -15,16 +15,16 @@ export default function Body() {
         Muita gente começa perguntando se o plano cobre consulta, exame ou internação. Segundo as regras da{' '}
         <abbr title="Agência Nacional de Saúde Suplementar">ANS</abbr>, todo plano de saúde regulamentado
         precisa cobrir, no mínimo, o Rol de Procedimentos e Eventos em Saúde da agência, conforme a
-        segmentação contratada — ambulatorial, hospitalar, com ou sem obstetrícia.
+        segmentação contratada: ambulatorial, hospitalar, com ou sem obstetrícia.
       </p>
       <p>
         Ou seja: cobertura básica não é diferencial de operadora nenhuma, é obrigação legal. O que separa um
-        plano do outro é o resto — onde você é atendido, quando pode começar, quanto custa de verdade e como
+        plano do outro é o resto: onde você é atendido, quando pode começar, quanto custa de verdade e como
         é usar no dia a dia.
       </p>
       <p>
         <strong>Quer avaliar com números reais?</strong> Peça a cotação com sua idade e cidade: é o único
-        jeito de aplicar os quatro critérios ao seu caso. Comece pela página da sua região —{' '}
+        jeito de aplicar os quatro critérios ao seu caso. Comece pela página da sua região:{' '}
         <Link to="/plano-hapvida/bauru">Bauru</Link>,{' '}
         <Link to="/plano-hapvida/ribeirao-preto">Ribeirão Preto</Link>,{' '}
         <Link to="/plano-hapvida/franca">Franca</Link> ou{' '}
@@ -42,7 +42,7 @@ export default function Body() {
       <p>
         Só que número nacional não responde a pergunta que importa. A composição entre rede própria e
         credenciada muda de cidade para cidade, e existe município atendido pela consultoria onde o
-        atendimento se dá por rede credenciada, sem unidade própria. Isso não é problema em si — atendimento
+        atendimento se dá por rede credenciada, sem unidade própria. Isso não é problema em si: atendimento
         credenciado é atendimento. Vira problema quando você assume uma coisa e encontra outra.
       </p>
       <p>
@@ -69,7 +69,7 @@ export default function Body() {
       </p>
       <p>
         Uma ressalva que vale mais que qualquer dica de economia: doença ou lesão preexistente precisa ser
-        declarada no formulário de saúde. Omitir não elimina a carência — só cria o risco de a operadora
+        declarada no formulário de saúde. Omitir não elimina a carência: só cria o risco de a operadora
         negar cobertura depois, justamente quando você precisar.
       </p>
 
@@ -80,14 +80,14 @@ export default function Body() {
         varia conforme a região, a faixa etária e a modalidade contratada.
       </p>
       <p>
-        Idade é o fator que mais mexe no cálculo — o plano individual usa faixas etárias definidas pela ANS,
+        Idade é o fator que mais mexe no cálculo: o plano individual usa faixas etárias definidas pela ANS,
         e a faixa mais nova tende a custar menos. Por isso duas pessoas da mesma cidade recebem valores
         diferentes, e por isso não dá para estimar o valor de uma família somando cabeças.
       </p>
       <p>
         Tem ainda dois pontos que mudam o custo ao longo do tempo. A coparticipação troca mensalidade menor
         por uma taxa quando você usa determinados procedimentos, e compensa ou não dependendo da sua
-        frequência de uso — o modelo está explicado no post sobre{' '}
+        frequência de uso. O modelo está explicado no post sobre{' '}
         <Link to="/blog/coparticipacao-plano-de-saude-explicada">coparticipação</Link>. E o reajuste anual:
         no individual, ele segue o teto definido pela ANS; no empresarial, é negociado com a operadora
         conforme a sinistralidade do grupo.
@@ -113,7 +113,7 @@ export default function Body() {
       </p>
       <p>
         Se você já tem médicos de confiança fora da rede e não pretende trocar, a conta provavelmente não
-        fecha — o modelo da operadora concentra atendimento na própria estrutura e nos credenciados dela. Se
+        fecha: o modelo da operadora concentra atendimento na própria estrutura e nos credenciados dela. Se
         você mora em um município sem unidade próxima e precisa de atendimento frequente, o deslocamento
         pesa. E se a sua prioridade é escolher livremente qualquer prestador, esse não é o tipo de produto
         que entrega isso.
@@ -128,13 +128,13 @@ export default function Body() {
       <p>
         Preço competitivo costuma vir do modelo: a operadora concentra parte do atendimento em estrutura
         própria, o que reduz custo com terceiros. Se isso é bom para você depende de a rede resolver na sua
-        cidade — que é o critério 1 deste post, não uma opinião geral.
+        cidade: é o critério 1 deste post, não uma opinião geral.
       </p>
 
       <h3>O plano cobre tudo?</h3>
       <p>
         Todo plano regulamentado cobre no mínimo o Rol de Procedimentos da ANS, conforme a segmentação
-        contratada. O que varia entre planos é rede, carência, custo e condições — não a cobertura mínima
+        contratada. O que varia entre planos é rede, carência, custo e condições, não a cobertura mínima
         obrigatória.
       </p>
 
@@ -178,7 +178,7 @@ export default function Body() {
       </p>
       <p>
         Os quatro só dá para conferir com os seus dados na mesa. Solicite uma cotação sem compromisso e peça
-        os valores junto com a lista de unidades da sua cidade — as duas informações que evitam surpresa
+        os valores junto com a lista de unidades da sua cidade: as duas informações que evitam surpresa
         depois. Veja também a página de <Link to="/plano-hapvida/marilia">Marília</Link>,{' '}
         <Link to="/plano-hapvida/piracicaba">Piracicaba</Link> ou a lista completa de{' '}
         <Link to="/planos-hapvida-por-cidade">cidades atendidas</Link>.

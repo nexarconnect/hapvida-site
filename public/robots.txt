@@ -3,5 +3,8 @@ Allow: /
 
 Disallow: /admin
 Disallow: /login
+Disallow: /politicas-privacidade/
+Disallow: /termos-de-uso/
+Disallow: /aviso-legal/
 
 Sitemap: https://tabelaplanosaude.com.br/sitemap.xml

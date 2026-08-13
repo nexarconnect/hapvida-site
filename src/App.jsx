@@ -2,6 +2,7 @@ import React, { useEffect, useState, lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { supabase } from './lib/supabase';
 import { loadSiteConfig } from './lib/siteConfig';
+import { captureUTMParams } from './lib/utm';
 
 import HomePage from './pages/HomePage';
 import ThankYou from './pages/ThankYou';
@@ -24,6 +25,8 @@ import PlanoPorCidade from './pages/PlanoPorCidade';
 import PlanosPorCidade from './pages/PlanosPorCidade';
 import PlanoIndividual from './pages/PlanoIndividual';
 import PlanoEmpresarial from './pages/PlanoEmpresarial';
+import TabelaDePrecoHapvida from './pages/TabelaDePrecoHapvida';
+import PlanoOdontologico from './pages/PlanoOdontologico';
 import TiposDePlanos from './pages/TiposDePlanos';
 import BlogIndex from './pages/BlogIndex';
 import BlogPost from './pages/BlogPost';
@@ -36,6 +39,8 @@ import ChatInteligente from './components/ChatInteligente';
 
 const ConfigPage = lazy(() => import('./pages/ConfigPage'));
 const AdminCorretoras = lazy(() => import('./pages/AdminCorretoras'));
+const AdminAnalytics = lazy(() => import('./pages/AdminAnalytics'));
+const AdminCRM = lazy(() => import('./pages/AdminCRM'));
 
 function ProtectedRoute({ session, children }) {
   if (!session) return <Navigate to="/login" replace />;
@@ -55,6 +60,7 @@ function App() {
 
   useEffect(() => {
     loadSiteConfig();
+    captureUTMParams();
   }, []);
 
   useEffect(() => {
@@ -148,6 +154,14 @@ function App() {
           element={<PlanosPorCidade onOpenForm={handleOpenForm} />}
         />
         <Route
+          path="/tabela-de-preco-hapvida"
+          element={<TabelaDePrecoHapvida onOpenForm={handleOpenForm} />}
+        />
+        <Route
+          path="/plano-odontologico-hapvida"
+          element={<PlanoOdontologico onOpenForm={handleOpenForm} />}
+        />
+        <Route
           path="/plano-individual-hapvida"
           element={<PlanoIndividual onOpenForm={handleOpenForm} />}
         />
@@ -209,6 +223,28 @@ function App() {
           element={
             <ProtectedRoute session={session}>
               <NetworkUnitsTest />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/admin/analytics"
+          element={
+            <ProtectedRoute session={session}>
+              <Suspense fallback={<div className="flex min-h-screen items-center justify-center"><div className="h-8 w-8 animate-spin rounded-full border-4 border-blue-200 border-t-blue-900" /></div>}>
+                <AdminAnalytics />
+              </Suspense>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/admin/crm"
+          element={
+            <ProtectedRoute session={session}>
+              <Suspense fallback={<div className="flex min-h-screen items-center justify-center"><div className="h-8 w-8 animate-spin rounded-full border-4 border-blue-200 border-t-blue-900" /></div>}>
+                <AdminCRM />
+              </Suspense>
             </ProtectedRoute>
           }
         />

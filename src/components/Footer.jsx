@@ -21,6 +21,10 @@ export default function Footer({ onOpenForm }) {
     trackCTA('whatsapp_click', 'footer_contact', { canal: 'whatsapp' });
   };
 
+  const handleBeneficiaryLinkClick = (portal) => {
+    trackCTA('area_beneficiario_click', 'footer_beneficiario', { portal });
+  };
+
   const handleCTAClick = () => {
     trackCTA('solicitar_cotacao', 'footer_main');
     onOpenForm();
@@ -70,8 +74,10 @@ export default function Footer({ onOpenForm }) {
               <li><Link to="/rede-de-atendimento" className="hover:text-white transition-colors">Rede Credenciada</Link></li>
               <li><Link to="/rede-nacional" className="hover:text-white transition-colors">Rede Nacional</Link></li>
               <li><Link to="/planos-hapvida-por-cidade" className="hover:text-white transition-colors">Planos por Cidade</Link></li>
+              <li><Link to="/tabela-de-preco-hapvida" className="hover:text-white transition-colors">Tabela de Preço</Link></li>
               <li><Link to="/plano-individual-hapvida" className="hover:text-white transition-colors">Plano Individual</Link></li>
               <li><Link to="/plano-empresarial-hapvida" className="hover:text-white transition-colors">Plano Empresarial</Link></li>
+              <li><Link to="/plano-odontologico-hapvida" className="hover:text-white transition-colors">Plano Odontológico</Link></li>
               <li><Link to="/tipos-de-planos" className="hover:text-white transition-colors">Tipos de Plano</Link></li>
               <li><Link to="/blog" className="hover:text-white transition-colors">Blog</Link></li>
             </ul>
@@ -83,6 +89,54 @@ export default function Footer({ onOpenForm }) {
               <li><Link to="/politicas-privacidade" className="hover:text-white transition-colors">Privacidade e Segurança</Link></li>
               <li><Link to="/termos-de-uso" className="hover:text-white transition-colors">Termos de Uso</Link></li>
               <li><Link to="/aviso-legal" className="hover:text-white transition-colors">Aviso Legal</Link></li>
+            </ul>
+
+            <h4 className="mb-6 mt-10 text-lg font-bold text-white">Área do Beneficiário</h4>
+            <ul className="space-y-4 text-sm text-blue-100/70">
+              <li>
+                <a
+                  href="https://portal-beneficiario.hapvida.com.br/#tabs-3"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => handleBeneficiaryLinkClick('portal_beneficiario')}
+                  className="hover:text-white transition-colors"
+                >
+                  Portal do Beneficiário
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://webhap.hapvida.com.br/pls/webhap/webNewBoletoEmpresa.Login"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => handleBeneficiaryLinkClick('2via_boleto_empresa')}
+                  className="hover:text-white transition-colors"
+                >
+                  2ª Via de Boleto (Empresa)
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://webhap.hapvida.com.br/pls/webhap/pk_carteira_provisoria.login_usuario_form"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => handleBeneficiaryLinkClick('carteirinha_provisoria_titular')}
+                  className="hover:text-white transition-colors"
+                >
+                  Carteirinha Provisória (Titular)
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://webhap.hapvida.com.br/pls/webhap/pk_carteira_provisoria.login_empresa_form"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => handleBeneficiaryLinkClick('carteirinha_provisoria_empresa')}
+                  className="hover:text-white transition-colors"
+                >
+                  Carteirinha Provisória (Empresa)
+                </a>
+              </li>
             </ul>
           </div>
 

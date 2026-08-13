@@ -10,6 +10,7 @@ export default function TermosDeUso() {
         path="/termos-de-uso"
         title="Termos de Uso | Tabela Plano Saúde"
         description="Termos e condições de uso do site Tabela Plano Saúde, operado pela Nexar para comercialização de planos Hapvida."
+        noindex
         breadcrumbs={[
           { name: 'Início', path: '/' },
           { name: 'Termos de Uso', path: '/termos-de-uso' },

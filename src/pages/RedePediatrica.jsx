@@ -10,7 +10,7 @@ export default function RedePediatrica() {
       <SEO
         path="/rede-nacional/rede-pediatrica"
         title="Rede Pediátrica Hapvida | Hospitais e Maternidades | Nexar"
-        description="Hospitais, maternidades e unidades com atendimento pediátrico da rede própria Hapvida, nos estados atendidos pela Nexar fora do interior de SP."
+        description="Hospitais, maternidades e unidades com atendimento pediátrico da rede própria e credenciada Hapvida, nos estados atendidos pela Nexar fora do interior de SP."
         breadcrumbs={[
           { name: 'Início', path: '/' },
           { name: 'Rede de Atendimento', path: '/rede-de-atendimento' },
@@ -33,8 +33,9 @@ export default function RedePediatrica() {
           <h1 className="text-3xl font-bold text-slate-900">Rede Pediátrica Hapvida</h1>
         </div>
         <p className="mb-10 text-sm text-slate-500">
-          Hospitais, maternidades e unidades com atendimento pediátrico da rede própria Hapvida.
-          Confirme a disponibilidade com um consultor antes de precisar do atendimento.
+          Hospitais, maternidades e unidades com atendimento pediátrico da rede própria e
+          credenciada Hapvida. Confirme a disponibilidade com um consultor antes de precisar do
+          atendimento.
         </p>
 
         <div className="pb-16">

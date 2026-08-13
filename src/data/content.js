@@ -8,6 +8,6 @@ export const hapvidaStats = {
     { label: "Beneficiários", value: "15.7", suffix: "Mi", icon: Users, desc: "Maior operadora do país" },
     { label: "Hospitais", value: "87", suffix: "", icon: Building2, desc: "Estrutura própria completa" },
     { label: "História", value: "45", suffix: "Anos", icon: History, desc: "Tradição e confiança" },
-    { label: "Rede Própria", value: "300", suffix: "+", icon: Activity, desc: "Unidades em todos os estados" }
+    { label: "Rede Própria e Credenciada", value: "300", suffix: "+", icon: Activity, desc: "Unidades em todos os estados" }
   ]
 };

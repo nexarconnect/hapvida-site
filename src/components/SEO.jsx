@@ -10,7 +10,7 @@ const DEFAULT_OG_IMAGE = `${SITE_URL}/og-hapvida-2026.jpg`;
 const LOGO_URL = `${SITE_URL}/logo.png`;
 const DEFAULT_TITLE = 'Plano de Saúde Hapvida 2026 | Cotação a partir de R$ 157,29';
 const DEFAULT_DESCRIPTION =
-  'Cotação do Plano de Saúde Hapvida 2026 a partir de R$ 157,29. Atendimento rápido no WhatsApp com consultor autorizado, sem compromisso.';
+  'Tabela Hapvida 2026 atualizada, a partir de R$ 157,29. Cotação gratuita na hora pelo WhatsApp com consultor autorizado, sem compromisso.';
 
 function normalizeSchemaPrice(price, fallback = '157.29') {
   const raw = String(price ?? fallback)

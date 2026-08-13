@@ -276,18 +276,18 @@ export const BLOG_POSTS_META = [
     slug: 'plano-hapvida-e-bom',
     title: 'Plano Hapvida é bom? 4 critérios antes de contratar',
     description:
-      'Plano Hapvida é bom? Veja os 4 critérios que decidem — rede, carência, custo e uso — e peça a cotação com o preço da sua cidade.',
+      'Plano Hapvida é bom? Veja os 4 critérios que decidem: rede, carência, custo e uso. Peça a cotação com o preço da sua cidade.',
     category: 'Guia',
     publishedAt: '2026-08-09',
     updatedAt: '2026-08-09',
     excerpt:
-      'Plano bom no abstrato não existe: existe plano que resolve o seu caso. Veja os quatro critérios que decidem isso — e em quais situações o Hapvida não é a melhor escolha.',
+      'Plano bom no abstrato não existe: existe plano que resolve o seu caso. Veja os quatro critérios que decidem isso, e em quais situações o Hapvida não é a melhor escolha.',
   },
   {
     slug: 'tabela-precos-hapvida-2026',
     title: 'Tabela de Preços Hapvida 2026: como funciona',
     description:
-      'Tabela de preços Hapvida 2026: veja como o valor é montado — idade, cidade e modalidade — e peça a cotação atualizada para o seu perfil.',
+      'Tabela de preços Hapvida 2026: veja como o valor é montado: idade, cidade e modalidade. Peça a cotação atualizada para o seu perfil.',
     category: 'Preços',
     publishedAt: '2026-08-09',
     updatedAt: '2026-08-09',

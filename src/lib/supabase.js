@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
+import { getUTMParams } from './utm';
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
@@ -132,6 +133,8 @@ export async function saveLead(leadData) {
     whatsappRaw: String(leadData?.whatsappRaw || '').trim(),
     plano: leadData?.plano ?? null,
     createdAt: new Date().toISOString(),
+    status: 'novo',
+    ...getUTMParams(),
   };
 
   console.log('SAVELEAD -> payload enviado:', normalizedPayload);
@@ -162,13 +165,66 @@ export async function saveLead(leadData) {
   };
 }
 
+// --- CRM DE LEADS ---
+
+export const LEAD_STATUSES = ['novo', 'contatado', 'negociando', 'fechado', 'perdido'];
+
+/**
+ * Move um lead entre colunas do Kanban em /admin/crm. `lost_reason` só faz
+ * sentido junto de status 'perdido' — nos outros casos gravamos null pra não
+ * deixar motivo de perda "grudado" num lead que voltou a negociar.
+ */
+export async function updateLeadStatus(leadId, status, lostReason = null) {
+  if (!supabase || !leadId) return { success: false, error: 'missing_supabase_or_id' };
+
+  const { data, error } = await supabase
+    .from('leads')
+    .update({
+      status,
+      lost_reason: status === 'perdido' ? (lostReason || null) : null,
+      last_contacted_at:
+        status === 'novo' ? null : new Date().toISOString(),
+    })
+    .eq('id', leadId)
+    .select('id, status, lost_reason, last_contacted_at')
+    .single();
+
+  if (error) {
+    console.error('Erro ao atualizar status do lead:', error);
+    return { success: false, error: error.message };
+  }
+
+  return { success: true, data };
+}
+
 // --- RASTREIO E ANALYTICS ---
 
+/**
+ * Grava o evento em `analytics_events` para alimentar o dashboard de
+ * /admin/analytics. Fire-and-forget de propósito: uma falha aqui (ex. tabela
+ * ainda não criada, rede instável) nunca pode quebrar o fluxo de conversão
+ * do site, então erros só vão pro console, nunca propagam.
+ */
 export const trackAnalyticsEvent = (eventName, eventData = {}) => {
-  if (typeof window !== 'undefined' && window.fbq) {
-    window.fbq('trackCustom', eventName, eventData);
-  }
   console.log(`[Event]: ${eventName}`, eventData);
+
+  if (!supabase) return;
+
+  const { placement, ...rest } = eventData || {};
+
+  supabase
+    .from('analytics_events')
+    .insert([
+      {
+        event_name: eventName,
+        placement: placement || null,
+        path: typeof window !== 'undefined' ? window.location.pathname : null,
+        payload: rest,
+      },
+    ])
+    .then(({ error }) => {
+      if (error) console.error('Erro ao gravar analytics_events:', error);
+    });
 };
 
 export const confirmWhatsAppClick = (leadData = {}) => {
