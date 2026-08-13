@@ -18,6 +18,10 @@ export default function BlogIndex({ onOpenForm }) {
         path="/blog"
         title="Blog | Tabela Plano Saúde"
         description="Guias sobre carência, portabilidade e contratação do plano de saúde Hapvida para quem mora no interior de São Paulo."
+        breadcrumbs={[
+          { name: 'Início', path: '/' },
+          { name: 'Blog', path: '/blog' },
+        ]}
       />
       <Navbar />
 

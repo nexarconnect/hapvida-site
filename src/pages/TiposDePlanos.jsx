@@ -45,7 +45,15 @@ export default function TiposDePlanos({ onOpenForm }) {
 
   return (
     <div>
-      <SEO path="/tipos-de-planos" title={title} description={description} />
+      <SEO
+        path="/tipos-de-planos"
+        title={title}
+        description={description}
+        breadcrumbs={[
+          { name: 'Início', path: '/' },
+          { name: 'Tipos de Plano', path: '/tipos-de-planos' },
+        ]}
+      />
       <Navbar />
 
       <header className="bg-[#002b5c] px-6 py-16 text-center text-white md:py-20">

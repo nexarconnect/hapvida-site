@@ -78,11 +78,11 @@ export default function PlanoPorCidade({ onOpenForm }) {
     onOpenForm?.(planName);
   };
 
-  const title = `Plano Hapvida em ${city.name} 2026 | Preços e Rede de Atendimento`;
+  const title = `Plano Hapvida em ${city.name} 2026 | Preços e Rede`;
   const description = `Tabela Hapvida 2026 em ${city.name} (${city.state}): planos e valores atualizados, rede local e cotação rápida pelo WhatsApp, sem compromisso.`;
 
   return (
-    <div>
+    <div data-prerender-ready={loading ? undefined : 'true'}>
       <SEO
         path={`/plano-hapvida/${slug}`}
         title={title}

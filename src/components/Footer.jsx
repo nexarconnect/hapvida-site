@@ -82,7 +82,7 @@ export default function Footer({ onOpenForm }) {
             <ul className="space-y-4 text-sm text-blue-100/70">
               <li><Link to="/politicas-privacidade" className="hover:text-white transition-colors">Privacidade e Segurança</Link></li>
               <li><Link to="/termos-de-uso" className="hover:text-white transition-colors">Termos de Uso</Link></li>
-              <li><Link to="aviso-legal" className="hover:text-white transition-colors">Aviso Legal</Link></li>
+              <li><Link to="/aviso-legal" className="hover:text-white transition-colors">Aviso Legal</Link></li>
             </ul>
           </div>
 

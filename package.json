@@ -7,6 +7,7 @@
     "dev": "vite --host 0.0.0.0 --port 3000",
     "build": "node scripts/generate-sitemap.js && vite build && node scripts/prerender.js",
     "build:no-prerender": "node scripts/generate-sitemap.js && vite build",
+    "verify-prerender": "node scripts/verify-prerender.js",
     "preview": "vite preview --host 0.0.0.0 --port 3000",
     "lint": "eslint . --quiet",
     "lint:warn": "eslint .",

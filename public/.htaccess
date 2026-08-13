@@ -10,7 +10,22 @@
   RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
 
   RewriteRule ^index\.html$ - [L]
-  RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule . /index.html [L]
+
+  # Arquivo ou diretório real (inclui toda rota pública, pré-renderizada
+  # como dist/<rota>/index.html) — serve como está.
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # Rotas do app que não são pré-renderizadas (não têm diretório em dist/)
+  # mas são válidas: obrigado (pós-conversão, noindex), login e admin*.
+  # Caem no shell da SPA para o React Router renderizar client-side.
+  RewriteRule ^(obrigado|login|admin)(/.*)?$ /index.html [L]
+
+  # Qualquer outra URL é desconhecida de verdade — 404 real em vez de servir
+  # a home pré-renderizada com status 200 (soft-404: o Google via a home
+  # como "conteúdo" de qualquer link quebrado ou digitado errado).
+  RewriteRule . - [R=404,L]
 </IfModule>
+
+ErrorDocument 404 /404.html

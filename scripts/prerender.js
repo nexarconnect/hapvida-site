@@ -125,6 +125,14 @@ async function main() {
       try {
         await page.goto(url, { waitUntil: 'networkidle0', timeout: 30000 });
         await page.waitForSelector('#root > *', { timeout: 10000 }).catch(() => {});
+        // Páginas que dependem de dado assíncrono do Supabase (preço/rede
+        // por cidade) marcam data-prerender-ready="true" quando o fetch
+        // termina — esperamos por isso em vez de confiar só no timeout fixo,
+        // que podia gravar o schema Product/AggregateOffer vazio em silêncio
+        // se a resposta do Supabase demorasse mais que 400ms.
+        await page
+          .waitForSelector('[data-prerender-ready="true"]', { timeout: 8000 })
+          .catch(() => {});
         // Pequena folga para o React assentar depois do networkidle0
         // (ex.: setState que dispara após a resposta do Supabase).
         await new Promise((resolve) => setTimeout(resolve, 400));
@@ -137,6 +145,23 @@ async function main() {
       } catch (routeErr) {
         console.warn(`[prerender] Falhou em ${route.path}, mantendo o HTML do build para essa rota. Motivo: ${routeErr.message}`);
       }
+    }
+
+    // Página 404 real: gravada em dist/404.html (não dist/404/index.html)
+    // para ser referenciada por "ErrorDocument 404 /404.html" no .htaccess.
+    // Sem isso, o Apache serve o index.html pré-renderizado (a home) com
+    // status 200 para qualquer URL desconhecida — um soft-404 que o Google
+    // trata como conteúdo duplicado da home.
+    try {
+      const url = `http://localhost:${PORT}/rota-inexistente-para-gerar-404`;
+      await page.goto(url, { waitUntil: 'networkidle0', timeout: 30000 });
+      await page.waitForSelector('#root > *', { timeout: 10000 }).catch(() => {});
+      await new Promise((resolve) => setTimeout(resolve, 400));
+      const html = await page.content();
+      fs.writeFileSync(path.join(DIST_DIR, '404.html'), html, 'utf8');
+      console.log('[prerender] 404 → 404.html');
+    } catch (notFoundErr) {
+      console.warn(`[prerender] Falhou ao gerar 404.html. Motivo: ${notFoundErr.message}`);
     }
   } finally {
     await browser.close();

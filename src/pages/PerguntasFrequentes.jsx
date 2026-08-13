@@ -13,6 +13,10 @@ export default function PerguntasFrequentes() {
         title="Perguntas Frequentes | Plano Hapvida 2026"
         description="Tire suas dúvidas sobre carência, preços, modalidades, rede de atendimento, coparticipação e cancelamento do plano de saúde Hapvida 2026."
         faqItems={EXTENDED_FAQS}
+        breadcrumbs={[
+          { name: 'Início', path: '/' },
+          { name: 'Perguntas Frequentes', path: '/perguntas-frequentes' },
+        ]}
       />
 
       <div className="container mx-auto max-w-3xl px-4 pt-12">

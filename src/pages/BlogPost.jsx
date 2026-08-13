@@ -57,6 +57,11 @@ export default function BlogPost({ onOpenForm }) {
         description={meta.description}
         article={{ publishedAt: meta.publishedAt, updatedAt: meta.updatedAt }}
         faqItems={faqItems}
+        breadcrumbs={[
+          { name: 'Início', path: '/' },
+          { name: 'Blog', path: '/blog' },
+          { name: meta.title, path: `/blog/${meta.slug}` },
+        ]}
       />
       <Navbar />
 

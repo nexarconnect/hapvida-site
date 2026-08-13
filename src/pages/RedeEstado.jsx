@@ -110,8 +110,12 @@ export default function RedeEstado() {
     <main className="min-h-screen bg-slate-50">
       <SEO
         path={`/rede-nacional/${group.slug}`}
-        title={`Rede Hapvida em ${group.stateName} | Hospitais e Unidades Credenciadas`}
-        description={`Consulte hospitais, clínicas e prontos-atendimentos da rede própria Hapvida em ${group.stateName}: veja as cidades atendidas e fale com um consultor Nexar para confirmar disponibilidade.`}
+        title={
+          group.stateName.length > 10
+            ? `Rede Hapvida em ${group.stateName} | Unidades Credenciadas`
+            : `Rede Hapvida em ${group.stateName} | Hospitais e Unidades Credenciadas`
+        }
+        description={`Consulte hospitais, clínicas e prontos-atendimentos da rede própria e credenciada Hapvida em ${group.stateName}: veja as cidades atendidas e fale com um consultor Nexar para confirmar disponibilidade.`}
         localBusiness={{ city: group.stateName, areaType: 'State' }}
         breadcrumbs={[
           { name: 'Início', path: '/' },

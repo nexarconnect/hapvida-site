@@ -230,7 +230,7 @@ export const BLOG_POSTS_META = [
   },
   {
     slug: 'coparticipacao-hapvida-modelos-parcial-total',
-    title: 'Coparticipação no plano Hapvida: parcial, total ou sem',
+    title: 'Coparticipação no plano Hapvida: parcial ou total',
     description:
       'Coparticipação no plano Hapvida: modelos parcial, total e sem coparticipação, e o que confirmar por escrito antes de assinar.',
     category: 'Contratação',
@@ -252,7 +252,7 @@ export const BLOG_POSTS_META = [
   },
   {
     slug: 'reajuste-plano-hapvida-como-funciona',
-    title: 'Reajuste do Plano Hapvida: como funciona em cada modalidade',
+    title: 'Reajuste do Plano Hapvida: como funciona',
     description:
       'Reajuste do plano Hapvida: como funciona em cada modalidade e como confirmar o valor atualizado na sua cotação.',
     category: 'Contratação',
@@ -263,7 +263,7 @@ export const BLOG_POSTS_META = [
   },
   {
     slug: 'cancelamento-plano-hapvida-como-funciona',
-    title: 'Cancelamento do Plano Hapvida: como fazer sem perder cobertura',
+    title: 'Cancelamento do Plano Hapvida: como fazer',
     description:
       'Cancelamento do plano Hapvida: como funciona, como não ficar sem cobertura na troca e quando vale pedir uma nova cotação antes de decidir.',
     category: 'Contratação',
@@ -274,7 +274,7 @@ export const BLOG_POSTS_META = [
   },
   {
     slug: 'plano-hapvida-e-bom',
-    title: 'Plano Hapvida é bom? Os 4 critérios que decidem antes de contratar',
+    title: 'Plano Hapvida é bom? 4 critérios antes de contratar',
     description:
       'Plano Hapvida é bom? Veja os 4 critérios que decidem — rede, carência, custo e uso — e peça a cotação com o preço da sua cidade.',
     category: 'Guia',
@@ -285,7 +285,7 @@ export const BLOG_POSTS_META = [
   },
   {
     slug: 'tabela-precos-hapvida-2026',
-    title: 'Tabela de Preços Hapvida 2026: como funciona e o que muda o valor',
+    title: 'Tabela de Preços Hapvida 2026: como funciona',
     description:
       'Tabela de preços Hapvida 2026: veja como o valor é montado — idade, cidade e modalidade — e peça a cotação atualizada para o seu perfil.',
     category: 'Preços',

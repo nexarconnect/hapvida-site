@@ -24,7 +24,15 @@ export default function PlanosPorCidade({ onOpenForm }) {
 
   return (
     <div>
-      <SEO path="/planos-hapvida-por-cidade" title={title} description={description} />
+      <SEO
+        path="/planos-hapvida-por-cidade"
+        title={title}
+        description={description}
+        breadcrumbs={[
+          { name: 'Início', path: '/' },
+          { name: 'Planos por Cidade', path: '/planos-hapvida-por-cidade' },
+        ]}
+      />
       <Navbar />
 
       <header className="bg-[#002b5c] px-6 py-16 text-center text-white md:py-20">

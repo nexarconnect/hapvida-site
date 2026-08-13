@@ -97,6 +97,10 @@ export default function RedeAtendimento() {
         path="/rede-de-atendimento"
         title="Rede de Atendimento e Hospitais Credenciados Hapvida 2026"
         description="Consulte hospitais, clínicas e prontos-atendimentos da rede própria e credenciada Hapvida por cidade no interior de SP."
+        breadcrumbs={[
+          { name: 'Início', path: '/' },
+          { name: 'Rede de Atendimento', path: '/rede-de-atendimento' },
+        ]}
       />
 
       <div className="container mx-auto max-w-6xl px-4 pt-12">

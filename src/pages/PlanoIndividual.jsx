@@ -59,7 +59,16 @@ export default function PlanoIndividual({ onOpenForm }) {
 
   return (
     <div>
-      <SEO path="/plano-individual-hapvida" title={title} description={description} faqItems={FAQ_ITEMS} />
+      <SEO
+        path="/plano-individual-hapvida"
+        title={title}
+        description={description}
+        faqItems={FAQ_ITEMS}
+        breadcrumbs={[
+          { name: 'Início', path: '/' },
+          { name: 'Plano Individual', path: '/plano-individual-hapvida' },
+        ]}
+      />
       <Navbar />
 
       <header className="bg-[#002b5c] px-6 py-16 text-center text-white md:py-20">

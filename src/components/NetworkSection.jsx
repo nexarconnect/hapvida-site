@@ -127,7 +127,7 @@ export default function NetworkSection({ sharedCity }) {
               {/* Visual da Unidade */}
               <div className="relative h-64 w-full overflow-hidden bg-slate-100">
                 {featured?.image_url ? (
-                  <img src={featured.image_url} alt={featured.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                  <img src={featured.image_url} alt={featured.name || 'Unidade Hapvida'} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                 ) : (
                   <div className="flex h-full flex-col items-center justify-center text-slate-300">
                     <Building2 size={64} strokeWidth={1} />

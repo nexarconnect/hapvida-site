@@ -97,7 +97,16 @@ export default function SobreNos({ onOpenForm }) {
 
   return (
     <div>
-      <SEO path="/sobre-nos" title={title} description={description} faqItems={FAQ_ITEMS} />
+      <SEO
+        path="/sobre-nos"
+        title={title}
+        description={description}
+        faqItems={FAQ_ITEMS}
+        breadcrumbs={[
+          { name: 'Início', path: '/' },
+          { name: 'Sobre Nós', path: '/sobre-nos' },
+        ]}
+      />
       <Navbar />
 
       <header className="bg-[#002b5c] px-6 py-16 text-center text-white md:py-20">

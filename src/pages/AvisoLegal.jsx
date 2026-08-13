@@ -10,6 +10,10 @@ export default function AvisoLegal() {
         path="/aviso-legal"
         title="Aviso Legal | Tabela Plano Saúde"
         description="Informações sobre a consultoria Nexar, atualização de valores, uso de marca e limitação de responsabilidade na comercialização de planos Hapvida."
+        breadcrumbs={[
+          { name: 'Início', path: '/' },
+          { name: 'Aviso Legal', path: '/aviso-legal' },
+        ]}
       />
       <div className="container mx-auto max-w-3xl px-4">
         <header className="mb-10">

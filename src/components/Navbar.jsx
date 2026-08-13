@@ -66,6 +66,15 @@ export default function Navbar() {
     { label: 'Dúvidas', id: 'faq' },
   ];
 
+  // Links reais para as páginas-hub do site — sem isso o header nunca
+  // distribuía link equity nem dava acesso a nenhuma outra página além da
+  // home (só tinha âncoras de scroll pra seções da própria home).
+  const pageLinks = [
+    { label: 'Cidades Atendidas', path: '/planos-hapvida-por-cidade' },
+    { label: 'Rede Credenciada', path: '/rede-de-atendimento' },
+    { label: 'Blog', path: '/blog' },
+  ];
+
   return (
     <header
       className={`fixed inset-x-0 top-0 z-[1000] flex h-16 items-center transition-all duration-500 md:h-20 ${
@@ -98,6 +107,20 @@ export default function Navbar() {
               {item.label}
             </button>
           ))}
+          {pageLinks.map((item) => (
+            <Link
+              key={item.path}
+              to={item.path}
+              onClick={closeAllMenus}
+              className={`text-[10px] font-black uppercase tracking-[0.25em] transition-all ${
+                isScrolled
+                  ? 'text-slate-600 hover:text-[#ff8200]'
+                  : 'text-white/80 hover:text-white'
+              }`}
+            >
+              {item.label}
+            </Link>
+          ))}
         </nav>
 
         <button
@@ -129,6 +152,16 @@ export default function Navbar() {
                 >
                   {item.label}
                 </button>
+              ))}
+              {pageLinks.map((item) => (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  onClick={closeAllMenus}
+                  className="text-left text-sm font-black uppercase tracking-[0.2em] text-slate-700"
+                >
+                  {item.label}
+                </Link>
               ))}
             </div>
           </motion.div>
