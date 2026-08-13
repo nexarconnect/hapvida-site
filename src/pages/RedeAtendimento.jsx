@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { MapPin, ArrowLeft, ChevronDown, Building2 } from "lucide-react";
 import NetworkSection from "../components/NetworkSection";
 import SEO from "../components/SEO";
+import { Navbar, Footer } from "../components";
 import { COVERED_CITIES, slugifyCity } from "../data/coveredCities";
 import { getNetworkUnits } from "../lib/supabase";
 
@@ -90,9 +91,10 @@ function CityAccordionItem({ city }) {
   );
 }
 
-export default function RedeAtendimento() {
+export default function RedeAtendimento({ onOpenForm }) {
   return (
     <main className="min-h-screen bg-slate-50">
+      <Navbar />
       <SEO
         path="/rede-de-atendimento"
         title="Rede de Atendimento e Hospitais Credenciados Hapvida 2026"
@@ -145,6 +147,8 @@ export default function RedeAtendimento() {
           </div>
         </div>
       </section>
+
+      <Footer onOpenForm={onOpenForm} />
     </main>
   );
 }

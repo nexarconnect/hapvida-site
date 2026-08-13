@@ -143,13 +143,22 @@ function App() {
         <Route path="/aviso-legal" element={<AvisoLegal />} />
         <Route path="/politicas-privacidade" element={<PoliticasPrivacidade />} />
         <Route path="/termos-de-uso" element={<TermosDeUso />} />
-        <Route path="/perguntas-frequentes" element={<PerguntasFrequentes />} />
-        <Route path="/rede-de-atendimento" element={<RedeAtendimento />} />
-        <Route path="/rede-nacional" element={<RedeNacional />} />
-        <Route path="/rede-nacional/urgencia-e-emergencia" element={<RedeUrgenciaEmergencia />} />
-        <Route path="/rede-nacional/rede-pediatrica" element={<RedePediatrica />} />
-        <Route path="/rede-nacional/clinicas-por-capital" element={<RedeClinicas />} />
-        <Route path="/rede-nacional/:slug" element={<RedeEstado />} />
+        <Route path="/perguntas-frequentes" element={<PerguntasFrequentes onOpenForm={handleOpenForm} />} />
+        <Route path="/rede-de-atendimento" element={<RedeAtendimento onOpenForm={handleOpenForm} />} />
+        <Route path="/rede-nacional" element={<RedeNacional onOpenForm={handleOpenForm} />} />
+        <Route
+          path="/rede-nacional/urgencia-e-emergencia"
+          element={<RedeUrgenciaEmergencia onOpenForm={handleOpenForm} />}
+        />
+        <Route
+          path="/rede-nacional/rede-pediatrica"
+          element={<RedePediatrica onOpenForm={handleOpenForm} />}
+        />
+        <Route
+          path="/rede-nacional/clinicas-por-capital"
+          element={<RedeClinicas onOpenForm={handleOpenForm} />}
+        />
+        <Route path="/rede-nacional/:slug" element={<RedeEstado onOpenForm={handleOpenForm} />} />
         <Route
           path="/planos-hapvida-por-cidade"
           element={<PlanosPorCidade onOpenForm={handleOpenForm} />}

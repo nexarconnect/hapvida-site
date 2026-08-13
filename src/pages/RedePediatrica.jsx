@@ -3,10 +3,12 @@ import { Link } from 'react-router-dom';
 import { Baby, ArrowLeft } from 'lucide-react';
 import SEO from '../components/SEO';
 import NetworkCategorySection from '../components/NetworkCategorySection';
+import { Navbar, Footer } from '../components';
 
-export default function RedePediatrica() {
+export default function RedePediatrica({ onOpenForm }) {
   return (
     <main className="min-h-screen bg-slate-50">
+      <Navbar />
       <SEO
         path="/rede-nacional/rede-pediatrica"
         title="Rede Pediátrica Hapvida | Hospitais e Maternidades | Nexar"
@@ -42,6 +44,8 @@ export default function RedePediatrica() {
           <NetworkCategorySection tags={['Pediátrica', 'Maternidade']} />
         </div>
       </div>
+
+      <Footer onOpenForm={onOpenForm} />
     </main>
   );
 }

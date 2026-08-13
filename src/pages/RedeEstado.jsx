@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { MapPin, ArrowLeft, ChevronDown, Building2 } from 'lucide-react';
 import SEO from '../components/SEO';
+import { Navbar, Footer } from '../components';
 import { getNetworkStateBySlug, slugifyCity } from '../data/coveredCities';
 import { getNetworkUnits } from '../lib/supabase';
 
@@ -91,23 +92,28 @@ function CityUnits({ city, defaultOpen = false }) {
   );
 }
 
-export default function RedeEstado() {
+export default function RedeEstado({ onOpenForm }) {
   const { slug } = useParams();
   const group = getNetworkStateBySlug(slug);
 
   if (!group) {
     return (
-      <main className="min-h-screen bg-slate-50 px-4 pt-12 text-center">
-        <p className="text-slate-600">Estado não encontrado.</p>
-        <Link to="/rede-nacional" className="mt-4 inline-block text-[#ff8200] hover:underline">
-          Voltar para Rede por Estado
-        </Link>
+      <main className="min-h-screen bg-slate-50">
+        <Navbar />
+        <div className="px-4 pt-12 text-center">
+          <p className="text-slate-600">Estado não encontrado.</p>
+          <Link to="/rede-nacional" className="mt-4 inline-block text-[#ff8200] hover:underline">
+            Voltar para Rede por Estado
+          </Link>
+        </div>
+        <Footer onOpenForm={onOpenForm} />
       </main>
     );
   }
 
   return (
     <main className="min-h-screen bg-slate-50">
+      <Navbar />
       <SEO
         path={`/rede-nacional/${group.slug}`}
         title={
@@ -151,6 +157,8 @@ export default function RedeEstado() {
           ))}
         </div>
       </div>
+
+      <Footer onOpenForm={onOpenForm} />
     </main>
   );
 }

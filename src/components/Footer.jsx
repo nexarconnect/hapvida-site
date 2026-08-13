@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import { trackCTA } from '../lib/tracking'; // Corrigido: removido trackContact
 import { useSiteConfig } from '../lib/siteConfig';
+import { COVERED_CITIES, slugifyCity } from '../data/coveredCities';
 
 export default function Footer({ onOpenForm }) {
   const currentYear = new Date().getFullYear();
@@ -28,6 +29,10 @@ export default function Footer({ onOpenForm }) {
   const handleCTAClick = () => {
     trackCTA('solicitar_cotacao', 'footer_main');
     onOpenForm();
+  };
+
+  const handleCityLinkClick = (cityName) => {
+    trackCTA('footer_cidade_click', 'footer_cidades', { cidade: cityName });
   };
 
   return (
@@ -167,6 +172,22 @@ export default function Footer({ onOpenForm }) {
               </li>
             </ul>
           </div>
+        </div>
+
+        <div className="mb-12 border-t border-white/10 pt-10">
+          <h4 className="mb-6 text-lg font-bold text-white">Planos por Cidade</h4>
+          <nav aria-label="Planos Hapvida por cidade" className="flex flex-wrap gap-x-6 gap-y-3 text-sm text-blue-100/70">
+            {COVERED_CITIES.map((city) => (
+              <Link
+                key={city.name}
+                to={`/plano-hapvida/${slugifyCity(city.name)}`}
+                onClick={() => handleCityLinkClick(city.name)}
+                className="transition-colors hover:text-white"
+              >
+                {city.name}
+              </Link>
+            ))}
+          </nav>
         </div>
 
         <div className="flex flex-col items-center justify-between gap-6 border-t border-white/10 pt-8 text-center md:flex-row md:text-left">

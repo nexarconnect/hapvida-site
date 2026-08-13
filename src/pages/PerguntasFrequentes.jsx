@@ -4,10 +4,12 @@ import { HelpCircle, ArrowLeft } from "lucide-react";
 import FAQSection from "../components/FAQ";
 import SEO from "../components/SEO";
 import { EXTENDED_FAQS } from "../data/faqs";
+import { Navbar, Footer } from "../components";
 
-export default function PerguntasFrequentes() {
+export default function PerguntasFrequentes({ onOpenForm }) {
   return (
     <main className="min-h-screen bg-slate-50">
+      <Navbar />
       <SEO
         path="/perguntas-frequentes"
         title="Perguntas Frequentes | Plano Hapvida 2026"
@@ -39,6 +41,8 @@ export default function PerguntasFrequentes() {
         title="Todas as perguntas sobre o plano Hapvida"
         subtitle="Organizadas por tema: carência, preços, rede de atendimento e pós-contratação."
       />
+
+      <Footer onOpenForm={onOpenForm} />
     </main>
   );
 }

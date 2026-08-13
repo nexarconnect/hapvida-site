@@ -3,10 +3,12 @@ import { Link } from 'react-router-dom';
 import { Siren, ArrowLeft } from 'lucide-react';
 import SEO from '../components/SEO';
 import NetworkCategorySection from '../components/NetworkCategorySection';
+import { Navbar, Footer } from '../components';
 
-export default function RedeUrgenciaEmergencia() {
+export default function RedeUrgenciaEmergencia({ onOpenForm }) {
   return (
     <main className="min-h-screen bg-slate-50">
+      <Navbar />
       <SEO
         path="/rede-nacional/urgencia-e-emergencia"
         title="Urgência e Emergência Hapvida 24h | Nexar"
@@ -42,6 +44,8 @@ export default function RedeUrgenciaEmergencia() {
           <NetworkCategorySection tags={['Emergência 24h']} />
         </div>
       </div>
+
+      <Footer onOpenForm={onOpenForm} />
     </main>
   );
 }

@@ -3,10 +3,12 @@ import { Link } from 'react-router-dom';
 import { Stethoscope, ArrowLeft } from 'lucide-react';
 import SEO from '../components/SEO';
 import NetworkCategorySection from '../components/NetworkCategorySection';
+import { Navbar, Footer } from '../components';
 
-export default function RedeClinicas() {
+export default function RedeClinicas({ onOpenForm }) {
   return (
     <main className="min-h-screen bg-slate-50">
+      <Navbar />
       <SEO
         path="/rede-nacional/clinicas-por-capital"
         title="Clínicas Hapvida por Capital | Nexar"
@@ -41,6 +43,8 @@ export default function RedeClinicas() {
           <NetworkCategorySection tags={['Clínica', 'Diagnóstico', 'Laboratório']} />
         </div>
       </div>
+
+      <Footer onOpenForm={onOpenForm} />
     </main>
   );
 }

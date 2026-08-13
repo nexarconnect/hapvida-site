@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { MapPin, ArrowLeft, ArrowRight, Siren, Baby, Stethoscope } from 'lucide-react';
 import SEO from '../components/SEO';
+import { Navbar, Footer } from '../components';
 import { NETWORK_CITIES_BY_STATE } from '../data/coveredCities';
 
 const CATEGORY_LINKS = [
@@ -10,9 +11,10 @@ const CATEGORY_LINKS = [
   { to: '/rede-nacional/clinicas-por-capital', label: 'Clínicas por Capital', Icon: Stethoscope },
 ];
 
-export default function RedeNacional() {
+export default function RedeNacional({ onOpenForm }) {
   return (
     <main className="min-h-screen bg-slate-50">
+      <Navbar />
       <SEO
         path="/rede-nacional"
         title="Rede Hapvida por Estado 2026 | Hospitais e Unidades Fora de SP"
@@ -79,6 +81,8 @@ export default function RedeNacional() {
           ))}
         </div>
       </div>
+
+      <Footer onOpenForm={onOpenForm} />
     </main>
   );
 }
