@@ -25,6 +25,7 @@ import PlanoPorCidade from './pages/PlanoPorCidade';
 import PlanosPorCidade from './pages/PlanosPorCidade';
 import PlanoIndividual from './pages/PlanoIndividual';
 import PlanoEmpresarial from './pages/PlanoEmpresarial';
+import PlanoHapvidaAdesao from './pages/PlanoHapvidaAdesao';
 import TabelaDePrecoHapvida from './pages/TabelaDePrecoHapvida';
 import PlanoOdontologico from './pages/PlanoOdontologico';
 import TiposDePlanos from './pages/TiposDePlanos';
@@ -168,6 +169,16 @@ function App() {
         <Route
           path="/plano-empresarial-hapvida"
           element={<PlanoEmpresarial onOpenForm={handleOpenForm} />}
+        />
+        {/* Conteúdo genérico, ainda sem confirmação de que a Nexar opera esta
+            modalidade — ver placeholder em PlanoHapvidaAdesao.jsx. Rota
+            registrada em publicRoutes.js com noindex: true (mesmo padrão das
+            3 páginas legais), pra continuar sendo pré-renderizada (senão o
+            .htaccess devolve 404 real em acesso direto) sem entrar no
+            sitemap.xml nem ser indexada. */}
+        <Route
+          path="/plano-hapvida-adesao"
+          element={<PlanoHapvidaAdesao onOpenForm={handleOpenForm} />}
         />
         <Route
           path="/tipos-de-planos"

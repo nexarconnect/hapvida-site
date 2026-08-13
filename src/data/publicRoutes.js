@@ -27,8 +27,17 @@ export const PUBLIC_ROUTES = [
   { path: '/plano-empresarial-hapvida', changefreq: 'monthly', priority: 0.9 },
   { path: '/tipos-de-planos', changefreq: 'monthly', priority: 0.8 },
   // noindex: página não entra no sitemap.xml (ver generate-sitemap.js) e a
-  // própria página deve renderizar <SEO noindex /> — só estas 3, as demais
-  // institucionais (sobre-nos, sobre-o-grupo, contato) continuam indexadas.
+  // própria página deve renderizar <SEO noindex /> — as demais institucionais
+  // (sobre-nos, sobre-o-grupo, contato) continuam indexadas.
+  {
+    // Conteúdo genérico, ainda sem confirmação de que a Nexar opera essa
+    // modalidade nem qual administradora usa — ver placeholder em
+    // PlanoHapvidaAdesao.jsx. Trocar para indexável só depois de confirmar.
+    path: '/plano-hapvida-adesao',
+    changefreq: 'monthly',
+    priority: 0.3,
+    noindex: true,
+  },
   { path: '/politicas-privacidade', changefreq: 'monthly', priority: 0.6, noindex: true },
   { path: '/termos-de-uso', changefreq: 'monthly', priority: 0.5, noindex: true },
   { path: '/aviso-legal', changefreq: 'monthly', priority: 0.5, noindex: true },

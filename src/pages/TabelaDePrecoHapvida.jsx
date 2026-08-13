@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, TrendingUp, MapPin } from 'lucide-react';
+import { ArrowLeft, TrendingUp, MapPin, Calendar, ShieldCheck, Layers } from 'lucide-react';
 
 import { COVERED_CITIES, slugifyCity } from '../data/coveredCities';
 import { EXTENDED_FAQS } from '../data/faqs';
@@ -50,6 +50,42 @@ const COPARTICIPACAO = [
   { item: 'Internação (coletivo)', percentual: 'N/A', limite: 'R$ 180' },
 ];
 
+const FATORES_PRECO = [
+  {
+    titulo: 'Faixa etária',
+    texto:
+      'A ANS define 10 faixas etárias e limita o reajuste entre elas: o valor da última faixa (59 anos ou mais) não pode ultrapassar 6 vezes o valor da primeira (0 a 18 anos). Os maiores saltos costumam acontecer a partir dos 44 anos.',
+  },
+  {
+    titulo: 'Modalidade de contratação',
+    texto:
+      'Individual, Super Simples (2 a 29 vidas) ou PME (30 vidas ou mais) têm regras e faixas de preço diferentes. A partir de 30 vidas, a operadora costuma isentar a carência para o grupo.',
+  },
+  {
+    titulo: 'Cidade e rede disponível',
+    texto:
+      'O valor muda conforme a cidade, porque a rede própria e credenciada disponível localmente varia. Por isso a tabela por faixa etária desta página é ilustrativa: peça a cotação exata para a sua cidade.',
+  },
+  {
+    titulo: 'Coparticipação',
+    texto:
+      'Planos com coparticipação cobram um valor adicional por procedimento utilizado (consulta, exame, internação), em troca de uma mensalidade menor. Quem usa pouco o plano tende a sair ganhando; quem usa com frequência, nem sempre.',
+  },
+  {
+    titulo: 'Reajuste anual',
+    texto:
+      'Planos individuais seguem o índice máximo autorizado pela ANS todo mês de maio. Planos coletivos (Super Simples e PME) têm reajuste próprio, negociado com a operadora conforme o histórico de uso do grupo.',
+  },
+];
+
+const CARENCIAS = [
+  { servico: 'Urgência e emergência', prazo: '24 horas' },
+  { servico: 'Consultas e exames simples', prazo: '30 dias' },
+  { servico: 'Internações e cirurgias', prazo: '180 dias' },
+  { servico: 'Parto a termo', prazo: '300 dias' },
+  { servico: 'Doenças e lesões preexistentes', prazo: 'até 24 meses (cobertura parcial)' },
+];
+
 const TABELA_FAQS = [
   {
     category: 'Tabela de preços',
@@ -65,6 +101,11 @@ const TABELA_FAQS = [
     category: 'Tabela de preços',
     question: 'Qual é a carência das modalidades da tabela?',
     answer: 'Até 29 vidas (individual e Super Simples), a carência padrão é de 60 dias. A partir de 30 vidas (PME), há isenção de carência.',
+  },
+  {
+    category: 'Tabela de preços',
+    question: 'Já tenho plano de saúde. Consigo migrar sem cumprir carência de novo?',
+    answer: 'Sim, pela portabilidade. Quem está no plano atual há dois anos ou mais (ou três, para cobertura parcial de doenças preexistentes) pode migrar para a Hapvida sem cumprir novas carências. O consultor confere se o seu caso se enquadra.',
   },
 ];
 
@@ -201,6 +242,65 @@ export default function TabelaDePrecoHapvida({ onOpenForm }) {
             e 48 anos (54%) e entre 49 e 53 anos (53%). Por isso, contratar mais cedo e planejar a
             faixa de entrada faz diferença no valor pago ao longo dos anos.
           </p>
+        </div>
+      </section>
+
+      <section className="bg-slate-50 py-16 md:py-20">
+        <div className="container mx-auto max-w-4xl px-6">
+          <div className="mb-8 flex items-center gap-3">
+            <Layers className="h-7 w-7 flex-shrink-0 text-[#ff8200]" />
+            <h2 className="text-2xl font-black text-[#002b5c] md:text-3xl">
+              5 fatores que definem o seu preço
+            </h2>
+          </div>
+          <div className="space-y-4">
+            {FATORES_PRECO.map((item) => (
+              <div key={item.titulo} className="rounded-2xl bg-white p-6 shadow-sm">
+                <h3 className="font-black text-slate-900">{item.titulo}</h3>
+                <p className="mt-2 text-sm text-slate-600">{item.texto}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-white py-16 md:py-20">
+        <div className="container mx-auto max-w-4xl px-6">
+          <div className="mb-8 flex items-center gap-3">
+            <Calendar className="h-7 w-7 flex-shrink-0 text-[#ff8200]" />
+            <h2 className="text-2xl font-black text-[#002b5c] md:text-3xl">
+              Carência: quanto tempo até poder usar o plano
+            </h2>
+          </div>
+          <p className="mb-6 text-sm text-slate-500">
+            Prazos padrão definidos pela ANS. Quem já tem plano de saúde há dois anos ou mais pode
+            pedir portabilidade e migrar para a Hapvida sem cumprir novas carências.
+          </p>
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[480px] border-collapse overflow-hidden rounded-2xl text-left text-sm">
+              <thead>
+                <tr className="bg-[#002b5c] text-white">
+                  <th className="px-4 py-3 font-black">Serviço</th>
+                  <th className="px-4 py-3 font-black">Carência</th>
+                </tr>
+              </thead>
+              <tbody>
+                {CARENCIAS.map((row) => (
+                  <tr key={row.servico} className="border-b border-slate-100 bg-slate-50 even:bg-white">
+                    <td className="px-4 py-3 font-bold text-slate-900">{row.servico}</td>
+                    <td className="px-4 py-3 text-slate-700">{row.prazo}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <div className="mt-6 flex items-start gap-3 rounded-2xl border border-slate-100 bg-slate-50 p-5">
+            <ShieldCheck className="mt-0.5 h-5 w-5 flex-shrink-0 text-[#ff8200]" />
+            <p className="text-sm text-slate-600">
+              Na modalidade PME (30 vidas ou mais), a carência costuma ser isenta para o grupo. Fale
+              com o consultor para confirmar as condições vigentes para a sua cidade e modalidade.
+            </p>
+          </div>
         </div>
       </section>
 

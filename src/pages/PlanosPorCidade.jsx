@@ -1,11 +1,34 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, MapPin, ArrowRight } from 'lucide-react';
+import { ArrowLeft, MapPin, ArrowRight, TrendingDown, Building2, Users } from 'lucide-react';
 
 import { COVERED_CITIES, slugifyCity } from '../data/coveredCities';
+import { EXTENDED_FAQS } from '../data/faqs';
 import { Navbar, Footer, ChatInteligente } from '../components';
+import FAQSection from '../components/FAQ';
 import SEO from '../components/SEO';
 import { useSiteConfig } from '../lib/siteConfig';
+
+const POR_QUE_VARIA = [
+  {
+    icon: Building2,
+    titulo: 'Rede disponível na cidade',
+    texto:
+      'O valor muda porque a rede própria e credenciada da Hapvida não é igual em todas as cidades. Onde há mais estrutura própria, o custo tende a ser menor.',
+  },
+  {
+    icon: Users,
+    titulo: 'Perfil de quem contrata na região',
+    texto:
+      'A sinistralidade média de cada cidade (o quanto os beneficiários usam o plano) entra no cálculo do valor cobrado ali.',
+  },
+  {
+    icon: TrendingDown,
+    titulo: 'Modalidade escolhida',
+    texto:
+      'Individual, Super Simples (2 a 29 vidas) ou PME (30 vidas ou mais) têm tabelas próprias, além da faixa etária de quem vai ser incluído no plano.',
+  },
+];
 
 export default function PlanosPorCidade({ onOpenForm }) {
   const title = 'Plano Hapvida por Cidade 2026 | Interior de SP';
@@ -56,6 +79,23 @@ export default function PlanosPorCidade({ onOpenForm }) {
         </p>
       </header>
 
+      <section className="bg-white py-16 md:py-20">
+        <div className="container mx-auto max-w-5xl px-6">
+          <h2 className="mb-8 text-center text-2xl font-black text-[#002b5c] md:text-3xl">
+            Por que o preço muda de uma cidade para outra?
+          </h2>
+          <div className="grid gap-4 md:grid-cols-3">
+            {POR_QUE_VARIA.map((item) => (
+              <div key={item.titulo} className="rounded-3xl border border-slate-100 bg-slate-50 p-6">
+                <item.icon className="h-6 w-6 text-[#ff8200]" />
+                <h3 className="mt-3 font-black text-slate-900">{item.titulo}</h3>
+                <p className="mt-2 text-sm text-slate-600">{item.texto}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="bg-slate-50 py-16 md:py-20">
         <div className="container mx-auto max-w-5xl px-6">
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -98,6 +138,12 @@ export default function PlanosPorCidade({ onOpenForm }) {
           </div>
         </div>
       </section>
+
+      <FAQSection
+        faqs={EXTENDED_FAQS.filter((item) => item.category === 'Rede de atendimento')}
+        title="Perguntas sobre cidades e rede"
+        subtitle="Disponibilidade, cobertura e como confirmar sua região."
+      />
 
       <ChatInteligente />
       <Footer onOpenForm={onOpenForm} />
