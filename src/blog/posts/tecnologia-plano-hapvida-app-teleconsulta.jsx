@@ -58,44 +58,55 @@ export default function Body() {
 
       <h2>Perguntas frequentes</h2>
 
-      <h3>O app Hapvida é gratuito?</h3>
-      <p>
-        O aplicativo é disponibilizado pela operadora para download na App Store e no Google Play. Detalhes
-        de uso e disponibilidade por plano podem ser confirmados com um consultor.
-      </p>
 
-      <h3>Como agendar uma consulta pelo app?</h3>
-      <p>
-        Pelo Portal do Beneficiário ou pelo aplicativo, escolhendo entre consulta presencial e teleconsulta,
-        com especialidade, data e horário.
-      </p>
-
-      <h3>A teleconsulta está inclusa em todos os planos?</h3>
-      <p>
-        Não necessariamente. A disponibilidade varia por modalidade e região; um consultor confirma se o
-        plano que você está avaliando inclui teleconsulta.
-      </p>
-
-      <h3>Quais especialidades têm teleconsulta?</h3>
-      <p>
-        A operadora atende por vídeo em especialidades como clínico geral, cardiologia, dermatologia e
-        ginecologia, entre outras. A lista completa varia por região e plano.
-      </p>
-
-      <h3>Como vejo o resultado dos meus exames?</h3>
-      <p>Pelo app ou pela área de resultados no site, com a senha que consta na ficha de atendimento.</p>
-
-      <h3>Preciso do cartão físico para usar o plano?</h3>
-      <p>
-        O app oferece a carteirinha digital do beneficiário. A aceitação em cada unidade pode variar, vale
-        confirmar com o consultor e com a própria rede.
-      </p>
-
-      <h3>Teleconsulta tem carência?</h3>
-      <p>
-        As condições de carência e de uso da teleconsulta dependem do plano e da região. Um consultor
-        confirma para o seu caso.
-      </p>
+      <div className="not-prose space-y-4">
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">O app Hapvida é gratuito?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            O aplicativo é disponibilizado pela operadora para download na App Store e no Google Play. Detalhes
+            de uso e disponibilidade por plano podem ser confirmados com um consultor.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">Como agendar uma consulta pelo app?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            Pelo Portal do Beneficiário ou pelo aplicativo, escolhendo entre consulta presencial e teleconsulta,
+            com especialidade, data e horário.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">A teleconsulta está inclusa em todos os planos?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            Não necessariamente. A disponibilidade varia por modalidade e região; um consultor confirma se o
+            plano que você está avaliando inclui teleconsulta.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">Quais especialidades têm teleconsulta?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            A operadora atende por vídeo em especialidades como clínico geral, cardiologia, dermatologia e
+            ginecologia, entre outras. A lista completa varia por região e plano.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">Como vejo o resultado dos meus exames?</h3>
+          <p className="!mt-2 text-sm text-slate-600">Pelo app ou pela área de resultados no site, com a senha que consta na ficha de atendimento.</p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">Preciso do cartão físico para usar o plano?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            O app oferece a carteirinha digital do beneficiário. A aceitação em cada unidade pode variar, vale
+            confirmar com o consultor e com a própria rede.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">Teleconsulta tem carência?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            As condições de carência e de uso da teleconsulta dependem do plano e da região. Um consultor
+            confirma para o seu caso.
+          </p>
+        </div>
+      </div>
 
       <h2>Conclusão</h2>
       <p>

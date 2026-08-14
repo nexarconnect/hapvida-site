@@ -112,53 +112,64 @@ export default function Body() {
 
       <h2>Perguntas frequentes</h2>
 
-      <h3>Quem posso incluir como dependente?</h3>
-      <p>
-        Cônjuge e filhos podem entrar no mesmo contrato, na modalidade familiar. Para outros graus de
-        parentesco, a regra depende do contrato e da disponibilidade comercial da região; um consultor
-        confirma o que se aplica ao seu caso.
-      </p>
 
-      <h3>O plano familiar sai mais barato que contratar planos separados?</h3>
-      <p>
-        Não existe resposta única. Como cada beneficiário é precificado pela sua faixa etária, o total
-        depende da composição da família, da cidade e da modalidade. A comparação precisa ser feita com os
-        números da sua cotação, não por estimativa.
-      </p>
-
-      <h3>Preciso de CNPJ para incluir a família?</h3>
-      <p>
-        Não. A modalidade individual é contratada direto por CPF, sem exigir empresa ativa, e aceita
-        dependentes no mesmo contrato.
-      </p>
-
-      <h3>Se eu incluir um dependente depois, ele começa a usar quando?</h3>
-      <p>
-        A carência dele começa a contar a partir da data de inclusão no contrato, de forma independente da
-        do titular. Urgência e emergência em 24 horas e consultas e exames simples em 30 dias são as
-        referências, seguindo a regra da ANS.
-      </p>
-
-      <h3>Tem limite de idade para incluir alguém?</h3>
-      <p>
-        Não há impedimento por idade avançada para contratar, mas o valor varia por faixa etária conforme a
-        tabela da ANS. Um consultor confirma o valor exato para a idade de cada pessoa.
-      </p>
-
-      <h3>A rede atende todos na minha cidade?</h3>
-      <p>
-        A operadora trabalha com rede própria e credenciada, e a validação é feita por município. Durante o
-        atendimento, o consultor confirma quais hospitais, clínicas e laboratórios estão disponíveis para a
-        sua cidade. Veja também a{' '}
-        <Link to="/rede-de-atendimento">rede de atendimento</Link> e o post sobre{' '}
-        <Link to="/blog/rede-de-atendimento-hapvida-como-funciona">como funciona a rede Hapvida</Link>.
-      </p>
-
-      <h3>Dá para incluir odontológico para a família toda?</h3>
-      <p>
-        Há opções que combinam saúde e odonto, dependendo da modalidade e da disponibilidade comercial da
-        região. O consultor mostra as alternativas no momento da cotação.
-      </p>
+      <div className="not-prose space-y-4">
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">Quem posso incluir como dependente?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            Cônjuge e filhos podem entrar no mesmo contrato, na modalidade familiar. Para outros graus de
+            parentesco, a regra depende do contrato e da disponibilidade comercial da região; um consultor
+            confirma o que se aplica ao seu caso.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">O plano familiar sai mais barato que contratar planos separados?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            Não existe resposta única. Como cada beneficiário é precificado pela sua faixa etária, o total
+            depende da composição da família, da cidade e da modalidade. A comparação precisa ser feita com os
+            números da sua cotação, não por estimativa.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">Preciso de CNPJ para incluir a família?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            Não. A modalidade individual é contratada direto por CPF, sem exigir empresa ativa, e aceita
+            dependentes no mesmo contrato.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">Se eu incluir um dependente depois, ele começa a usar quando?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            A carência dele começa a contar a partir da data de inclusão no contrato, de forma independente da
+            do titular. Urgência e emergência em 24 horas e consultas e exames simples em 30 dias são as
+            referências, seguindo a regra da ANS.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">Tem limite de idade para incluir alguém?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            Não há impedimento por idade avançada para contratar, mas o valor varia por faixa etária conforme a
+            tabela da ANS. Um consultor confirma o valor exato para a idade de cada pessoa.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">A rede atende todos na minha cidade?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            A operadora trabalha com rede própria e credenciada, e a validação é feita por município. Durante o
+            atendimento, o consultor confirma quais hospitais, clínicas e laboratórios estão disponíveis para a
+            sua cidade. Veja também a{' '}
+            <Link to="/rede-de-atendimento">rede de atendimento</Link> e o post sobre{' '}
+            <Link to="/blog/rede-de-atendimento-hapvida-como-funciona">como funciona a rede Hapvida</Link>.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">Dá para incluir odontológico para a família toda?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            Há opções que combinam saúde e odonto, dependendo da modalidade e da disponibilidade comercial da
+            região. O consultor mostra as alternativas no momento da cotação.
+          </p>
+        </div>
+      </div>
 
       <h2>Conclusão</h2>
       <p>

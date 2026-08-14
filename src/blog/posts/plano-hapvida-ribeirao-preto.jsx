@@ -39,36 +39,45 @@ export default function Body() {
 
       <h2>Perguntas frequentes</h2>
 
-      <h3>Qual o valor do plano Hapvida em Ribeirão Preto?</h3>
-      <p>
-        A referência inicial divulgada é de R$ 157,29, mas o valor real depende da sua idade e modalidade. Um
-        consultor confirma o número exato na cotação para Ribeirão Preto.
-      </p>
 
-      <h3>A rede atende bem em Ribeirão Preto?</h3>
-      <p>
-        A operadora trabalha com rede própria e credenciada na região. O consultor confirma quais hospitais,
-        clínicas e laboratórios estão disponíveis antes de qualquer assinatura.
-      </p>
-
-      <h3>Quanto tempo até poder usar o plano?</h3>
-      <p>
-        Urgência e emergência liberam em 24 horas; consultas e exames simples, em 30 dias. Os demais
-        procedimentos seguem a tabela completa da ANS.
-      </p>
-
-      <h3>Dá para reduzir a carência em Ribeirão Preto?</h3>
-      <p>
-        Sim, em alguns casos. Quem já tem plano ativo em outra operadora pode avaliar a portabilidade, que
-        aproveita carências já cumpridas. Confira o post sobre{' '}
-        <Link to="/blog/portabilidade-para-hapvida">portabilidade para Hapvida</Link>.
-      </p>
-
-      <h3>O plano odontológico está incluso?</h3>
-      <p>
-        Há opções que combinam saúde e odonto, conforme a modalidade e a disponibilidade comercial da
-        região. O consultor mostra as alternativas no momento da cotação.
-      </p>
+      <div className="not-prose space-y-4">
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">Qual o valor do plano Hapvida em Ribeirão Preto?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            A referência inicial divulgada é de R$ 157,29, mas o valor real depende da sua idade e modalidade. Um
+            consultor confirma o número exato na cotação para Ribeirão Preto.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">A rede atende bem em Ribeirão Preto?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            A operadora trabalha com rede própria e credenciada na região. O consultor confirma quais hospitais,
+            clínicas e laboratórios estão disponíveis antes de qualquer assinatura.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">Quanto tempo até poder usar o plano?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            Urgência e emergência liberam em 24 horas; consultas e exames simples, em 30 dias. Os demais
+            procedimentos seguem a tabela completa da ANS.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">Dá para reduzir a carência em Ribeirão Preto?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            Sim, em alguns casos. Quem já tem plano ativo em outra operadora pode avaliar a portabilidade, que
+            aproveita carências já cumpridas. Confira o post sobre{' '}
+            <Link to="/blog/portabilidade-para-hapvida">portabilidade para Hapvida</Link>.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">O plano odontológico está incluso?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            Há opções que combinam saúde e odonto, conforme a modalidade e a disponibilidade comercial da
+            região. O consultor mostra as alternativas no momento da cotação.
+          </p>
+        </div>
+      </div>
 
       <h2>Conclusão</h2>
       <p>

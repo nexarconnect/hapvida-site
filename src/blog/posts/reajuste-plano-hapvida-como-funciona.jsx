@@ -70,48 +70,59 @@ export default function Body() {
 
       <h2>Perguntas frequentes</h2>
 
-      <h3>O reajuste do plano Hapvida é obrigatório todo ano?</h3>
-      <p>
-        Sim, a variação de custos da operadora normalmente gera reajuste anual. No individual/familiar, ele
-        segue o teto definido pela ANS; nos planos coletivos, depende do que foi negociado no contrato.
-      </p>
 
-      <h3>Qual a diferença de reajuste entre plano individual e empresarial?</h3>
-      <p>
-        O individual segue um teto máximo definido pela ANS. O empresarial não tem teto da ANS: o
-        percentual é negociado com a operadora conforme a sinistralidade do grupo de beneficiários.
-      </p>
-
-      <h3>A modalidade adesão também tem teto da ANS?</h3>
-      <p>
-        Não. Assim como o empresarial, é um plano coletivo: o reajuste é definido pelo contrato entre a
-        entidade de classe (sindicato, conselho ou associação) e a operadora.
-      </p>
-
-      <h3>Trocar de modalidade evita o reajuste?</h3>
-      <p>
-        Não evita, mas pode mudar a lógica do reajuste seguinte, já que cada modalidade tem regra própria.
-        Vale comparar as condições disponíveis para o seu perfil antes de decidir.
-      </p>
-
-      <h3>O reajuste também muda por causa da minha idade?</h3>
-      <p>
-        A mudança de faixa etária é separada do reajuste anual do contrato: as duas podem ocorrer no mesmo
-        período, mas têm motivos diferentes. Um consultor confirma o valor exato para a sua idade.
-      </p>
-
-      <h3>Como sei quando o reajuste será aplicado no meu contrato?</h3>
-      <p>
-        No individual/familiar, a aplicação costuma acontecer no mês de aniversário do contrato. Nos
-        planos coletivos, o momento depende do que foi acordado entre a empresa ou entidade e a operadora.
-        Vale confirmar com quem administra o contrato.
-      </p>
-
-      <h3>Posso pedir uma nova cotação antes de renovar?</h3>
-      <p>
-        Sim. Pedir uma cotação atualizada antes da renovação ajuda a comparar se vale manter a modalidade
-        atual ou avaliar outra, com os valores confirmados para o seu caso.
-      </p>
+      <div className="not-prose space-y-4">
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">O reajuste do plano Hapvida é obrigatório todo ano?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            Sim, a variação de custos da operadora normalmente gera reajuste anual. No individual/familiar, ele
+            segue o teto definido pela ANS; nos planos coletivos, depende do que foi negociado no contrato.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">Qual a diferença de reajuste entre plano individual e empresarial?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            O individual segue um teto máximo definido pela ANS. O empresarial não tem teto da ANS: o
+            percentual é negociado com a operadora conforme a sinistralidade do grupo de beneficiários.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">A modalidade adesão também tem teto da ANS?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            Não. Assim como o empresarial, é um plano coletivo: o reajuste é definido pelo contrato entre a
+            entidade de classe (sindicato, conselho ou associação) e a operadora.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">Trocar de modalidade evita o reajuste?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            Não evita, mas pode mudar a lógica do reajuste seguinte, já que cada modalidade tem regra própria.
+            Vale comparar as condições disponíveis para o seu perfil antes de decidir.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">O reajuste também muda por causa da minha idade?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            A mudança de faixa etária é separada do reajuste anual do contrato: as duas podem ocorrer no mesmo
+            período, mas têm motivos diferentes. Um consultor confirma o valor exato para a sua idade.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">Como sei quando o reajuste será aplicado no meu contrato?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            No individual/familiar, a aplicação costuma acontecer no mês de aniversário do contrato. Nos
+            planos coletivos, o momento depende do que foi acordado entre a empresa ou entidade e a operadora.
+            Vale confirmar com quem administra o contrato.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">Posso pedir uma nova cotação antes de renovar?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            Sim. Pedir uma cotação atualizada antes da renovação ajuda a comparar se vale manter a modalidade
+            atual ou avaliar outra, com os valores confirmados para o seu caso.
+          </p>
+        </div>
+      </div>
 
       <h2>Conclusão</h2>
       <p>

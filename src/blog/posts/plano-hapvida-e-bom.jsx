@@ -124,51 +124,62 @@ export default function Body() {
 
       <h2>Perguntas frequentes</h2>
 
-      <h3>O plano Hapvida é bom mesmo sendo barato?</h3>
-      <p>
-        Preço competitivo costuma vir do modelo: a operadora concentra parte do atendimento em estrutura
-        própria, o que reduz custo com terceiros. Se isso é bom para você depende de a rede resolver na sua
-        cidade: é o critério 1 deste post, não uma opinião geral.
-      </p>
 
-      <h3>O plano cobre tudo?</h3>
-      <p>
-        Todo plano regulamentado cobre no mínimo o Rol de Procedimentos da ANS, conforme a segmentação
-        contratada. O que varia entre planos é rede, carência, custo e condições, não a cobertura mínima
-        obrigatória.
-      </p>
-
-      <h3>Quanto tempo depois de contratar eu já posso usar?</h3>
-      <p>
-        Urgência e emergência em 24 horas, consultas e exames simples em 30 dias. Os demais procedimentos
-        seguem os prazos da ANS e podem variar conforme o histórico de saúde declarado na contratação.
-      </p>
-
-      <h3>Existe unidade própria na minha cidade?</h3>
-      <p>
-        Varia por município. Algumas cidades atendidas contam com rede credenciada, sem unidade própria
-        local. O consultor confirma quais unidades atendem o seu município antes de qualquer decisão.
-      </p>
-
-      <h3>Quanto vou pagar por mês?</h3>
-      <p>
-        O valor depende da sua idade, da cidade e da modalidade. A referência inicial de R$ 157,29 é ponto
-        de partida e pode mudar sem aviso prévio. Um consultor confirma o valor exato para o seu perfil.
-      </p>
-
-      <h3>Vale mais a pena individual ou empresarial?</h3>
-      <p>
-        Quem tem empresa ativa, inclusive MEI, costuma encontrar condições comerciais diferentes no
-        empresarial, conforme a regra disponível para a região. O caminho honesto é pedir as duas cotações e
-        comparar. Veja os <Link to="/tipos-de-planos">tipos de plano</Link>.
-      </p>
-
-      <h3>Este site é o site oficial da Hapvida?</h3>
-      <p>
-        Não. A Nexar é uma consultoria independente e autorizada a comercializar planos Hapvida: um canal de
-        venda e suporte, não a operadora. Os detalhes estão no nosso{' '}
-        <Link to="/aviso-legal">aviso legal</Link>.
-      </p>
+      <div className="not-prose space-y-4">
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">O plano Hapvida é bom mesmo sendo barato?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            Preço competitivo costuma vir do modelo: a operadora concentra parte do atendimento em estrutura
+            própria, o que reduz custo com terceiros. Se isso é bom para você depende de a rede resolver na sua
+            cidade: é o critério 1 deste post, não uma opinião geral.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">O plano cobre tudo?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            Todo plano regulamentado cobre no mínimo o Rol de Procedimentos da ANS, conforme a segmentação
+            contratada. O que varia entre planos é rede, carência, custo e condições, não a cobertura mínima
+            obrigatória.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">Quanto tempo depois de contratar eu já posso usar?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            Urgência e emergência em 24 horas, consultas e exames simples em 30 dias. Os demais procedimentos
+            seguem os prazos da ANS e podem variar conforme o histórico de saúde declarado na contratação.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">Existe unidade própria na minha cidade?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            Varia por município. Algumas cidades atendidas contam com rede credenciada, sem unidade própria
+            local. O consultor confirma quais unidades atendem o seu município antes de qualquer decisão.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">Quanto vou pagar por mês?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            O valor depende da sua idade, da cidade e da modalidade. A referência inicial de R$ 157,29 é ponto
+            de partida e pode mudar sem aviso prévio. Um consultor confirma o valor exato para o seu perfil.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">Vale mais a pena individual ou empresarial?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            Quem tem empresa ativa, inclusive MEI, costuma encontrar condições comerciais diferentes no
+            empresarial, conforme a regra disponível para a região. O caminho honesto é pedir as duas cotações e
+            comparar. Veja os <Link to="/tipos-de-planos">tipos de plano</Link>.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">Este site é o site oficial da Hapvida?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            Não. A Nexar é uma consultoria independente e autorizada a comercializar planos Hapvida: um canal de
+            venda e suporte, não a operadora. Os detalhes estão no nosso{' '}
+            <Link to="/aviso-legal">aviso legal</Link>.
+          </p>
+        </div>
+      </div>
 
       <h2>Conclusão</h2>
       <p>

@@ -34,6 +34,7 @@ import BlogPost from './pages/BlogPost';
 import NotFound from './pages/NotFound';
 
 import ScrollToTop from './components/ScrollToTop';
+import ScrollNav from './components/ScrollNav';
 import NetworkUnitsTest from './components/NetworkUnitsTest';
 import FormModal from './components/FormModal';
 import ChatInteligente from './components/ChatInteligente';
@@ -127,6 +128,7 @@ function App() {
   return (
     <Router>
       <ScrollToTop />
+      <ScrollNav />
 
       <Routes>
         <Route

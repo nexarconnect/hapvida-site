@@ -32,35 +32,44 @@ export default function Body() {
 
       <h2>Perguntas frequentes</h2>
 
-      <h3>Qual o valor do plano Hapvida em São José dos Campos?</h3>
-      <p>
-        R$ 157,29 é o valor nacional mais baixo divulgado, mas o plano em São José dos Campos costuma
-        começar acima disso. Um consultor confirma o número exato na cotação.
-      </p>
 
-      <h3>A rede atende em São José dos Campos?</h3>
-      <p>
-        Sim, com rede própria e credenciada. O consultor valida as unidades disponíveis antes de qualquer
-        decisão.
-      </p>
-
-      <h3>Quanto tempo até poder usar o plano?</h3>
-      <p>
-        Urgência e emergência em 24 horas, consultas e exames simples em 30 dias, conforme a regra da{' '}
-        <abbr title="Agência Nacional de Saúde Suplementar">ANS</abbr>.
-      </p>
-
-      <h3>Dá para reduzir a carência com portabilidade?</h3>
-      <p>
-        Sim, em alguns casos. Veja como funciona no post sobre{' '}
-        <Link to="/blog/portabilidade-para-hapvida">portabilidade para Hapvida</Link>.
-      </p>
-
-      <h3>O plano odontológico vem junto?</h3>
-      <p>
-        Há opções que combinam saúde e odonto, dependendo da modalidade e da disponibilidade comercial da
-        região.
-      </p>
+      <div className="not-prose space-y-4">
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">Qual o valor do plano Hapvida em São José dos Campos?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            R$ 157,29 é o valor nacional mais baixo divulgado, mas o plano em São José dos Campos costuma
+            começar acima disso. Um consultor confirma o número exato na cotação.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">A rede atende em São José dos Campos?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            Sim, com rede própria e credenciada. O consultor valida as unidades disponíveis antes de qualquer
+            decisão.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">Quanto tempo até poder usar o plano?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            Urgência e emergência em 24 horas, consultas e exames simples em 30 dias, conforme a regra da{' '}
+            <abbr title="Agência Nacional de Saúde Suplementar">ANS</abbr>.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">Dá para reduzir a carência com portabilidade?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            Sim, em alguns casos. Veja como funciona no post sobre{' '}
+            <Link to="/blog/portabilidade-para-hapvida">portabilidade para Hapvida</Link>.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">O plano odontológico vem junto?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            Há opções que combinam saúde e odonto, dependendo da modalidade e da disponibilidade comercial da
+            região.
+          </p>
+        </div>
+      </div>
 
       <h2>Conclusão</h2>
       <p>

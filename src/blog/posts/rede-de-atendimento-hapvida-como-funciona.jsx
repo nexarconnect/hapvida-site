@@ -62,49 +62,60 @@ export default function Body() {
 
       <h2>Perguntas frequentes</h2>
 
-      <h3>A rede Hapvida é toda própria?</h3>
-      <p>
-        Não. Funciona em dois níveis: rede própria (unidades da operadora) e rede credenciada (prestadores
-        contratados). A proporção varia conforme a cidade; um consultor confirma o que se aplica ao seu
-        município.
-      </p>
 
-      <h3>A rede atende na minha cidade?</h3>
-      <p>
-        A operadora cobre as cidades em que há rede própria ou credenciada. Durante o atendimento, o
-        consultor valida as unidades disponíveis para o seu município antes de qualquer decisão.
-      </p>
-
-      <h3>Como funciona em caso de emergência?</h3>
-      <p>
-        Urgência e emergência têm carência máxima de 24 horas pela regra da ANS. O atendimento fora da sua
-        cidade depende do tipo de plano e da região; confirme com o consultor.
-      </p>
-
-      <h3>O plano cobre atendimento fora da minha cidade?</h3>
-      <p>
-        Varia conforme o plano e a região. A confirmação é individual: leve os dados do seu perfil para o
-        consultor validar a cobertura onde você precisa.
-      </p>
-
-      <h3>Como saber quais hospitais e clínicas estão disponíveis?</h3>
-      <p>
-        Pela nossa página de <Link to="/rede-de-atendimento">rede de atendimento</Link>, por cidade, e pela
-        validação do consultor na cotação. As duas fontes juntas evitam surpresa no primeiro exame.
-      </p>
-
-      <h3>O plano odontológico está incluso?</h3>
-      <p>
-        Há opções que combinam saúde e odonto, conforme a modalidade e a disponibilidade comercial da
-        região. O consultor mostra as alternativas no momento da cotação.
-      </p>
-
-      <h3>O valor do Hapvida parte de R$ 157,29?</h3>
-      <p>
-        A referência inicial divulgada no site é de R$ 157,29 e varia por município, faixa etária e
-        modalidade: individual, familiar ou empresarial. Um consultor confirma o valor exato para o seu
-        caso.
-      </p>
+      <div className="not-prose space-y-4">
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">A rede Hapvida é toda própria?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            Não. Funciona em dois níveis: rede própria (unidades da operadora) e rede credenciada (prestadores
+            contratados). A proporção varia conforme a cidade; um consultor confirma o que se aplica ao seu
+            município.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">A rede atende na minha cidade?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            A operadora cobre as cidades em que há rede própria ou credenciada. Durante o atendimento, o
+            consultor valida as unidades disponíveis para o seu município antes de qualquer decisão.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">Como funciona em caso de emergência?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            Urgência e emergência têm carência máxima de 24 horas pela regra da ANS. O atendimento fora da sua
+            cidade depende do tipo de plano e da região; confirme com o consultor.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">O plano cobre atendimento fora da minha cidade?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            Varia conforme o plano e a região. A confirmação é individual: leve os dados do seu perfil para o
+            consultor validar a cobertura onde você precisa.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">Como saber quais hospitais e clínicas estão disponíveis?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            Pela nossa página de <Link to="/rede-de-atendimento">rede de atendimento</Link>, por cidade, e pela
+            validação do consultor na cotação. As duas fontes juntas evitam surpresa no primeiro exame.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">O plano odontológico está incluso?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            Há opções que combinam saúde e odonto, conforme a modalidade e a disponibilidade comercial da
+            região. O consultor mostra as alternativas no momento da cotação.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">O valor do Hapvida parte de R$ 157,29?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            A referência inicial divulgada no site é de R$ 157,29 e varia por município, faixa etária e
+            modalidade: individual, familiar ou empresarial. Um consultor confirma o valor exato para o seu
+            caso.
+          </p>
+        </div>
+      </div>
 
       <h2>Conclusão</h2>
       <p>

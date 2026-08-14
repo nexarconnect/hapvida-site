@@ -81,47 +81,58 @@ export default function Body() {
 
       <h2>Perguntas frequentes</h2>
 
-      <h3>O que é um plano de saúde por adesão?</h3>
-      <p>
-        É a modalidade contratada por meio de um sindicato, conselho profissional ou associação de
-        classe que tem convênio com a operadora, em vez de contratação direta por CPF ou CNPJ.
-      </p>
 
-      <h3>Quem pode contratar o plano Hapvida por adesão?</h3>
-      <p>
-        Quem é filiado a uma entidade (sindicato, conselho profissional ou associação de classe) que
-        tenha convênio ativo com a Hapvida.
-      </p>
-
-      <h3>Preciso de CNPJ para contratar por adesão?</h3>
-      <p>
-        Não. O destaque dessa modalidade é justamente não exigir CNPJ nem vínculo empregatício, apenas
-        a filiação à entidade conveniada.
-      </p>
-
-      <h3>Qual a diferença entre adesão e empresarial?</h3>
-      <p>
-        O empresarial exige CNPJ ativo, inclusive MEI. O adesão exige filiação a uma entidade de classe
-        conveniada. Nas duas, o reajuste é negociado coletivamente, sem teto da ANS.
-      </p>
-
-      <h3>O plano por adesão tem o mesmo reajuste do plano individual?</h3>
-      <p>
-        Não. O individual segue o teto de reajuste definido anualmente pela ANS. No adesão, o
-        percentual é o que foi negociado no contrato entre a entidade de classe e a operadora.
-      </p>
-
-      <h3>Que documentos preciso para contratar por adesão?</h3>
-      <p>
-        Documentos pessoais e o comprovante de vínculo com a entidade (sindicato, conselho ou
-        associação de classe). Um consultor confirma a lista completa para o seu caso.
-      </p>
-
-      <h3>Posso incluir dependentes no plano por adesão?</h3>
-      <p>
-        A possibilidade e as regras de inclusão dependem do contrato firmado entre a entidade e a
-        operadora. Um consultor confirma o que se aplica ao seu caso.
-      </p>
+      <div className="not-prose space-y-4">
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">O que é um plano de saúde por adesão?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            É a modalidade contratada por meio de um sindicato, conselho profissional ou associação de
+            classe que tem convênio com a operadora, em vez de contratação direta por CPF ou CNPJ.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">Quem pode contratar o plano Hapvida por adesão?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            Quem é filiado a uma entidade (sindicato, conselho profissional ou associação de classe) que
+            tenha convênio ativo com a Hapvida.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">Preciso de CNPJ para contratar por adesão?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            Não. O destaque dessa modalidade é justamente não exigir CNPJ nem vínculo empregatício, apenas
+            a filiação à entidade conveniada.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">Qual a diferença entre adesão e empresarial?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            O empresarial exige CNPJ ativo, inclusive MEI. O adesão exige filiação a uma entidade de classe
+            conveniada. Nas duas, o reajuste é negociado coletivamente, sem teto da ANS.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">O plano por adesão tem o mesmo reajuste do plano individual?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            Não. O individual segue o teto de reajuste definido anualmente pela ANS. No adesão, o
+            percentual é o que foi negociado no contrato entre a entidade de classe e a operadora.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">Que documentos preciso para contratar por adesão?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            Documentos pessoais e o comprovante de vínculo com a entidade (sindicato, conselho ou
+            associação de classe). Um consultor confirma a lista completa para o seu caso.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">Posso incluir dependentes no plano por adesão?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            A possibilidade e as regras de inclusão dependem do contrato firmado entre a entidade e a
+            operadora. Um consultor confirma o que se aplica ao seu caso.
+          </p>
+        </div>
+      </div>
 
       <h2>Conclusão</h2>
       <p>

@@ -66,43 +66,53 @@ export default function Body() {
 
       <h2>Perguntas frequentes</h2>
 
-      <h3>Como cancelo o plano Hapvida?</h3>
-      <p>
-        O cancelamento é feito diretamente com a operadora. Se a intenção for trocar de plano, o
-        recomendado é confirmar a nova contratação (e a portabilidade de carências, se aplicável) antes de
-        cancelar o atual, para não perder cobertura no meio do processo.
-      </p>
 
-      <h3>Cancelar e contratar de novo depois faz eu perder a carência já cumprida?</h3>
-      <p>
-        Pode fazer, sim, se o cancelamento acontecer antes de confirmar a portabilidade. Por isso o caminho
-        mais seguro é validar a elegibilidade com um consultor antes de cancelar qualquer coisa.
-      </p>
-
-      <h3>Vale a pena cancelar só porque o plano reajustou?</h3>
-      <p>
-        Nem sempre. Às vezes o problema não é a operadora, é a modalidade contratada. Comparar o valor em
-        outra modalidade (empresarial, por exemplo, para quem tem CNPJ) costuma resolver sem precisar
-        cancelar.
-      </p>
-
-      <h3>Posso cancelar o plano de um dependente sem cancelar o meu?</h3>
-      <p>
-        A situação de cada beneficiário incluído no contrato pode ser tratada separadamente; um consultor
-        confirma como isso funciona no seu caso específico.
-      </p>
-
-      <h3>O cancelamento tem multa?</h3>
-      <p>
-        As condições contratuais variam conforme o plano e a modalidade. Um consultor confirma as
-        condições específicas do seu contrato antes de você formalizar o pedido.
-      </p>
-
-      <h3>Quem cancela, a Nexar ou a Hapvida?</h3>
-      <p>
-        O pedido de cancelamento é processado pela operadora. A Nexar é a consultoria autorizada que
-        acompanha o processo e ajuda a confirmar os próximos passos, mas não é a operadora do plano.
-      </p>
+      <div className="not-prose space-y-4">
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">Como cancelo o plano Hapvida?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            O cancelamento é feito diretamente com a operadora. Se a intenção for trocar de plano, o
+            recomendado é confirmar a nova contratação (e a portabilidade de carências, se aplicável) antes de
+            cancelar o atual, para não perder cobertura no meio do processo.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">Cancelar e contratar de novo depois faz eu perder a carência já cumprida?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            Pode fazer, sim, se o cancelamento acontecer antes de confirmar a portabilidade. Por isso o caminho
+            mais seguro é validar a elegibilidade com um consultor antes de cancelar qualquer coisa.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">Vale a pena cancelar só porque o plano reajustou?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            Nem sempre. Às vezes o problema não é a operadora, é a modalidade contratada. Comparar o valor em
+            outra modalidade (empresarial, por exemplo, para quem tem CNPJ) costuma resolver sem precisar
+            cancelar.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">Posso cancelar o plano de um dependente sem cancelar o meu?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            A situação de cada beneficiário incluído no contrato pode ser tratada separadamente; um consultor
+            confirma como isso funciona no seu caso específico.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">O cancelamento tem multa?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            As condições contratuais variam conforme o plano e a modalidade. Um consultor confirma as
+            condições específicas do seu contrato antes de você formalizar o pedido.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">Quem cancela, a Nexar ou a Hapvida?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            O pedido de cancelamento é processado pela operadora. A Nexar é a consultoria autorizada que
+            acompanha o processo e ajuda a confirmar os próximos passos, mas não é a operadora do plano.
+          </p>
+        </div>
+      </div>
 
       <h2>Conclusão</h2>
       <p>

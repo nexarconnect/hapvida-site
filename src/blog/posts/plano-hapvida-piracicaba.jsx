@@ -28,34 +28,43 @@ export default function Body() {
 
       <h2>Perguntas frequentes</h2>
 
-      <h3>Qual o valor do plano Hapvida em Piracicaba?</h3>
-      <p>
-        R$ 157,29 é o valor nacional mais baixo divulgado, mas o plano disponível em Piracicaba costuma ser
-        outro, com valor de entrada diferente. Um consultor confirma o número exato na cotação.
-      </p>
 
-      <h3>A rede atende em Piracicaba?</h3>
-      <p>
-        Sim, com rede própria e credenciada. O consultor valida as unidades disponíveis na cidade antes de
-        qualquer decisão.
-      </p>
-
-      <h3>Quanto tempo até poder usar o plano?</h3>
-      <p>
-        Urgência e emergência em 24 horas, consultas e exames simples em 30 dias, conforme a ANS.
-      </p>
-
-      <h3>Dá para reduzir a carência com portabilidade?</h3>
-      <p>
-        Sim, em alguns casos. Veja como funciona no post sobre{' '}
-        <Link to="/blog/portabilidade-para-hapvida">portabilidade para Hapvida</Link>.
-      </p>
-
-      <h3>Dá para contratar como MEI em Piracicaba?</h3>
-      <p>
-        Sim. Com CNPJ ativo, incluindo MEI, é possível avaliar a modalidade empresarial e comparar condições
-        com o consultor.
-      </p>
+      <div className="not-prose space-y-4">
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">Qual o valor do plano Hapvida em Piracicaba?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            R$ 157,29 é o valor nacional mais baixo divulgado, mas o plano disponível em Piracicaba costuma ser
+            outro, com valor de entrada diferente. Um consultor confirma o número exato na cotação.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">A rede atende em Piracicaba?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            Sim, com rede própria e credenciada. O consultor valida as unidades disponíveis na cidade antes de
+            qualquer decisão.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">Quanto tempo até poder usar o plano?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            Urgência e emergência em 24 horas, consultas e exames simples em 30 dias, conforme a ANS.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">Dá para reduzir a carência com portabilidade?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            Sim, em alguns casos. Veja como funciona no post sobre{' '}
+            <Link to="/blog/portabilidade-para-hapvida">portabilidade para Hapvida</Link>.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">Dá para contratar como MEI em Piracicaba?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            Sim. Com CNPJ ativo, incluindo MEI, é possível avaliar a modalidade empresarial e comparar condições
+            com o consultor.
+          </p>
+        </div>
+      </div>
 
       <h2>Conclusão</h2>
       <p>

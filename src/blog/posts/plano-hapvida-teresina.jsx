@@ -46,36 +46,45 @@ export default function Body() {
 
       <h2>Perguntas frequentes</h2>
 
-      <h3>Qual o valor do plano Hapvida em Teresina?</h3>
-      <p>
-        O valor de entrada divulgado hoje é R$ 84,71 (plano Mix), mas o valor exato do seu perfil depende
-        da idade e da modalidade. Um consultor confirma o número certo na cotação para Teresina.
-      </p>
 
-      <h3>Qual plano é mais barato em Teresina?</h3>
-      <p>
-        Depende do seu perfil e da modalidade contratada. A comparação entre as opções disponíveis só faz
-        sentido com os seus dados na cotação: é aí que aparece o valor real de cada uma.
-      </p>
-
-      <h3>A rede atende em Teresina?</h3>
-      <p>
-        Sim, por rede própria e credenciada. Qual delas você acessa depende do plano contratado, e a
-        consultoria Nexar confirma as unidades disponíveis em Teresina antes de qualquer decisão.
-      </p>
-
-      <h3>Quanto tempo depois de contratar já posso usar o plano em Teresina?</h3>
-      <p>
-        Urgência e emergência em 24 horas, consultas e exames simples em 30 dias, pela regra da ANS. Os
-        demais procedimentos seguem a tabela completa e podem variar conforme o histórico de saúde
-        declarado.
-      </p>
-
-      <h3>Dá para contratar sendo MEI em Teresina?</h3>
-      <p>
-        Sim. Com CNPJ ativo, inclusive MEI, é possível avaliar a modalidade empresarial, que costuma ter
-        condições comerciais próprias. Um consultor explica o que muda para o seu caso.
-      </p>
+      <div className="not-prose space-y-4">
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">Qual o valor do plano Hapvida em Teresina?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            O valor de entrada divulgado hoje é R$ 84,71 (plano Mix), mas o valor exato do seu perfil depende
+            da idade e da modalidade. Um consultor confirma o número certo na cotação para Teresina.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">Qual plano é mais barato em Teresina?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            Depende do seu perfil e da modalidade contratada. A comparação entre as opções disponíveis só faz
+            sentido com os seus dados na cotação: é aí que aparece o valor real de cada uma.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">A rede atende em Teresina?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            Sim, por rede própria e credenciada. Qual delas você acessa depende do plano contratado, e a
+            consultoria Nexar confirma as unidades disponíveis em Teresina antes de qualquer decisão.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">Quanto tempo depois de contratar já posso usar o plano em Teresina?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            Urgência e emergência em 24 horas, consultas e exames simples em 30 dias, pela regra da ANS. Os
+            demais procedimentos seguem a tabela completa e podem variar conforme o histórico de saúde
+            declarado.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">Dá para contratar sendo MEI em Teresina?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            Sim. Com CNPJ ativo, inclusive MEI, é possível avaliar a modalidade empresarial, que costuma ter
+            condições comerciais próprias. Um consultor explica o que muda para o seu caso.
+          </p>
+        </div>
+      </div>
 
       <h2>Conclusão</h2>
       <p>

@@ -55,42 +55,52 @@ export default function Body() {
 
       <h2>Perguntas frequentes</h2>
 
-      <h3>O que é coparticipação no plano de saúde?</h3>
-      <p>
-        É um modelo em que você paga uma mensalidade menor e uma taxa adicional só quando usa determinados
-        procedimentos, como consultas e exames. O plano cobre a maior parte do custo; você entra com uma
-        fração na hora do atendimento.
-      </p>
 
-      <h3>Coparticipação e franquia são a mesma coisa?</h3>
-      <p>
-        Não. São modelos diferentes de cobrança por uso. Cada operadora e cada plano definem as próprias
-        regras; o consultor esclarece qual se aplica à opção que você está avaliando.
-      </p>
-
-      <h3>Plano com coparticipação é mais barato?</h3>
-      <p>
-        A mensalidade costuma ser menor, mas o custo total depende de quanto você usa. Quem usa pouco tende
-        a pagar menos; quem usa muito pode acabar pagando mais no acumulado.
-      </p>
-
-      <h3>Tem limite de quanto pago por mês?</h3>
-      <p>
-        Alguns contratos preveem um teto de coparticipação mensal. Isso varia por plano, vale confirmar no
-        momento da cotação.
-      </p>
-
-      <h3>Coparticipação vale a pena para família?</h3>
-      <p>
-        Depende da frequência de uso. Famílias que usam o plano com frequência costumam se beneficiar mais
-        do modelo sem coparticipação. A comparação com os seus dados é o que decide.
-      </p>
-
-      <h3>Como saber o valor exato da coparticipação?</h3>
-      <p>
-        O valor varia conforme o plano, a modalidade e a região. Um consultor confirma o valor exato para o
-        seu caso antes de você assinar qualquer contrato.
-      </p>
+      <div className="not-prose space-y-4">
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">O que é coparticipação no plano de saúde?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            É um modelo em que você paga uma mensalidade menor e uma taxa adicional só quando usa determinados
+            procedimentos, como consultas e exames. O plano cobre a maior parte do custo; você entra com uma
+            fração na hora do atendimento.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">Coparticipação e franquia são a mesma coisa?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            Não. São modelos diferentes de cobrança por uso. Cada operadora e cada plano definem as próprias
+            regras; o consultor esclarece qual se aplica à opção que você está avaliando.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">Plano com coparticipação é mais barato?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            A mensalidade costuma ser menor, mas o custo total depende de quanto você usa. Quem usa pouco tende
+            a pagar menos; quem usa muito pode acabar pagando mais no acumulado.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">Tem limite de quanto pago por mês?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            Alguns contratos preveem um teto de coparticipação mensal. Isso varia por plano, vale confirmar no
+            momento da cotação.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">Coparticipação vale a pena para família?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            Depende da frequência de uso. Famílias que usam o plano com frequência costumam se beneficiar mais
+            do modelo sem coparticipação. A comparação com os seus dados é o que decide.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">Como saber o valor exato da coparticipação?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            O valor varia conforme o plano, a modalidade e a região. Um consultor confirma o valor exato para o
+            seu caso antes de você assinar qualquer contrato.
+          </p>
+        </div>
+      </div>
 
       <h2>Conclusão</h2>
       <p>

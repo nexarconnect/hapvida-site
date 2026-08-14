@@ -71,50 +71,61 @@ export default function Body() {
 
       <h2>Perguntas frequentes</h2>
 
-      <h3>Todo plano Hapvida tem coparticipação?</h3>
-      <p>
-        Não necessariamente. A disponibilidade de coparticipação, e de planos sem ela, varia por região e
-        modalidade. Um consultor confirma as opções para a sua cidade.
-      </p>
 
-      <h3>Qual a diferença entre coparticipação parcial e total?</h3>
-      <p>
-        São desenhos comuns no mercado: no parcial, só parte dos atendimentos gera cobrança extra; no total,
-        consultas, exames e terapias entram. As regras exatas de cada plano variam por operadora e precisam
-        ser confirmadas no contrato.
-      </p>
-
-      <h3>Internação e cirurgia entram na coparticipação?</h3>
-      <p>
-        Depende do plano e da operadora: cada contrato define quais procedimentos têm coparticipação e
-        quais ficam isentos. Não dá para afirmar isso de forma genérica: peça essa condição por escrito ao
-        consultor antes de assinar.
-      </p>
-
-      <h3>Plano sem coparticipação vale a pena?</h3>
-      <p>
-        Depende da frequência de uso. Quem usa bastante o plano tende a compensar a mensalidade maior para
-        não pagar por atendimento.
-      </p>
-
-      <h3>Como saber o valor da coparticipação no meu plano?</h3>
-      <p>
-        Os valores e percentuais variam por operadora, plano e região. Um consultor envia a tabela vigente
-        na cotação, com as condições específicas do seu perfil.
-      </p>
-
-      <h3>Coparticipação e franquia são a mesma coisa?</h3>
-      <p>
-        Não. Na franquia, você paga até um valor definido e a operadora cobre o restante; na coparticipação,
-        você paga uma fração de cada atendimento, sem um limite inicial fixo.
-      </p>
-
-      <h3>Existe limite para o que pago por mês?</h3>
-      <p>
-        Alguns contratos preveem um teto mensal de coparticipação; outros não. As regras da ANS exigem que
-        essas condições estejam previstas e detalhadas no contrato; vale confirmar por escrito no momento
-        da cotação.
-      </p>
+      <div className="not-prose space-y-4">
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">Todo plano Hapvida tem coparticipação?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            Não necessariamente. A disponibilidade de coparticipação, e de planos sem ela, varia por região e
+            modalidade. Um consultor confirma as opções para a sua cidade.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">Qual a diferença entre coparticipação parcial e total?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            São desenhos comuns no mercado: no parcial, só parte dos atendimentos gera cobrança extra; no total,
+            consultas, exames e terapias entram. As regras exatas de cada plano variam por operadora e precisam
+            ser confirmadas no contrato.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">Internação e cirurgia entram na coparticipação?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            Depende do plano e da operadora: cada contrato define quais procedimentos têm coparticipação e
+            quais ficam isentos. Não dá para afirmar isso de forma genérica: peça essa condição por escrito ao
+            consultor antes de assinar.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">Plano sem coparticipação vale a pena?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            Depende da frequência de uso. Quem usa bastante o plano tende a compensar a mensalidade maior para
+            não pagar por atendimento.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">Como saber o valor da coparticipação no meu plano?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            Os valores e percentuais variam por operadora, plano e região. Um consultor envia a tabela vigente
+            na cotação, com as condições específicas do seu perfil.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">Coparticipação e franquia são a mesma coisa?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            Não. Na franquia, você paga até um valor definido e a operadora cobre o restante; na coparticipação,
+            você paga uma fração de cada atendimento, sem um limite inicial fixo.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">Existe limite para o que pago por mês?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            Alguns contratos preveem um teto mensal de coparticipação; outros não. As regras da ANS exigem que
+            essas condições estejam previstas e detalhadas no contrato; vale confirmar por escrito no momento
+            da cotação.
+          </p>
+        </div>
+      </div>
 
       <h2>Conclusão</h2>
       <p>

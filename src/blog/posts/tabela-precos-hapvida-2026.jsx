@@ -88,54 +88,65 @@ export default function Body() {
 
       <h2>Perguntas frequentes</h2>
 
-      <h3>Qual é a tabela de preços Hapvida 2026?</h3>
-      <p>
-        Não existe uma tabela única: o valor varia por região, faixa etária e modalidade contratada. A
-        referência inicial divulgada é R$ 157,29, mas o número exato para o seu caso só sai na cotação.
-      </p>
 
-      <h3>Qual a diferença entre os planos Mix, Nosso Plano e Pleno?</h3>
-      <p>
-        O Mix tem a menor mensalidade, pela rede própria e credenciada Hapvida. O Nosso Plano tem o melhor
-        custo-benefício do portfólio, também com rede própria e credenciada. O Pleno oferece a cobertura
-        mais completa e mais conforto no uso. Os três estão disponíveis nas modalidades individual, familiar,
-        MEI e empresarial.
-      </p>
-
-      <h3>O preço aumenta todo ano?</h3>
-      <p>
-        Sim, há reajuste anual. No individual, segue o teto definido pela ANS. No empresarial, é negociado
-        com a operadora conforme a sinistralidade do grupo.
-      </p>
-
-      <h3>MEI paga o mesmo valor que pessoa física?</h3>
-      <p>
-        MEI com CNPJ ativo pode contratar o plano empresarial, que costuma ter condições diferentes do
-        individual, inclusive em relação à carência. O consultor compara as duas modalidades antes de
-        qualquer indicação. Veja mais no post sobre{' '}
-        <Link to="/blog/plano-hapvida-empresarial-mei">plano Hapvida empresarial e MEI</Link>.
-      </p>
-
-      <h3>A tabela é a mesma em todas as cidades atendidas?</h3>
-      <p>
-        Não. A consultoria Nexar atende Bauru, Ribeirão Preto, Franca, São José dos Campos, Sertãozinho,
-        Lins, Araraquara, Limeira, Barretos, Pirassununga, Marília, São Carlos e Piracicaba, e o valor varia
-        por município dentro dessa lista. Veja a{' '}
-        <Link to="/planos-hapvida-por-cidade">lista completa de cidades atendidas</Link>.
-      </p>
-
-      <h3>Como recebo a tabela atualizada?</h3>
-      <p>
-        Pelo WhatsApp, direto com um consultor autorizado. O retorno costuma ser rápido: você informa idade,
-        cidade e modalidade de interesse, e recebe os valores disponíveis para o seu perfil.
-      </p>
-
-      <h3>Este site é o site oficial da Hapvida?</h3>
-      <p>
-        Não. A Nexar é uma consultoria independente e autorizada a comercializar planos Hapvida: um canal de
-        venda e suporte, não a operadora. Os detalhes estão no nosso{' '}
-        <Link to="/aviso-legal">aviso legal</Link>.
-      </p>
+      <div className="not-prose space-y-4">
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">Qual é a tabela de preços Hapvida 2026?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            Não existe uma tabela única: o valor varia por região, faixa etária e modalidade contratada. A
+            referência inicial divulgada é R$ 157,29, mas o número exato para o seu caso só sai na cotação.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">Qual a diferença entre os planos Mix, Nosso Plano e Pleno?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            O Mix tem a menor mensalidade, pela rede própria e credenciada Hapvida. O Nosso Plano tem o melhor
+            custo-benefício do portfólio, também com rede própria e credenciada. O Pleno oferece a cobertura
+            mais completa e mais conforto no uso. Os três estão disponíveis nas modalidades individual, familiar,
+            MEI e empresarial.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">O preço aumenta todo ano?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            Sim, há reajuste anual. No individual, segue o teto definido pela ANS. No empresarial, é negociado
+            com a operadora conforme a sinistralidade do grupo.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">MEI paga o mesmo valor que pessoa física?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            MEI com CNPJ ativo pode contratar o plano empresarial, que costuma ter condições diferentes do
+            individual, inclusive em relação à carência. O consultor compara as duas modalidades antes de
+            qualquer indicação. Veja mais no post sobre{' '}
+            <Link to="/blog/plano-hapvida-empresarial-mei">plano Hapvida empresarial e MEI</Link>.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">A tabela é a mesma em todas as cidades atendidas?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            Não. A consultoria Nexar atende Bauru, Ribeirão Preto, Franca, São José dos Campos, Sertãozinho,
+            Lins, Araraquara, Limeira, Barretos, Pirassununga, Marília, São Carlos e Piracicaba, e o valor varia
+            por município dentro dessa lista. Veja a{' '}
+            <Link to="/planos-hapvida-por-cidade">lista completa de cidades atendidas</Link>.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">Como recebo a tabela atualizada?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            Pelo WhatsApp, direto com um consultor autorizado. O retorno costuma ser rápido: você informa idade,
+            cidade e modalidade de interesse, e recebe os valores disponíveis para o seu perfil.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+          <h3 className="!mt-0 font-black text-slate-900">Este site é o site oficial da Hapvida?</h3>
+          <p className="!mt-2 text-sm text-slate-600">
+            Não. A Nexar é uma consultoria independente e autorizada a comercializar planos Hapvida: um canal de
+            venda e suporte, não a operadora. Os detalhes estão no nosso{' '}
+            <Link to="/aviso-legal">aviso legal</Link>.
+          </p>
+        </div>
+      </div>
 
       <h2>Conclusão</h2>
       <p>
