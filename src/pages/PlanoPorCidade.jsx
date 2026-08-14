@@ -6,44 +6,20 @@ import { ArrowLeft, MapPin, Building2, Building, Users, ShieldCheck } from 'luci
 import { getCityBySlug } from '../data/coveredCities';
 import { CITY_NETWORK_NOTES } from '../data/cityNetworkNotes';
 import { getPostBySlug } from '../data/blogPosts';
-import { getPricingByCity, getNetworkUnits } from '../lib/supabase';
+import { getPricingByCity } from '../lib/supabase';
+import { useNetworkUnits } from '../hooks/useNetworkUnits';
 import { Navbar, PriceTablesSection, Footer, ChatInteligente, selectDisplayPlans } from '../components';
+import NetworkUnitCard from '../components/NetworkUnitCard';
 import SEO from '../components/SEO';
 import NotFound from './NotFound';
-
-function NetworkUnitCard({ unit }) {
-  return (
-    <div className="flex items-start gap-4 rounded-3xl border border-slate-100 bg-white p-6 shadow-sm">
-      <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl bg-blue-50 text-[#002b5c]">
-        <Building2 size={22} />
-      </div>
-      <div>
-        <h3 className="font-black text-slate-900">{unit.name}</h3>
-        {unit.address && (
-          <p className="mt-1 text-sm text-slate-500">{unit.address}</p>
-        )}
-        {unit.map_link && (
-          <a
-            href={unit.map_link}
-            target="_blank"
-            rel="noreferrer"
-            className="mt-2 inline-block text-xs font-black uppercase tracking-widest text-[#ff8200] hover:underline"
-          >
-            Abrir no mapa
-          </a>
-        )}
-      </div>
-    </div>
-  );
-}
 
 export default function PlanoPorCidade({ onOpenForm }) {
   const { slug } = useParams();
   const city = getCityBySlug(slug);
 
   const [pricing, setPricing] = useState([]);
-  const [units, setUnits] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { units } = useNetworkUnits(city?.name);
 
   useEffect(() => {
     if (!city) return;
@@ -52,13 +28,9 @@ export default function PlanoPorCidade({ onOpenForm }) {
 
     async function load() {
       setLoading(true);
-      const [pricingData, unitsData] = await Promise.all([
-        getPricingByCity(city.name),
-        getNetworkUnits(city.name),
-      ]);
+      const pricingData = await getPricingByCity(city.name);
       if (mounted) {
         setPricing(pricingData);
-        setUnits(unitsData);
         setLoading(false);
       }
     }
@@ -197,7 +169,7 @@ export default function PlanoPorCidade({ onOpenForm }) {
         </section>
       )}
 
-      {units.length > 0 && (
+      {units && units.length > 0 && (
         <section className="bg-slate-50 py-16 md:py-20">
           <div className="container mx-auto max-w-5xl px-6">
             <h2 className="mb-8 text-center text-3xl font-black text-[#002b5c] md:text-4xl">

@@ -1,36 +1,22 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { MapPin, ArrowLeft, ChevronDown, Building2, ShieldCheck } from "lucide-react";
+import { MapPin, ArrowLeft, ChevronDown, ShieldCheck } from "lucide-react";
 import NetworkSection from "../components/NetworkSection";
+import NetworkUnitCard from "../components/NetworkUnitCard";
 import SEO from "../components/SEO";
 import { Navbar, Footer } from "../components";
 import { COVERED_CITIES, slugifyCity } from "../data/coveredCities";
-import { getNetworkUnits } from "../lib/supabase";
+import { useNetworkUnits } from "../hooks/useNetworkUnits";
 
 function CityAccordionItem({ city }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [units, setUnits] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const { units, loading, load } = useNetworkUnits(city.name, { lazy: true });
 
-  const handleToggle = async () => {
+  const handleToggle = () => {
     const next = !isOpen;
     setIsOpen(next);
-
     if (next && units === null) {
-      setLoading(true);
-      const data = await getNetworkUnits(city.name);
-      // A tabela network_units tem linhas duplicadas para a mesma unidade
-      // (mesmo nome + endereço) em algumas cidades — dedup defensivo aqui
-      // até a duplicidade ser limpa na fonte.
-      const seen = new Set();
-      const deduped = (data || []).filter((unit) => {
-        const key = `${unit.name}|${unit.address}`;
-        if (seen.has(key)) return false;
-        seen.add(key);
-        return true;
-      });
-      setUnits(deduped);
-      setLoading(false);
+      load();
     }
   };
 
@@ -61,19 +47,11 @@ function CityAccordionItem({ city }) {
           {loading ? (
             <p className="text-sm text-slate-400">Carregando unidades de {city.name}...</p>
           ) : units && units.length > 0 ? (
-            <ul className="space-y-3">
+            <div className="space-y-3">
               {units.map((unit) => (
-                <li key={unit.id} className="flex items-start gap-3 text-sm">
-                  <Building2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-[#002b5c]" />
-                  <div>
-                    <span className="font-bold text-slate-800">{unit.name}</span>
-                    {unit.address && (
-                      <span className="block text-slate-500">{unit.address}</span>
-                    )}
-                  </div>
-                </li>
+                <NetworkUnitCard key={unit.id} unit={unit} />
               ))}
-            </ul>
+            </div>
           ) : (
             <p className="text-sm text-slate-500">
               Um consultor confirma as unidades disponíveis em {city.name}.

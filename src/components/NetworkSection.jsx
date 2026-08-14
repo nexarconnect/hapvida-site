@@ -2,15 +2,15 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MapPin, ExternalLink, Building2, ShieldCheck, CheckCircle2, ChevronDown } from 'lucide-react';
 import { COVERED_CITIES, NETWORK_ONLY_CITIES } from '../data/coveredCities';
-import { getNetworkUnits } from '../lib/supabase';
+import { useNetworkUnits } from '../hooks/useNetworkUnits';
 import { detectCityIfAlreadyGranted } from '../hooks/useCityDetection';
 
 const DEFAULT_CITY = 'São Paulo';
 
 export default function NetworkSection({ sharedCity }) {
   const [activeCity, setActiveCity] = useState(sharedCity || DEFAULT_CITY);
-  const [units, setUnits] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { units: fetchedUnits, loading } = useNetworkUnits(activeCity);
+  const units = fetchedUnits || [];
   const [autoDetected, setAutoDetected] = useState(false);
 
   // Se veio uma cidade de fora (prop), ela manda.
@@ -35,28 +35,10 @@ export default function NetworkSection({ sharedCity }) {
     };
   }, [sharedCity, autoDetected]);
 
-  useEffect(() => {
-    let mounted = true;
-    setLoading(true);
-    // Limpa a unidade da cidade anterior de imediato — sem isso, `featured`
-    // fica com o dado antigo até a busca da cidade nova terminar, e o selo
-    // "Rede Exclusiva"/nome da unidade errada pode aparecer colado na cidade
-    // nova por um instante.
-    setUnits([]);
-
-    getNetworkUnits(activeCity).then((data) => {
-      if (mounted) {
-        setUnits(data);
-        setLoading(false);
-      }
-    });
-
-    return () => {
-      mounted = false;
-    };
-  }, [activeCity]);
-
-  const featured = useMemo(() => units[0] || null, [units]);
+  // `loading` acompanha activeCity: enquanto a cidade nova ainda carrega,
+  // `featured` fica null aqui de propósito, pra não mostrar por um instante
+  // a imagem/selo "Rede Exclusiva" da unidade da cidade anterior.
+  const featured = useMemo(() => (loading ? null : units[0] || null), [units, loading]);
   // Só existe registro em `network_units` pra cidade que teve unidade própria
   // confirmada (ver getNetworkUnits) — sem isso, nem o rótulo "Rede Própria"
   // nem o selo "Rede Exclusiva" podem ser afirmados pra essa cidade.
