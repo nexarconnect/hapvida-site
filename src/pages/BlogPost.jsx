@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { ArrowLeft, CalendarDays, MessageCircle } from 'lucide-react';
+import { ArrowLeft, CalendarDays, MessageCircle, PenLine } from 'lucide-react';
 
 import { getPostBySlug } from '../data/blogPosts';
 import { BLOG_AUTHOR } from '../data/author';
@@ -69,7 +69,7 @@ export default function BlogPost({ onOpenForm }) {
         <div className="container mx-auto max-w-3xl">
           <Link
             to="/blog"
-            className="mb-6 inline-flex items-center gap-2 text-sm font-bold text-blue-200 hover:text-white"
+            className="mb-8 inline-flex items-center gap-2 text-sm font-bold text-blue-200 hover:text-white"
           >
             <ArrowLeft className="h-4 w-4" />
             Voltar para o Blog
@@ -81,15 +81,18 @@ export default function BlogPost({ onOpenForm }) {
               {formatDate(meta.publishedAt)}
             </span>
           </div>
-          <h1 className="text-3xl font-black leading-tight text-white md:text-5xl">{meta.title}</h1>
-          <p className="mt-4 text-sm font-medium text-blue-200">
-            Por {BLOG_AUTHOR.name}, {BLOG_AUTHOR.role}
-          </p>
+          <h1 className="mt-2 max-w-2xl pb-1 text-3xl font-black leading-[1.18] tracking-tight text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.25)] md:text-5xl">
+            {meta.title}
+          </h1>
         </div>
       </header>
 
-      <div className="border-b border-slate-100 bg-white py-6">
-        <div className="container mx-auto max-w-3xl px-6">
+      <div className="border-b border-slate-100 bg-white py-4">
+        <div className="container mx-auto flex max-w-3xl flex-wrap items-center justify-between gap-3 px-6">
+          <span className="inline-flex items-center gap-1.5 text-xs font-medium text-slate-400">
+            <PenLine className="h-3.5 w-3.5" />
+            {BLOG_AUTHOR.name} · {BLOG_AUTHOR.role}
+          </span>
           <ShareButtons path={`/blog/${meta.slug}`} title={meta.title} />
         </div>
       </div>

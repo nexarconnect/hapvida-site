@@ -152,10 +152,10 @@ export default function TabelaDePrecoHapvida({ onOpenForm }) {
       />
       <Navbar />
 
-      <header className="bg-[#002b5c] px-6 py-16 text-center text-white md:py-20">
+      <header className="flex flex-col items-center bg-[#002b5c] px-6 py-16 text-center text-white md:py-20">
         <Link
           to="/"
-          className="mb-6 inline-flex items-center gap-2 text-sm font-bold text-blue-200 hover:text-white"
+          className="mb-8 inline-flex items-center gap-2 text-sm font-bold text-blue-200 hover:text-white"
         >
           <ArrowLeft className="h-4 w-4" />
           Voltar para a Home
@@ -176,7 +176,21 @@ export default function TabelaDePrecoHapvida({ onOpenForm }) {
       <section className="bg-white py-16 md:py-20">
         <div className="container mx-auto max-w-4xl px-6">
           <h2 className="text-2xl font-black text-[#002b5c] md:text-3xl">Quanto custa em 2026?</h2>
-          <div className="mt-8 overflow-x-auto">
+
+          <div className="mt-8 space-y-4 md:hidden">
+            {MODALIDADES.map((row) => (
+              <div key={row.modalidade} className="rounded-2xl border border-slate-100 bg-slate-50 p-5">
+                <div className="flex items-center justify-between gap-3">
+                  <span className="font-black text-slate-900">{row.modalidade}</span>
+                  <span className="whitespace-nowrap font-black text-[#002b5c]">{row.entrada}</span>
+                </div>
+                <p className="mt-2 text-sm text-slate-600">{row.planos}</p>
+                <p className="mt-1 text-xs text-slate-500">{row.destaque}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-8 hidden overflow-x-auto md:block">
             <table className="w-full min-w-[560px] border-collapse overflow-hidden rounded-2xl text-left text-sm">
               <thead>
                 <tr className="bg-[#002b5c] text-white">
@@ -210,7 +224,19 @@ export default function TabelaDePrecoHapvida({ onOpenForm }) {
             Exemplo ilustrativo: Ribeirão Preto, plano Nosso Médico. Consulte a cotação exata para
             a sua cidade e idade.
           </p>
-          <div className="mt-8 overflow-x-auto">
+          <div className="mt-8 overflow-hidden rounded-2xl bg-white shadow-sm md:hidden">
+            {FAIXAS_ETARIAS.map((row, i) => (
+              <div
+                key={row.faixa}
+                className={`flex items-center justify-between px-5 py-3 ${i % 2 === 0 ? 'bg-slate-50' : 'bg-white'}`}
+              >
+                <span className="font-bold text-slate-900">{row.faixa} anos</span>
+                <span className="font-black text-[#ff8200]">{row.valor}</span>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-8 hidden overflow-x-auto md:block">
             <table className="w-full min-w-[600px] border-collapse overflow-hidden rounded-2xl bg-white text-left text-sm">
               <thead>
                 <tr className="bg-[#ff8200] text-white">
@@ -276,7 +302,16 @@ export default function TabelaDePrecoHapvida({ onOpenForm }) {
             Prazos padrão definidos pela ANS. Quem já tem plano de saúde há dois anos ou mais pode
             pedir portabilidade e migrar para a Hapvida sem cumprir novas carências.
           </p>
-          <div className="overflow-x-auto">
+          <div className="space-y-3 md:hidden">
+            {CARENCIAS.map((row) => (
+              <div key={row.servico} className="rounded-2xl border border-slate-100 bg-slate-50 px-5 py-4">
+                <span className="font-bold text-slate-900">{row.servico}</span>
+                <p className="mt-1 font-black text-[#002b5c]">{row.prazo}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="hidden overflow-x-auto md:block">
             <table className="w-full min-w-[480px] border-collapse overflow-hidden rounded-2xl text-left text-sm">
               <thead>
                 <tr className="bg-[#002b5c] text-white">
@@ -328,7 +363,20 @@ export default function TabelaDePrecoHapvida({ onOpenForm }) {
       <section className="bg-white py-16 md:py-20">
         <div className="container mx-auto max-w-4xl px-6">
           <h2 className="text-2xl font-black text-[#002b5c] md:text-3xl">Coparticipação</h2>
-          <div className="mt-8 overflow-x-auto">
+
+          <div className="mt-8 space-y-3 md:hidden">
+            {COPARTICIPACAO.map((row) => (
+              <div key={row.item} className="rounded-2xl border border-slate-100 bg-slate-50 px-5 py-4">
+                <div className="flex items-center justify-between gap-3">
+                  <span className="font-bold text-slate-900">{row.item}</span>
+                  <span className="whitespace-nowrap font-black text-[#002b5c]">{row.percentual}</span>
+                </div>
+                <p className="mt-1 text-sm text-slate-500">Limite: {row.limite}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-8 hidden overflow-x-auto md:block">
             <table className="w-full min-w-[560px] border-collapse overflow-hidden rounded-2xl text-left text-sm">
               <thead>
                 <tr className="bg-[#002b5c] text-white">

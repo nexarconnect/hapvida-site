@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { MapPin, ArrowLeft, ChevronDown, Building2 } from "lucide-react";
+import { MapPin, ArrowLeft, ChevronDown, Building2, ShieldCheck } from "lucide-react";
 import NetworkSection from "../components/NetworkSection";
 import SEO from "../components/SEO";
 import { Navbar, Footer } from "../components";
@@ -115,23 +115,29 @@ export default function RedeAtendimento({ onOpenForm }) {
         </Link>
 
         <div className="mb-2 flex items-center gap-3">
-          <MapPin className="h-8 w-8 text-blue-900" />
-          <h1 className="text-3xl font-bold text-slate-900">Rede de Atendimento</h1>
+          <MapPin className="h-8 w-8 text-[#002b5c]" />
+          <h1 className="text-3xl font-black text-slate-900">Rede de Atendimento</h1>
         </div>
       </div>
 
       <NetworkSection />
 
-      <section className="py-16 md:py-20">
-        <div className="container mx-auto max-w-3xl px-6">
-          <h2 className="mb-2 text-center text-2xl font-black text-[#002b5c] md:text-3xl">
-            Hospitais e clínicas por cidade
-          </h2>
-          <p className="mb-10 text-center text-sm text-slate-500">
-            Clique na sua cidade para ver as unidades disponíveis.
-          </p>
+      <section className="bg-slate-50 py-16 md:py-20">
+        <div className="container mx-auto max-w-5xl px-6">
+          <div className="mx-auto mb-10 max-w-2xl text-center">
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-blue-50 px-4 py-2 text-[10px] font-black uppercase tracking-widest text-[#002b5c]">
+              <ShieldCheck size={14} className="text-[#ff8200]" />
+              Rede hospitalar
+            </div>
+            <h2 className="text-2xl font-black text-[#002b5c] md:text-3xl">
+              Hospitais e clínicas por cidade
+            </h2>
+            <p className="mt-3 text-slate-600">
+              Clique na sua cidade para ver as unidades disponíveis.
+            </p>
+          </div>
 
-          <div className="space-y-3">
+          <div className="grid gap-6 md:grid-cols-2">
             {COVERED_CITIES.map((city) => (
               <CityAccordionItem key={city.name} city={city} />
             ))}

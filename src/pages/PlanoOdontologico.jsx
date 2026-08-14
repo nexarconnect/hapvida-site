@@ -80,15 +80,15 @@ export default function PlanoOdontologico({ onOpenForm }) {
       />
       <Navbar />
 
-      <header className="bg-[#002b5c] px-6 py-16 text-center text-white md:py-20">
+      <header className="flex flex-col items-center bg-[#002b5c] px-6 py-16 text-center text-white md:py-20">
         <Link
           to="/"
-          className="mb-6 inline-flex items-center gap-2 text-sm font-bold text-blue-200 hover:text-white"
+          className="mb-8 inline-flex items-center gap-2 text-sm font-bold text-blue-200 hover:text-white"
         >
           <ArrowLeft className="h-4 w-4" />
           Voltar para a Home
         </Link>
-        <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-xs font-black uppercase tracking-widest">
+        <div className="mb-5 inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-xs font-black uppercase tracking-widest">
           <Smile className="h-4 w-4 text-[#ff8200]" />
           Odonto Hapvida
         </div>

@@ -26,7 +26,7 @@ export default function RedeNacional({ onOpenForm }) {
         ]}
       />
 
-      <div className="container mx-auto max-w-4xl px-4 pt-12">
+      <div className="container mx-auto max-w-6xl px-4 pt-12">
         <Link
           to="/rede-de-atendimento"
           className="mb-4 flex items-center gap-2 text-sm text-slate-500 hover:text-blue-900"
@@ -36,8 +36,8 @@ export default function RedeNacional({ onOpenForm }) {
         </Link>
 
         <div className="mb-2 flex items-center gap-3">
-          <MapPin className="h-8 w-8 text-blue-900" />
-          <h1 className="text-3xl font-bold text-slate-900">Rede Hapvida por estado</h1>
+          <MapPin className="h-8 w-8 text-[#002b5c]" />
+          <h1 className="text-3xl font-black text-slate-900">Rede Hapvida por estado</h1>
         </div>
         <p className="mb-10 text-sm text-slate-500">
           Rede própria e credenciada Hapvida nos estados fora de São Paulo. Escolha um estado para

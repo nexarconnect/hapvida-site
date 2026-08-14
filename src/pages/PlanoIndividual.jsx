@@ -71,15 +71,15 @@ export default function PlanoIndividual({ onOpenForm }) {
       />
       <Navbar />
 
-      <header className="bg-[#002b5c] px-6 py-16 text-center text-white md:py-20">
+      <header className="flex flex-col items-center bg-[#002b5c] px-6 py-16 text-center text-white md:py-20">
         <Link
           to="/"
-          className="mb-6 inline-flex items-center gap-2 text-sm font-bold text-blue-200 hover:text-white"
+          className="mb-8 inline-flex items-center gap-2 text-sm font-bold text-blue-200 hover:text-white"
         >
           <ArrowLeft className="h-4 w-4" />
           Voltar para a Home
         </Link>
-        <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-xs font-black uppercase tracking-widest">
+        <div className="mb-5 inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-xs font-black uppercase tracking-widest">
           <UserCheck className="h-4 w-4 text-[#ff8200]" />
           Contratação por CPF
         </div>
@@ -105,23 +105,29 @@ export default function PlanoIndividual({ onOpenForm }) {
           </p>
 
           <div className="mt-10 grid gap-6 sm:grid-cols-3">
-            <div className="rounded-3xl border border-slate-100 bg-slate-50 p-6">
-              <UserCheck className="h-7 w-7 text-[#ff8200]" />
-              <h3 className="mt-4 font-black text-slate-900">Sem CNPJ</h3>
+            <div className="rounded-3xl border border-slate-100 bg-white p-6 shadow-sm">
+              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-[#002b5c]">
+                <UserCheck size={22} />
+              </div>
+              <h3 className="font-black text-slate-900">Sem CNPJ</h3>
               <p className="mt-2 text-sm text-slate-500">
                 Contratação direto por CPF, sem precisar abrir empresa.
               </p>
             </div>
-            <div className="rounded-3xl border border-slate-100 bg-slate-50 p-6">
-              <Users2 className="h-7 w-7 text-[#ff8200]" />
-              <h3 className="mt-4 font-black text-slate-900">Dependentes</h3>
+            <div className="rounded-3xl border border-slate-100 bg-white p-6 shadow-sm">
+              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-[#002b5c]">
+                <Users2 size={22} />
+              </div>
+              <h3 className="font-black text-slate-900">Dependentes</h3>
               <p className="mt-2 text-sm text-slate-500">
                 Inclua cônjuge e filhos no mesmo contrato (modalidade familiar).
               </p>
             </div>
-            <div className="rounded-3xl border border-slate-100 bg-slate-50 p-6">
-              <ShieldCheck className="h-7 w-7 text-[#ff8200]" />
-              <h3 className="mt-4 font-black text-slate-900">Reajuste regulado</h3>
+            <div className="rounded-3xl border border-slate-100 bg-white p-6 shadow-sm">
+              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-[#002b5c]">
+                <ShieldCheck size={22} />
+              </div>
+              <h3 className="font-black text-slate-900">Reajuste regulado</h3>
               <p className="mt-2 text-sm text-slate-500">
                 Reajuste anual segue o teto definido pela ANS.
               </p>

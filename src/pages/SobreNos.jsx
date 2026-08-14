@@ -163,23 +163,29 @@ export default function SobreNos({ onOpenForm }) {
           </p>
 
           <div className="mt-10 grid gap-6 sm:grid-cols-3">
-            <div className="rounded-3xl border border-slate-100 bg-slate-50 p-6">
-              <ShieldCheck className="h-7 w-7 text-[#ff8200]" />
-              <h3 className="mt-4 font-black text-slate-900">+22 anos de experiência</h3>
+            <div className="rounded-3xl border border-slate-100 bg-white p-6 shadow-sm">
+              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-[#002b5c]">
+                <ShieldCheck size={22} />
+              </div>
+              <h3 className="font-black text-slate-900">+22 anos de experiência</h3>
               <p className="mt-2 text-sm text-slate-500">
                 Atuação no mercado de seguros e saúde suplementar.
               </p>
             </div>
-            <div className="rounded-3xl border border-slate-100 bg-slate-50 p-6">
-              <MapPin className="h-7 w-7 text-[#ff8200]" />
-              <h3 className="mt-4 font-black text-slate-900">Foco no interior de SP</h3>
+            <div className="rounded-3xl border border-slate-100 bg-white p-6 shadow-sm">
+              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-[#002b5c]">
+                <MapPin size={22} />
+              </div>
+              <h3 className="font-black text-slate-900">Foco no interior de SP</h3>
               <p className="mt-2 text-sm text-slate-500">
                 Atendimento prioritário nas principais cidades da região.
               </p>
             </div>
-            <div className="rounded-3xl border border-slate-100 bg-slate-50 p-6">
-              <Users2 className="h-7 w-7 text-[#ff8200]" />
-              <h3 className="mt-4 font-black text-slate-900">Consultor real</h3>
+            <div className="rounded-3xl border border-slate-100 bg-white p-6 shadow-sm">
+              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-[#002b5c]">
+                <Users2 size={22} />
+              </div>
+              <h3 className="font-black text-slate-900">Consultor real</h3>
               <p className="mt-2 text-sm text-slate-500">
                 Sem bot e sem script genérico em nenhuma etapa do atendimento.
               </p>

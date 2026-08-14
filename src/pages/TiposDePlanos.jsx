@@ -56,10 +56,10 @@ export default function TiposDePlanos({ onOpenForm }) {
       />
       <Navbar />
 
-      <header className="bg-[#002b5c] px-6 py-16 text-center text-white md:py-20">
+      <header className="flex flex-col items-center bg-[#002b5c] px-6 py-16 text-center text-white md:py-20">
         <Link
           to="/"
-          className="mb-6 inline-flex items-center gap-2 text-sm font-bold text-blue-200 hover:text-white"
+          className="mb-8 inline-flex items-center gap-2 text-sm font-bold text-blue-200 hover:text-white"
         >
           <ArrowLeft className="h-4 w-4" />
           Voltar para a Home

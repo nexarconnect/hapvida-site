@@ -71,15 +71,15 @@ export default function PlanoEmpresarial({ onOpenForm }) {
       />
       <Navbar />
 
-      <header className="bg-[#002b5c] px-6 py-16 text-center text-white md:py-20">
+      <header className="flex flex-col items-center bg-[#002b5c] px-6 py-16 text-center text-white md:py-20">
         <Link
           to="/"
-          className="mb-6 inline-flex items-center gap-2 text-sm font-bold text-blue-200 hover:text-white"
+          className="mb-8 inline-flex items-center gap-2 text-sm font-bold text-blue-200 hover:text-white"
         >
           <ArrowLeft className="h-4 w-4" />
           Voltar para a Home
         </Link>
-        <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-xs font-black uppercase tracking-widest">
+        <div className="mb-5 inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-xs font-black uppercase tracking-widest">
           <Briefcase className="h-4 w-4 text-[#ff8200]" />
           Empresas e MEI
         </div>
@@ -104,23 +104,29 @@ export default function PlanoEmpresarial({ onOpenForm }) {
           </p>
 
           <div className="mt-10 grid gap-6 sm:grid-cols-3">
-            <div className="rounded-3xl border border-slate-100 bg-slate-50 p-6">
-              <Briefcase className="h-7 w-7 text-[#ff8200]" />
-              <h3 className="mt-4 font-black text-slate-900">CNPJ ativo</h3>
+            <div className="rounded-3xl border border-slate-100 bg-white p-6 shadow-sm">
+              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-[#002b5c]">
+                <Briefcase size={22} />
+              </div>
+              <h3 className="font-black text-slate-900">CNPJ ativo</h3>
               <p className="mt-2 text-sm text-slate-500">
                 Empresas e MEI podem contratar, mesmo com poucos funcionários.
               </p>
             </div>
-            <div className="rounded-3xl border border-slate-100 bg-slate-50 p-6">
-              <TrendingDown className="h-7 w-7 text-[#ff8200]" />
-              <h3 className="mt-4 font-black text-slate-900">Condição comercial própria</h3>
+            <div className="rounded-3xl border border-slate-100 bg-white p-6 shadow-sm">
+              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-[#002b5c]">
+                <TrendingDown size={22} />
+              </div>
+              <h3 className="font-black text-slate-900">Condição comercial própria</h3>
               <p className="mt-2 text-sm text-slate-500">
                 Regras de valor e carência específicas para a modalidade empresarial.
               </p>
             </div>
-            <div className="rounded-3xl border border-slate-100 bg-slate-50 p-6">
-              <Users2 className="h-7 w-7 text-[#ff8200]" />
-              <h3 className="mt-4 font-black text-slate-900">Inclui colaboradores</h3>
+            <div className="rounded-3xl border border-slate-100 bg-white p-6 shadow-sm">
+              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-[#002b5c]">
+                <Users2 size={22} />
+              </div>
+              <h3 className="font-black text-slate-900">Inclui colaboradores</h3>
               <p className="mt-2 text-sm text-slate-500">
                 Adicione beneficiários vinculados à empresa no mesmo contrato.
               </p>

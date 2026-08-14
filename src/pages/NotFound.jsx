@@ -20,8 +20,8 @@ export default function NotFound() {
         noindex
       />
       <div>
-        <SearchX className="mx-auto mb-4 h-12 w-12 text-blue-900" />
-        <h1 className="mb-2 text-3xl font-bold text-slate-900">Página não encontrada</h1>
+        <SearchX className="mx-auto mb-4 h-12 w-12 text-[#002b5c]" />
+        <h1 className="mb-2 text-3xl font-black text-slate-900">Página não encontrada</h1>
         <p className="mb-6 text-slate-600">
           O endereço acessado não existe ou foi movido. Confira o link, volte para a página inicial ou
           fale direto com um consultor.
@@ -29,7 +29,7 @@ export default function NotFound() {
         <div className="flex flex-wrap items-center justify-center gap-3">
           <Link
             to="/"
-            className="inline-flex h-12 items-center justify-center rounded-full bg-[#004b8d] px-8 font-bold text-white transition-all hover:opacity-90 active:scale-95"
+            className="inline-flex h-12 items-center justify-center rounded-full bg-[#002b5c] px-8 font-bold text-white transition-all hover:opacity-90 active:scale-95"
           >
             Voltar para a Home
           </Link>
