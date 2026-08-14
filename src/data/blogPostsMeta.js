@@ -657,4 +657,15 @@ export const BLOG_POSTS_META = [
     excerpt:
       'Quanto custa o plano Hapvida em Itajaí? Veja o que define o preço, como funciona a rede local e como confirmar o valor exato para a sua idade.',
   },
+  {
+    slug: 'plano-odontologico-hapvida-como-funciona',
+    title: 'Plano Odontológico Hapvida: como funciona e quanto custa',
+    description:
+      'Plano odontológico Hapvida: preço a partir de R$ 14,87 ao contratar com o plano médico, cobertura e carência. Peça a cotação.',
+    category: 'Odontológico',
+    publishedAt: '2026-08-14',
+    updatedAt: '2026-08-14',
+    excerpt:
+      'O preço do plano odontológico Hapvida muda bastante conforme você já ter o plano médico ou não. Veja os valores, o que está incluso e a carência antes de pedir a cotação.',
+  },
 ];
