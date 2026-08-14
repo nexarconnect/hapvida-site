@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, MapPin, Building2 } from 'lucide-react';
+import { ArrowLeft, MapPin, Building2, Building, Users, ShieldCheck } from 'lucide-react';
 
 import { getCityBySlug } from '../data/coveredCities';
+import { CITY_NETWORK_NOTES } from '../data/cityNetworkNotes';
 import { getPostBySlug } from '../data/blogPosts';
 import { getPricingByCity, getNetworkUnits } from '../lib/supabase';
 import { Navbar, PriceTablesSection, Footer, ChatInteligente, selectDisplayPlans } from '../components';
@@ -123,6 +124,77 @@ export default function PlanoPorCidade({ onOpenForm }) {
         <div className="py-24 text-center text-slate-400">Carregando preços de {city.name}...</div>
       ) : (
         <PriceTablesSection pricing={pricing} onOpenForm={handleOpenForm} city={city.name} />
+      )}
+
+      {CITY_NETWORK_NOTES[city.name] && (
+        <section className="bg-slate-50 py-16 md:py-20">
+          <div className="container mx-auto max-w-5xl px-6">
+            <div className="mx-auto mb-10 max-w-2xl text-center">
+              <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-blue-50 px-4 py-2 text-[10px] font-black uppercase tracking-widest text-[#002b5c]">
+                <ShieldCheck size={14} className="text-[#ff8200]" />
+                Rede hospitalar
+              </div>
+              <h2 className="text-2xl font-black text-[#002b5c] md:text-3xl">
+                Sobre a rede em {city.name}
+              </h2>
+              <p className="mt-3 text-slate-600">
+                A Hapvida atende por <strong className="text-[#002b5c]">duas redes hospitalares</strong>{' '}
+                nacionais. Qual delas você acessa em {city.name} <em>depende do plano contratado</em>, não
+                é igual para todos.
+              </p>
+            </div>
+
+            <div className="grid gap-6 md:grid-cols-3">
+              <div className="rounded-3xl border border-slate-100 bg-white p-6 text-center shadow-sm">
+                <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-[#002b5c]">
+                  <Building2 size={22} />
+                </div>
+                <div className="text-3xl font-black text-[#002b5c]">86</div>
+                <p className="mt-1 text-sm font-bold uppercase tracking-widest text-slate-400">
+                  Hospitais próprios
+                </p>
+                <p className="mt-2 text-sm text-slate-500">
+                  Sob gestão direta da Hapvida, com prontuário integrado.
+                </p>
+              </div>
+
+              <div className="rounded-3xl border border-slate-100 bg-white p-6 text-center shadow-sm">
+                <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-[#002b5c]">
+                  <Building size={22} />
+                </div>
+                <div className="text-3xl font-black text-[#002b5c]">123</div>
+                <p className="mt-1 text-sm font-bold uppercase tracking-widest text-slate-400">
+                  Hospitais credenciados
+                </p>
+                <p className="mt-2 text-sm text-slate-500">
+                  Rede parceira que completa a cobertura por região.
+                </p>
+              </div>
+
+              <div className="rounded-3xl border border-slate-100 bg-white p-6 text-center shadow-sm">
+                <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-[#002b5c]">
+                  <Users size={22} />
+                </div>
+                <div className="text-3xl font-black text-[#002b5c]">15,9 mi</div>
+                <p className="mt-1 text-sm font-bold uppercase tracking-widest text-slate-400">
+                  Beneficiários
+                </p>
+                <p className="mt-2 text-sm text-slate-500">
+                  Em todo o Brasil, nas cinco regiões do país.
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-6 rounded-3xl bg-[#002b5c] p-8 text-center text-white md:p-10">
+              <p className="text-blue-100">
+                Na região de <strong className="text-white">{city.name}</strong>,{' '}
+                {CITY_NETWORK_NOTES[city.name]} fazem parte do atendimento. Um consultor confirma{' '}
+                <strong className="text-white">exatamente o que o seu plano libera</strong> antes de
+                qualquer assinatura.
+              </p>
+            </div>
+          </div>
+        </section>
       )}
 
       {units.length > 0 && (

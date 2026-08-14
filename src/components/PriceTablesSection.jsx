@@ -48,7 +48,7 @@ function getPlanContent(planName) {
       badge: 'Mais econômico',
       bullets: [
         'Menor valor de entrada',
-        'Rede própria Hapvida',
+        'Rede própria e credenciada',
         'Ideal para economizar'
       ]
     };

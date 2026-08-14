@@ -27,6 +27,41 @@ export const COVERED_CITIES = [
   { name: 'Marília', state: 'SP', lat: -22.2139, lng: -49.9458, sitemapPriority: 0.7 },
   { name: 'Pirassununga', state: 'SP', lat: -21.9994, lng: -47.4256, sitemapPriority: 0.7 },
   { name: 'São Carlos', state: 'SP', lat: -22.0175, lng: -47.8908, sitemapPriority: 0.7 },
+
+  // Expansão de 2026-08-13: cidades novas fora do interior de SP, com preço
+  // e rede verificados (ver scripts/data/cidades-expansao-2026-08.json).
+  { name: 'São Paulo', state: 'SP', lat: -23.5505, lng: -46.6333, sitemapPriority: 1.0 },
+  { name: 'São Bernardo do Campo', state: 'SP', lat: -23.6939, lng: -46.565, sitemapPriority: 0.8 },
+  { name: 'Santo André', state: 'SP', lat: -23.6639, lng: -46.5383, sitemapPriority: 0.8 },
+  { name: 'Americana', state: 'SP', lat: -22.7375, lng: -47.3311, sitemapPriority: 0.7 },
+  { name: 'Belo Horizonte', state: 'MG', lat: -19.9167, lng: -43.9345, sitemapPriority: 1.0 },
+  { name: 'Uberlândia', state: 'MG', lat: -18.9186, lng: -48.2772, sitemapPriority: 0.8 },
+  { name: 'Uberaba', state: 'MG', lat: -19.7483, lng: -47.9319, sitemapPriority: 0.7 },
+  { name: 'Rio de Janeiro', state: 'RJ', lat: -22.9068, lng: -43.1729, sitemapPriority: 1.0 },
+  { name: 'Salvador', state: 'BA', lat: -12.9777, lng: -38.5016, sitemapPriority: 1.0 },
+  { name: 'Feira de Santana', state: 'BA', lat: -12.2667, lng: -38.9667, sitemapPriority: 0.7 },
+  { name: 'Fortaleza', state: 'CE', lat: -3.7172, lng: -38.5433, sitemapPriority: 1.0 },
+  { name: 'Recife', state: 'PE', lat: -8.0476, lng: -34.877, sitemapPriority: 1.0 },
+  { name: 'Olinda', state: 'PE', lat: -8.0089, lng: -34.8553, sitemapPriority: 0.7 },
+  { name: 'João Pessoa', state: 'PB', lat: -7.1195, lng: -34.845, sitemapPriority: 0.8 },
+  { name: 'Campina Grande', state: 'PB', lat: -7.2306, lng: -35.8811, sitemapPriority: 0.7 },
+  { name: 'Natal', state: 'RN', lat: -5.7945, lng: -35.211, sitemapPriority: 0.8 },
+  { name: 'Maceió', state: 'AL', lat: -9.6498, lng: -35.7089, sitemapPriority: 0.8 },
+  { name: 'Aracaju', state: 'SE', lat: -10.9472, lng: -37.0731, sitemapPriority: 0.8 },
+  { name: 'São Luís', state: 'MA', lat: -2.5307, lng: -44.3068, sitemapPriority: 0.8 },
+  { name: 'Teresina', state: 'PI', lat: -5.0892, lng: -42.8019, sitemapPriority: 0.8 },
+  { name: 'Belém', state: 'PA', lat: -1.4558, lng: -48.4902, sitemapPriority: 0.8 },
+  { name: 'Ananindeua', state: 'PA', lat: -1.3656, lng: -48.3722, sitemapPriority: 0.7 },
+  { name: 'Manaus', state: 'AM', lat: -3.119, lng: -60.0217, sitemapPriority: 1.0 },
+  { name: 'Goiânia', state: 'GO', lat: -16.6869, lng: -49.2648, sitemapPriority: 0.8 },
+  { name: 'Anápolis', state: 'GO', lat: -16.3267, lng: -48.953, sitemapPriority: 0.7 },
+  { name: 'Brasília', state: 'DF', lat: -15.7942, lng: -47.8822, sitemapPriority: 1.0 },
+  { name: 'Campo Grande', state: 'MS', lat: -20.4697, lng: -54.6201, sitemapPriority: 0.8 },
+  { name: 'Curitiba', state: 'PR', lat: -25.4284, lng: -49.2733, sitemapPriority: 1.0 },
+  { name: 'Londrina', state: 'PR', lat: -23.3045, lng: -51.1696, sitemapPriority: 0.8 },
+  { name: 'Maringá', state: 'PR', lat: -23.4205, lng: -51.9331, sitemapPriority: 0.7 },
+  { name: 'Joinville', state: 'SC', lat: -26.3044, lng: -48.8464, sitemapPriority: 0.8 },
+  { name: 'Itajaí', state: 'SC', lat: -26.9078, lng: -48.6614, sitemapPriority: 0.7 },
 ];
 
 // Cidades onde a Hapvida tem unidade própria e a Nexar quer exibir a rede,
@@ -39,24 +74,21 @@ export const COVERED_CITIES = [
 // "São Gonçalo do Amarante" existe em dois estados diferentes (CE e RN) com
 // unidades Hapvida distintas — por isso o nome leva o estado, tanto aqui
 // quanto na coluna `city` de network_units, pra não misturar as duas.
+// Promovidas para COVERED_CITIES em 2026-08-13 (preço real confirmado):
+// Fortaleza, Manaus, Salvador, Feira de Santana, Belém, Ananindeua, Natal.
+// Parauapebas continua aqui: o CSV de origem trouxe só um placeholder de
+// preço, sem valor real confirmado ainda.
 export const NETWORK_ONLY_CITIES = [
-  { name: 'Fortaleza', state: 'CE' },
   { name: 'Maracanaú', state: 'CE' },
   { name: 'Juazeiro do Norte', state: 'CE' },
   { name: 'São Gonçalo do Amarante - CE', state: 'CE' },
   { name: 'Pacajus', state: 'CE' },
-  { name: 'Manaus', state: 'AM' },
-  { name: 'Salvador', state: 'BA' },
   { name: 'Camaçari', state: 'BA' },
-  { name: 'Feira de Santana', state: 'BA' },
   { name: 'Lauro de Freitas', state: 'BA' },
   { name: 'Alagoinhas', state: 'BA' },
-  { name: 'Belém', state: 'PA' },
   { name: 'Parauapebas', state: 'PA' },
-  { name: 'Ananindeua', state: 'PA' },
   { name: 'São Gonçalo do Amarante - RN', state: 'RN' },
   { name: 'Mossoró', state: 'RN' },
-  { name: 'Natal', state: 'RN' },
 ];
 
 // Nome completo de cada estado presente em NETWORK_ONLY_CITIES — usado só
@@ -65,7 +97,6 @@ export const NETWORK_ONLY_CITIES = [
 // (COVERED_CITIES).
 const STATE_NAMES = {
   CE: 'Ceará',
-  AM: 'Amazonas',
   BA: 'Bahia',
   PA: 'Pará',
   RN: 'Rio Grande do Norte',
