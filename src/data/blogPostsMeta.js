@@ -668,4 +668,15 @@ export const BLOG_POSTS_META = [
     excerpt:
       'O preço do plano odontológico Hapvida muda bastante conforme você já ter o plano médico ou não. Veja os valores, o que está incluso e a carência antes de pedir a cotação.',
   },
+  {
+    slug: 'doenca-preexistente-plano-hapvida-cpt',
+    title: 'Doença Preexistente no Plano Hapvida: como declarar e o que muda',
+    description:
+      'Doença preexistente no plano Hapvida: como declarar, o que é a CPT da ANS e por quanto tempo. Peça a cotação e confirme o que se aplica ao seu caso.',
+    category: 'Carência',
+    publishedAt: '2026-08-16',
+    updatedAt: '2026-08-16',
+    excerpt:
+      'Ter doença preexistente não impede contratar o plano Hapvida, mas muda a cobertura de alguns procedimentos por até 24 meses. Veja como funciona a Cobertura Parcial Temporária da ANS antes de declarar.',
+  },
 ];
