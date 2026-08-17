@@ -679,4 +679,15 @@ export const BLOG_POSTS_META = [
     excerpt:
       'Ter doença preexistente não impede contratar o plano Hapvida, mas muda a cobertura de alguns procedimentos por até 24 meses. Veja como funciona a Cobertura Parcial Temporária da ANS antes de declarar.',
   },
+  {
+    slug: 'faixa-etaria-plano-hapvida',
+    title: 'Faixa Etária no Plano Hapvida: Como o Preço Muda com a Idade',
+    description:
+      'Faixa etária no plano Hapvida: veja como o preço sobe por idade, os maiores saltos e peça a cotação com o valor exato para você.',
+    category: 'Preços',
+    publishedAt: '2026-08-17',
+    updatedAt: '2026-08-17',
+    excerpt:
+      'Duas pessoas na mesma cidade podem pagar valores bem diferentes pelo plano Hapvida só por causa da idade. Veja como funciona a tabela por faixa etária e onde ficam os maiores saltos de preço.',
+  },
 ];
