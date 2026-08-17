@@ -114,7 +114,7 @@ export default function PoliticasPrivacidade() {
             <p className="mb-1 text-sm font-medium text-slate-900">
               Dúvidas sobre seus dados?
             </p>
-            <p className="text-sm">WhatsApp: (14) 99123-5094</p>
+            <p className="text-sm">WhatsApp: (11) 93289-4067</p>
           </div>
         </section>
       </div>

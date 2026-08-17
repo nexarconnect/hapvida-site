@@ -174,7 +174,7 @@ export default function Footer({ onOpenForm }) {
                   rel="noopener noreferrer"
                   className="hover:text-white transition-colors"
                 >
-                  (14) 99123-5094
+                  (11) 93289-4067
                 </a>
               </li>
               <li className="flex items-center gap-3">

@@ -107,7 +107,7 @@ export default function TermosDeUso() {
               Contato e Suporte
             </h2>
             <p className="text-sm">
-              WhatsApp: <strong>(14) 99123-5094</strong>
+              WhatsApp: <strong>(11) 93289-4067</strong>
               <br />
               E-mail: <strong>contato@nexarconnect.com.br</strong>
             </p>

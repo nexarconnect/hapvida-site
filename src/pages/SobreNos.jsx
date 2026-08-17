@@ -309,12 +309,12 @@ export default function SobreNos({ onOpenForm }) {
             <div className="flex items-start gap-3">
               <Phone className="mt-1 h-5 w-5 flex-shrink-0 text-[#ff8200]" />
               <a
-                href="https://wa.me/5514991235094"
+                href="https://wa.me/5511932894067"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-sm font-bold text-slate-700 hover:text-[#002b5c]"
               >
-                (14) 99123-5094
+                (11) 93289-4067
               </a>
             </div>
             <div className="flex items-start gap-3">

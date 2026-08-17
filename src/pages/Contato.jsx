@@ -88,7 +88,7 @@ export default function Contato({ onOpenForm }) {
               </div>
               <div>
                 <h3 className="font-black text-slate-900">WhatsApp</h3>
-                <p className="mt-1 text-sm text-slate-500">(14) 99123-5094</p>
+                <p className="mt-1 text-sm text-slate-500">(11) 93289-4067</p>
                 <p className="mt-2 text-xs font-bold uppercase tracking-widest text-[#ff8200]">
                   Resposta mais rápida
                 </p>
@@ -166,7 +166,7 @@ export default function Contato({ onOpenForm }) {
                 rel="noopener noreferrer"
                 className="text-sm font-bold text-slate-700 hover:text-[#002b5c]"
               >
-                (14) 99123-5094
+                (11) 93289-4067
               </a>
             </div>
           </div>

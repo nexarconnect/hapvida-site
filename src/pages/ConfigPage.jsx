@@ -110,7 +110,7 @@ export default function ConfigPage() {
           <div className="space-y-5 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
             <Field
               label="Número do WhatsApp (com DDI)"
-              description="Ex: 5514991235094"
+              description="Ex: 5511932894067"
               value={config.whatsapp_number}
               onChange={(v) => update('whatsapp_number', v)}
             />

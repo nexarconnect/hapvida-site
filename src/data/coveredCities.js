@@ -11,11 +11,17 @@
 // `sitemapPriority`: prioridade dessa cidade no sitemap.xml (ver
 // scripts/generate-sitemap.js) — escalonada por relevância comercial da
 // cidade, não um valor fixo para todas.
+// Jaboticabal removida em 2026-08-17: estava listada aqui sem nenhum preço
+// em pricing_table (nunca teve PDF de origem em scripts/sync-prices.js nem
+// entrada em scripts/data/cidades-expansao-2026-08.json), o que deixava
+// /plano-hapvida/jaboticabal em produção com a página quebrada ("Não foi
+// possível carregar os planos agora"). Só recolocar depois de ter preço
+// real Mix/Nosso Plano/Pleno confirmado, mesmo critério já usado para as
+// cidades em NETWORK_ONLY_CITIES.
 export const COVERED_CITIES = [
   { name: 'Campinas', state: 'SP', lat: -22.9099, lng: -47.0626, sitemapPriority: 1.0 },
   { name: 'Ribeirão Preto', state: 'SP', lat: -21.1775, lng: -47.8208, sitemapPriority: 1.0 },
   { name: 'São José dos Campos', state: 'SP', lat: -23.1791, lng: -45.8872, sitemapPriority: 1.0 },
-  { name: 'Jaboticabal', state: 'SP', lat: -21.2558, lng: -48.3225, sitemapPriority: 0.9 },
   { name: 'Araraquara', state: 'SP', lat: -21.7845, lng: -48.1781, sitemapPriority: 0.8 },
   { name: 'Bauru', state: 'SP', lat: -22.3145, lng: -49.0608, sitemapPriority: 0.8 },
   { name: 'Franca', state: 'SP', lat: -20.5386, lng: -47.4008, sitemapPriority: 0.8 },
