@@ -679,4 +679,15 @@ export const BLOG_POSTS_META = [
     excerpt:
       'Ter doença preexistente não impede contratar o plano Hapvida, mas muda a cobertura de alguns procedimentos por até 24 meses. Veja como funciona a Cobertura Parcial Temporária da ANS antes de declarar.',
   },
+  {
+    slug: 'hapvida-e-confiavel',
+    title: 'Hapvida é confiável? Conheça a operadora por trás do plano',
+    description:
+      'Hapvida é confiável? Veja o tamanho da operadora, a rede própria e as certificações antes de pedir sua cotação de plano de saúde.',
+    category: 'Institucional',
+    publishedAt: '2026-08-18',
+    updatedAt: '2026-08-18',
+    excerpt:
+      'Antes de olhar o preço, muita gente quer saber se a Hapvida é confiável. Veja o tamanho do grupo, o modelo de rede própria e as certificações antes de pedir sua cotação.',
+  },
 ];
