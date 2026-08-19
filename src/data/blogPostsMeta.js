@@ -679,4 +679,15 @@ export const BLOG_POSTS_META = [
     excerpt:
       'Ter doença preexistente não impede contratar o plano Hapvida, mas muda a cobertura de alguns procedimentos por até 24 meses. Veja como funciona a Cobertura Parcial Temporária da ANS antes de declarar.',
   },
+  {
+    slug: 'plano-hapvida-individual-como-funciona',
+    title: 'Plano Individual Hapvida: como funciona e quem pode contratar',
+    description:
+      'Plano individual Hapvida: contratação por CPF, sem CNPJ, com opção de incluir dependentes. Veja documentos, reajuste e peça a cotação.',
+    category: 'Contratação',
+    publishedAt: '2026-08-19',
+    updatedAt: '2026-08-19',
+    excerpt:
+      'Sem CNPJ e sem vínculo com entidade de classe, o plano individual é a modalidade mais direta para contratar. Veja como funciona, quem pode contratar e o que muda no reajuste e na carência.',
+  },
 ];
