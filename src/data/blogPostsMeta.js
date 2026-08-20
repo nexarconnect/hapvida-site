@@ -669,6 +669,17 @@ export const BLOG_POSTS_META = [
       'O preço do plano odontológico Hapvida muda bastante conforme você já ter o plano médico ou não. Veja os valores, o que está incluso e a carência antes de pedir a cotação.',
   },
   {
+    slug: 'plano-hapvida-campinas',
+    title: 'Plano Hapvida em Campinas: preço e rede',
+    description:
+      'Plano Hapvida em Campinas: preço, rede de atendimento e carência. Peça a cotação e confirme o valor da sua idade.',
+    category: 'Cidades',
+    publishedAt: '2026-08-20',
+    updatedAt: '2026-08-20',
+    excerpt:
+      'Campinas é a maior cidade do interior de SP atendida pela Nexar. Veja o que define o preço do plano Hapvida, como funciona a rede local e como confirmar o valor exato para a sua idade.',
+  },
+  {
     slug: 'doenca-preexistente-plano-hapvida-cpt',
     title: 'Doença Preexistente no Plano Hapvida: como declarar e o que muda',
     description:
